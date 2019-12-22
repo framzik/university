@@ -11,7 +11,7 @@ import static ru.university.util.ValidationUtil.assureIdConsistent;
 import static ru.university.util.ValidationUtil.checkNew;
 
 
-public abstract class StudentRestController {
+public class StudentRestController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     private StudentService service;
