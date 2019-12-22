@@ -10,11 +10,11 @@ import java.io.IOException;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
-public class ProfessorServlet extends HttpServlet {
-    public static final Logger log = getLogger(ProfessorServlet.class);
+public class UniCourseServlet extends HttpServlet {
+    public static final Logger log = getLogger((StudentServlet.class));
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        log.debug("redirect to professors");
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        log.debug("redirect to courses");
         req.getRequestDispatcher("/professors.jsp").forward(req, resp);
     }
 }

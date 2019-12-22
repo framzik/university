@@ -20,6 +20,9 @@ public abstract class AbstractBaseEntity {
     protected AbstractBaseEntity(Integer id) {
         this.id = id;
     }
+    public boolean isNew() {
+        return this.id == null;
+    }
 
     public void setId(Integer id) {
         this.id = id;

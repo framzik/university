@@ -16,4 +16,23 @@
         <url-pattern>/professors</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+    <servlet-name>studentServlet</servlet-name>
+    <servlet-class>ru.university.web.StudentServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+</servlet>
+    <servlet-mapping>
+        <servlet-name>studentServlet</servlet-name>
+        <url-pattern>/students</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>courseServlet</servlet-name>
+        <servlet-class>ru.university.web.UniCourseServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>courseServlet</servlet-name>
+        <url-pattern>/courses</url-pattern>
+    </servlet-mapping>
 </web-app>
