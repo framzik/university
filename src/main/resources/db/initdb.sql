@@ -7,11 +7,11 @@ DROP TABLE IF EXISTS university_course;
 CREATE TABLE students
 (
     id             SERIAL PRIMARY KEY AUTO_INCREMENT,
-    name           VARCHAR(50) NOT NULL,
-    address        VARCHAR(90) NOT NULL,
-    email          VARCHAR(50) NOT NULL,
-    record_number  INTEGER     NOT NULL,
-    average_rating FLOAT       NULL
+    name           VARCHAR(100) NOT NULL,
+    address        VARCHAR(200) NOT NULL,
+    email          VARCHAR(100) NOT NULL,
+    record_number  INTEGER(9)     NOT NULL,
+    average_rating FLOAT(5)       NULL
 )
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8;
@@ -21,9 +21,9 @@ CREATE UNIQUE INDEX students_unique_email_record_number_idx ON students (email, 
 CREATE TABLE professors
 (
     id      SERIAL PRIMARY KEY AUTO_INCREMENT,
-    name    VARCHAR(50) NOT NULL,
-    address VARCHAR(90) NOT NULL,
-    cost    FLOAT       NOT NULL
+    name    VARCHAR(100) NOT NULL,
+    address VARCHAR(200) NOT NULL,
+    cost    FLOAT(9)      NOT NULL
 )
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8;
@@ -31,9 +31,9 @@ CREATE TABLE professors
 CREATE TABLE university_course
 (
     id     SERIAL PRIMARY KEY AUTO_INCREMENT,
-    name   VARCHAR(90) NOT NULL,
+    name   VARCHAR(100) NOT NULL,
     number INTEGER(7)  NOT NULL,
-    cost   FLOAT       NOT NULL
+    cost   FLOAT(9)       NOT NULL
 )
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8;
