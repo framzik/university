@@ -6,7 +6,6 @@ import ru.university.model.Student;
 import ru.university.service.StudentService;
 
 import java.util.Collection;
-import java.util.List;
 
 import static ru.university.util.ValidationUtil.assureIdConsistent;
 import static ru.university.util.ValidationUtil.checkNew;

@@ -6,6 +6,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 @Entity
 @Table(name = "professors")
@@ -64,7 +65,7 @@ public class Professor extends AbstractEntity {
 
         Professor professor = (Professor) o;
 
-        return cost != null ? cost.equals(professor.cost) : professor.cost == null;
+        return Objects.equals(cost, professor.cost);
     }
 
     @Override

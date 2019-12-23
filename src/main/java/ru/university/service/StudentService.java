@@ -5,7 +5,6 @@ import ru.university.repository.StudentRepository;
 import ru.university.util.exception.NotFoundException;
 
 import java.util.Collection;
-import java.util.List;
 
 import static ru.university.util.ValidationUtil.checkNotFound;
 import static ru.university.util.ValidationUtil.checkNotFoundWithId;

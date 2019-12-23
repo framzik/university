@@ -1,7 +1,6 @@
 package ru.university.repository;
 
 import ru.university.model.Student;
-import ru.university.util.exception.NotFoundException;
 
 import java.util.Arrays;
 import java.util.Collection;

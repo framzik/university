@@ -3,6 +3,7 @@ package ru.university.model;
 import org.springframework.data.annotation.AccessType;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @MappedSuperclass
 @AccessType(AccessType.Type.FIELD)
@@ -44,7 +45,7 @@ public abstract class AbstractBaseEntity {
 
         AbstractBaseEntity that = (AbstractBaseEntity) o;
 
-        return id != null ? id.equals(that.id) : that.id == null;
+        return Objects.equals(id, that.id);
     }
 
     @Override
