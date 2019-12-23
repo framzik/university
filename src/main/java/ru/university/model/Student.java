@@ -39,6 +39,10 @@ public class Student extends AbstractEntity {
         this.averageRating = averageRating;
     }
 
+    public Student(String name, String address, String email, Integer recordNumber, float averageRating) {
+        super(name, address);
+    }
+
     public String getEmail() {
         return email;
     }

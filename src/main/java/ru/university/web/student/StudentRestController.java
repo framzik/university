@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import ru.university.model.Student;
 import ru.university.service.StudentService;
 
+import java.util.Collection;
 import java.util.List;
 
 import static ru.university.util.ValidationUtil.assureIdConsistent;
@@ -16,7 +17,7 @@ public class StudentRestController {
 
     private StudentService service;
 
-    public List<Student> getAll() {
+    public Collection<Student> getAll() {
         log.info("getAll");
         return service.getAll();
     }

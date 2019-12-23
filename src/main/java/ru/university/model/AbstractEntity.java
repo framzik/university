@@ -28,6 +28,11 @@ public abstract class AbstractEntity extends AbstractBaseEntity {
         this.address = address;
     }
 
+    public AbstractEntity(String name, String address) {
+        this.name = name;
+        this.address = address;
+    }
+
     public void setName(String name) {
         this.name = name;
     }

@@ -4,6 +4,7 @@ import ru.university.model.Student;
 import ru.university.repository.StudentRepository;
 import ru.university.util.exception.NotFoundException;
 
+import java.util.Collection;
 import java.util.List;
 
 import static ru.university.util.ValidationUtil.checkNotFound;
@@ -28,7 +29,7 @@ public class StudentService {
         return checkNotFound(repository.getByEmail(email), "email=" + email);
     }
 
-    public List<Student> getAll() {
+    public Collection<Student> getAll() {
         return repository.getAll();
     }
 

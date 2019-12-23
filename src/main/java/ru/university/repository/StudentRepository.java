@@ -2,7 +2,7 @@ package ru.university.repository;
 
 import ru.university.model.Student;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface StudentRepository {
     Student save(Student student);
@@ -13,5 +13,5 @@ public interface StudentRepository {
 
     Student getByEmail(String email);
 
-    List<Student> getAll();
+    Collection<Student> getAll();
 }
