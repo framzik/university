@@ -2,7 +2,7 @@ package ru.university.web;
 
 import org.slf4j.Logger;
 import ru.university.model.Student;
-import ru.university.repository.InMemoryStudentRepository;
+import ru.university.repository.inmemory.InMemoryStudentRepository;
 import ru.university.repository.StudentRepository;
 
 import javax.servlet.ServletConfig;

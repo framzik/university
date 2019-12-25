@@ -12,6 +12,10 @@ import static ru.university.util.ValidationUtil.checkNotFoundWithId;
 public class StudentService {
     private StudentRepository repository;
 
+    public void setRepository(StudentRepository repository) {
+        this.repository = repository;
+    }
+
     public Student create(Student student) {
         return repository.save(student);
     }

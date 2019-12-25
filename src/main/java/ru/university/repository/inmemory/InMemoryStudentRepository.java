@@ -1,6 +1,7 @@
-package ru.university.repository;
+package ru.university.repository.inmemory;
 
 import ru.university.model.Student;
+import ru.university.repository.StudentRepository;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -10,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
-public class InMemoryStudentRepository implements  StudentRepository{
+public class InMemoryStudentRepository implements StudentRepository {
     private Map<Integer, Student> repository = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);
 
