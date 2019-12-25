@@ -35,4 +35,14 @@
         <servlet-name>courseServlet</servlet-name>
         <url-pattern>/courses</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>facultyServlet</servlet-name>
+        <servlet-class>ru.university.web.FacultyServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>facultyServlet</servlet-name>
+        <url-pattern>/faculties</url-pattern>
+    </servlet-mapping>
 </web-app>

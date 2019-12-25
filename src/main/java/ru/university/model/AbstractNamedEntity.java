@@ -7,30 +7,18 @@ import javax.validation.constraints.Size;
 
 @MappedSuperclass
 
-public abstract class AbstractEntity extends AbstractBaseEntity {
+public abstract class AbstractNamedEntity extends AbstractBaseEntity {
     @NotBlank
     @Size(min = 2, max = 100)
     @Column(name = "name", nullable = false)
     protected String name;
 
-    @NotBlank
-    @Size(min=2,max = 200)
-    @Column(name = "address", nullable = false)
-    protected String address;
-
-
-    protected AbstractEntity() {
+    protected AbstractNamedEntity() {
     }
 
-    protected AbstractEntity(Integer id, String name, String address) {
+    protected AbstractNamedEntity(Integer id, String name) {
         super(id);
         this.name = name;
-        this.address = address;
-    }
-
-    public AbstractEntity(String name, String address) {
-        this.name = name;
-        this.address = address;
     }
 
     public void setName(String name) {
@@ -41,21 +29,10 @@ public abstract class AbstractEntity extends AbstractBaseEntity {
         return this.name;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-
-
     @Override
     public String toString() {
         return "AbstractEntity{" +
                 "name='" + name + '\'' +
-                ", address='" + address + '\'' +
                 '}';
     }
 }

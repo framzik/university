@@ -11,5 +11,7 @@ public interface UniversityCourseRepository {
 
     UniversityCourse get(int id);
 
+    UniversityCourse getByName(String name);
+
     Collection<UniversityCourse> getAll();
 }

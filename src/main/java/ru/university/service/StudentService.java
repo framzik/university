@@ -16,8 +16,6 @@ public class StudentService {
     @Autowired
     private StudentRepository repository;
 
-
-
     public Student create(Student student) {
         return repository.save(student);
     }
@@ -41,6 +39,4 @@ public class StudentService {
     public void update(Student student) throws NotFoundException {
         checkNotFoundWithId(repository.save(student), student.getId());
     }
-
-
 }

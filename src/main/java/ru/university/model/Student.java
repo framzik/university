@@ -9,7 +9,12 @@ import java.util.List;
 
 @Entity
 @Table(name = "students")
-public class Student extends AbstractEntity {
+public class Student extends AbstractNamedEntity {
+    @NotBlank
+    @Size(min=2,max = 200)
+    @Column(name = "address", nullable = false)
+    protected String address;
+
     @Column(name = "email", nullable = false, unique = true)
     @Email
     @NotBlank
@@ -33,14 +38,11 @@ public class Student extends AbstractEntity {
     }
 
     public Student(Integer id, String name, String address, String email, Integer recordNumber, float averageRating) {
-        super(id, name, address);
+        super(id, name);
+        this.address = address;
         this.email = email;
         this.recordNumber = recordNumber;
         this.averageRating = averageRating;
-    }
-
-    public Student(String name, String address, String email, Integer recordNumber, float averageRating) {
-        super(name, address);
     }
 
     public String getEmail() {
@@ -63,8 +65,24 @@ public class Student extends AbstractEntity {
         return averageRating;
     }
 
-    public void setAverageRating(long averageRating) {
+    public void setAverageRating(float averageRating) {
         this.averageRating = averageRating;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public List<UniversityCourse> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<UniversityCourse> courses) {
+        this.courses = courses;
     }
 
     @Override

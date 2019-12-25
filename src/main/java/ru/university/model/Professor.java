@@ -10,7 +10,12 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "professors")
-public class Professor extends AbstractEntity {
+public class Professor extends AbstractNamedEntity {
+    @NotBlank
+    @Size(min=2,max = 200)
+    @Column(name = "address", nullable = false)
+    protected String address;
+
     @NotBlank
     @Size(min = 2, max = 200)
     @Column(name = "address", nullable = false)
@@ -25,7 +30,8 @@ public class Professor extends AbstractEntity {
     }
 
     public Professor(Integer id, String name, String address, String telephone, Float cost) {
-        super(id, name, address);
+        super(id, name);
+        this.address = address;
         this.telephone = telephone;
         this.cost = cost;
     }
@@ -46,13 +52,21 @@ public class Professor extends AbstractEntity {
         this.telephone = telephone;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     @Override
     public String toString() {
         return "Professor{" +
-                "cost=" + cost +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
+                "address='" + address + '\'' +
                 ", telephone='" + telephone + '\'' +
+                ", cost=" + cost +
+                ", name='" + name + '\'' +
                 ", id=" + id +
                 '}';
     }

@@ -7,11 +7,7 @@ import javax.validation.constraints.Size;
 import java.util.List;
 @Entity
 @Table(name = "university_course")
-public class UniversityCourse extends AbstractBaseEntity {
-    @NotBlank
-    @Size(min = 2, max = 100)
-    @Column(name = "name", nullable = false)
-    private String name;
+public class UniversityCourse extends AbstractNamedEntity {
 
     @NotNull
     @Size(max = 7)
@@ -30,8 +26,7 @@ public class UniversityCourse extends AbstractBaseEntity {
     }
 
     public UniversityCourse(Integer id, String name, int number, float cost) {
-        super(id);
-        this.name = name;
+        super(id,name);
         this.number = number;
         this.cost = cost;
     }

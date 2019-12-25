@@ -8,7 +8,6 @@ import java.util.Objects;
 @MappedSuperclass
 @AccessType(AccessType.Type.FIELD)
 public abstract class AbstractBaseEntity {
-    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,6 +20,7 @@ public abstract class AbstractBaseEntity {
     protected AbstractBaseEntity(Integer id) {
         this.id = id;
     }
+
     public boolean isNew() {
         return this.id == null;
     }
@@ -42,9 +42,7 @@ public abstract class AbstractBaseEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         AbstractBaseEntity that = (AbstractBaseEntity) o;
-
         return Objects.equals(id, that.id);
     }
 

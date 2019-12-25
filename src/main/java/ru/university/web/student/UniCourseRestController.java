@@ -1,7 +1,7 @@
 package ru.university.web.student;
 
-import ru.university.service.UniCourseService;
+import ru.university.service.UniversityCourseService;
 
 public class UniCourseRestController {
-    private UniCourseService uniCourseService;
+    private UniversityCourseService universityCourseService;
 }

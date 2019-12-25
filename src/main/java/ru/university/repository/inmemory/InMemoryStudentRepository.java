@@ -49,11 +49,10 @@ public class InMemoryStudentRepository implements StudentRepository {
 
     @Override
     public Student getByEmail(String email) {
-       for(Map.Entry<Integer,Student> st: repository.entrySet() ){
-           if(st.getValue().toString().contains(email))
-               return get(st.getKey());
-       }
-        return null;
+        return repository.values().stream()
+                .filter(u -> email.equals(u.getEmail()))
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
