@@ -5,11 +5,9 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-    <bean class="ru.university.repository.inmemory.InMemoryStudentRepository" id="inMemoryStudentRepository"/>
 
-    <bean class="ru.university.service.StudentService">
-    <property name="repository" ref ="inMemoryStudentRepository"/>
-    </bean>
-
+    <context:component-scan base-package="ru.university.service"/>
+    <context:component-scan base-package="ru.university.web"/>
+    <context:component-scan base-package="ru.university.repository"/>
 
 </beans>

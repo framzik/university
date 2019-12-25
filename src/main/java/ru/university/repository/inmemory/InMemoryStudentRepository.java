@@ -1,5 +1,6 @@
 package ru.university.repository.inmemory;
 
+import org.springframework.stereotype.Repository;
 import ru.university.model.Student;
 import ru.university.repository.StudentRepository;
 
@@ -10,7 +11,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-
+@Repository
 public class InMemoryStudentRepository implements StudentRepository {
     private Map<Integer, Student> repository = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);

@@ -2,8 +2,8 @@ package ru.university.web;
 
 import org.slf4j.Logger;
 import ru.university.model.Student;
-import ru.university.repository.inmemory.InMemoryStudentRepository;
 import ru.university.repository.StudentRepository;
+import ru.university.repository.inmemory.InMemoryStudentRepository;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
