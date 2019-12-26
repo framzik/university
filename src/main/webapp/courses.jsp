@@ -4,6 +4,15 @@
 <html>
 <head>
     <title>Course list</title>
+    <style>
+        .normal {
+            color: green;
+        }
+
+        .bad {
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <section>
@@ -25,7 +34,7 @@
 
         <c:forEach items="${courses}" var="course">
             <jsp:useBean id="course" type="ru.university.model.UniversityCourse"/>
-            <tr>
+            <tr class="${course.cost<=16000 ? 'bad' : 'normal'}">
                 <td>${course.name}</td>
                 <td>${course.number}</td>
                 <td>${course.cost}</td>

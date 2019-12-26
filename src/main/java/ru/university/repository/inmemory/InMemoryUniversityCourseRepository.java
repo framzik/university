@@ -42,7 +42,7 @@ public class InMemoryUniversityCourseRepository implements UniversityCourseRepos
     @Override
     public boolean delete(int id, int facultyId) {
         Map<Integer, UniversityCourse> universityCourses = facultyCourseMap.get(facultyId);
-        return facultyCourseMap.remove(id) != null && universityCourses.remove(id) != null;
+        return universityCourses != null && universityCourses.remove(id) != null;
     }
 
     @Override
