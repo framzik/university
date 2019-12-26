@@ -45,4 +45,5 @@
         <servlet-name>facultyServlet</servlet-name>
         <url-pattern>/faculties</url-pattern>
     </servlet-mapping>
+
 </web-app>

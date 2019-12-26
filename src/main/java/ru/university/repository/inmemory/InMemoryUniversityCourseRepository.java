@@ -1,60 +1,77 @@
 package ru.university.repository.inmemory;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import ru.university.model.Student;
+import org.springframework.util.CollectionUtils;
 import ru.university.model.UniversityCourse;
 import ru.university.repository.UniversityCourseRepository;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+import static ru.university.repository.inmemory.InMemoryFacultyRepository.FIZFAK_ID;
 
 @Repository
 public class InMemoryUniversityCourseRepository implements UniversityCourseRepository {
-    private Map<Integer, UniversityCourse> repository = new ConcurrentHashMap<>();
+
+    private Map<Integer, Map<Integer, UniversityCourse>> facultyCourseMap = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);
 
     public static final List<UniversityCourse> UNIVERSITY_COURSES = Arrays.asList(
-            new UniversityCourse(null,"Теормех", 666,15250.0f),
-            new UniversityCourse(null,"Мат. анализ", 669,15900.0f)
+            new UniversityCourse(null, "Теормех", 666, 15250.0f),
+            new UniversityCourse(null, "Мат. анализ", 669, 15900.0f)
     );
 
     {
-        UNIVERSITY_COURSES.forEach(this::save);
+        UNIVERSITY_COURSES.forEach(universityCourse -> save(universityCourse, FIZFAK_ID));
     }
 
     @Override
-    public UniversityCourse save(UniversityCourse universityCourse) {
-        if(universityCourse.isNew()){
+    public UniversityCourse save(UniversityCourse universityCourse, int facultyId) {
+        Map<Integer, UniversityCourse> universityCourses = facultyCourseMap.computeIfAbsent(facultyId, ConcurrentHashMap::new);
+        if (universityCourse.isNew()) {
             universityCourse.setId(counter.incrementAndGet());
-            repository.put(universityCourse.getId(),universityCourse);
+            universityCourses.put(universityCourse.getId(), universityCourse);
             return universityCourse;
         }
-        return repository.computeIfPresent(universityCourse.getId(), (id,oldUniCource)->universityCourse);
+        return universityCourses.computeIfPresent(universityCourse.getId(), (id, oldUniCources) -> universityCourse);
     }
 
     @Override
-    public boolean delete(int id) {
-        return repository.remove(id)!=null;
+    public boolean delete(int id, int facultyId) {
+        Map<Integer, UniversityCourse> universityCourses = facultyCourseMap.get(facultyId);
+        return facultyCourseMap.remove(id) != null && universityCourses.remove(id) != null;
     }
 
     @Override
-    public UniversityCourse get(int id) {
-        return repository.get(id);
+    public UniversityCourse get(int id, int facultyId) {
+        Map<Integer, UniversityCourse> universityCourses = facultyCourseMap.get(facultyId);
+        return universityCourses == null ? null : universityCourses.get(id);
     }
 
     @Override
-    public UniversityCourse getByName(String name) {
-        return repository.values().stream()
-                .filter(r -> name.equals(r.getName()))
+    public UniversityCourse getByName(String name, int facultyId) {
+        Map<Integer, UniversityCourse> universityCourses = facultyCourseMap.get(facultyId);
+        return universityCourses.values().stream()
+                .filter(course -> name.equals(course.getName()))
                 .findFirst()
                 .orElse(null);
     }
 
     @Override
-    public Collection<UniversityCourse> getAll() {
-        return repository.values();
+    public List<UniversityCourse> getAll(int facultyId) {
+        return getAllFiltered(facultyId, course -> true);
+    }
+
+    private List<UniversityCourse> getAllFiltered(int facultyId, Predicate<UniversityCourse> filter) {
+        Map<Integer, UniversityCourse> universityCourses = facultyCourseMap.get(facultyId);
+
+        return CollectionUtils.isEmpty(universityCourses) ? Collections.emptyList() :
+                universityCourses.values().stream()
+                        .filter(filter)
+                        .sorted(Comparator.comparing(UniversityCourse::getName).reversed())
+                        .collect(Collectors.toList());
     }
 }

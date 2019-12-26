@@ -5,16 +5,18 @@ import ru.university.model.Faculty;
 import ru.university.model.UniversityCourse;
 import ru.university.repository.FacultyRepository;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import static ru.university.repository.inmemory.InMemoryUniversityCourseRepository.UNIVERSITY_COURSES;
 @Repository
 public class InMemoryFacultyRepository implements FacultyRepository {
+
+    public static final int FIZFAK_ID = 1;
+    public static final int ECONOM_ID = 2;
+
     private Map<Integer, Faculty> repository = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);
 
@@ -50,8 +52,10 @@ public class InMemoryFacultyRepository implements FacultyRepository {
     }
 
     @Override
-    public Collection<Faculty> getAll() {
-        return repository.values();
+    public List<Faculty> getAll() {
+        return repository.values().stream()
+                .sorted(Comparator.comparing(Faculty::getName).thenComparing(Faculty::getName))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -61,4 +65,5 @@ public class InMemoryFacultyRepository implements FacultyRepository {
                 .findFirst()
                 .orElse(null);
     }
+
 }
