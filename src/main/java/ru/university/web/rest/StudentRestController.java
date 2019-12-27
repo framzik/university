@@ -1,8 +1,7 @@
-package ru.university.web.student;
+package ru.university.web.rest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ru.university.model.Student;
 import ru.university.service.StudentService;
@@ -16,8 +15,11 @@ import static ru.university.util.ValidationUtil.checkNew;
 public class StudentRestController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    private StudentService service;
+    private final StudentService service;
+
+    public StudentRestController(StudentService service) {
+        this.service = service;
+    }
 
     public Collection<Student> getAll() {
         log.info("getAll");

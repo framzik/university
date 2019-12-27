@@ -36,7 +36,10 @@ public class FacultyService {
         return repository.getAll();
     }
 
-    public void update(Faculty ufaculty) throws NotFoundException {
-        checkNotFoundWithId(repository.save(ufaculty), ufaculty.getId());
+    public void update(Faculty faculty) throws NotFoundException {
+        checkNotFoundWithId(repository.save(faculty), faculty.getId());
+    }
+    public Faculty create(Faculty faculty) {
+        return repository.save(faculty);
     }
 }

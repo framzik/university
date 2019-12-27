@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 import ru.university.model.UniversityCourse;
 import ru.university.repository.UniversityCourseRepository;
+import ru.university.util.Util;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,7 +22,8 @@ public class InMemoryUniversityCourseRepository implements UniversityCourseRepos
 
     public static final List<UniversityCourse> UNIVERSITY_COURSES = Arrays.asList(
             new UniversityCourse(null, "Теормех", 666, 15250.0f),
-            new UniversityCourse(null, "Мат. анализ", 669, 15900.0f)
+            new UniversityCourse(null, "Мат. анализ", 669, 15900.0f),
+            new UniversityCourse(null, "Теория струн", 668, 16900.0f)
     );
 
     {
@@ -73,5 +75,10 @@ public class InMemoryUniversityCourseRepository implements UniversityCourseRepos
                         .filter(filter)
                         .sorted(Comparator.comparing(UniversityCourse::getName).reversed())
                         .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UniversityCourse> getBetweenCost(float startCost, float endCost, int facultyId) {
+        return getAllFiltered(facultyId,course -> Util.isBetweenInclusive(course.getCost(),startCost,endCost));
     }
 }
