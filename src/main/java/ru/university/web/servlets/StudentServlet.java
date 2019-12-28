@@ -3,9 +3,7 @@ package ru.university.web.servlets;
 import org.slf4j.Logger;
 import ru.university.model.Student;
 import ru.university.repository.StudentRepository;
-import ru.university.repository.inmemory.InMemoryStudentRepository;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,11 +18,11 @@ public class StudentServlet extends HttpServlet {
 
     private StudentRepository repository;
 
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        repository = new InMemoryStudentRepository();
-    }
+//    @Override
+//    public void init(ServletConfig config) throws ServletException {
+//        super.init(config);
+//        repository = new InMemoryStudentRepository();
+//    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

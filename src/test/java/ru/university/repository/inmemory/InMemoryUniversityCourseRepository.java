@@ -11,9 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
-import static ru.university.repository.inmemory.InMemoryFacultyRepository.ECONOM_ID;
-import static ru.university.repository.inmemory.InMemoryFacultyRepository.FIZFAK_ID;
+import static ru.university.FacultyTestData.*;
 
 @Repository
 public class InMemoryUniversityCourseRepository implements UniversityCourseRepository {
@@ -31,7 +29,7 @@ public class InMemoryUniversityCourseRepository implements UniversityCourseRepos
 
     {
         UNIVERSITY_COURSES.forEach(universityCourse -> save(universityCourse, FIZFAK_ID));
-        UNIVERSITY_COURSES_ECONOM.forEach(universityCourse -> save(universityCourse,ECONOM_ID));
+        UNIVERSITY_COURSES_ECONOM.forEach(universityCourse -> save(universityCourse, ECONOM_ID));
     }
 
     @Override
