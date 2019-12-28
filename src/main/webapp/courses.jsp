@@ -4,21 +4,25 @@
 <html>
 <head>
     <title>Course list</title>
-    <style>
-        .normal {
-            color: green;
-        }
-
-        .bad {
-            color: red;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <section>
     <h3><a href="index.html">Home</a></h3>
     <hr/>
     <h2>Courses</h2>
+    <form method="get" action="courses">
+        <input type="hidden" name="action" value="filter">
+        <dl>
+            <dt>From Cost:</dt>
+            <dd><input type="number"   name="startCost" value="${param.startCost}"></dd>
+        </dl>
+        <dl>
+            <dt>To Cost:</dt>
+            <dd><input type="number" name="endCost" value="${param.endCost}"></dd>
+        </dl>
+        <button type="submit">Filter</button>
+    </form>
     <a href="courses?action=create">Add Course</a>
     <br><br>
     <table border="1" cellpadding="8" cellspacing="0">
@@ -34,7 +38,7 @@
 
         <c:forEach items="${courses}" var="course">
             <jsp:useBean id="course" type="ru.university.model.UniversityCourse"/>
-            <tr class="${course.cost<=16000 ? 'bad' : 'normal'}">
+            <tr data-cost=${course.cost<16000}>
                 <td>${course.name}</td>
                 <td>${course.number}</td>
                 <td>${course.cost}</td>

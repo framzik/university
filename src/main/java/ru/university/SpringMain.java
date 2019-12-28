@@ -19,7 +19,7 @@ public class SpringMain {
             System.out.println();
 
             UniversityCourseRestController universityCourseRestController = appCtx.getBean(UniversityCourseRestController.class);
-            List<UniversityCourse> universityCourses = universityCourseRestController.getBetween(15500f, 17000f);
+            List<UniversityCourse> universityCourses = universityCourseRestController.getBetween(15500f, 16000f);
             universityCourses.forEach(System.out::println);
         }
     }

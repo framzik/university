@@ -1,8 +1,7 @@
-package ru.university.web;
+package ru.university.web.servlets;
 
 import org.slf4j.Logger;
 import ru.university.model.Faculty;
-import ru.university.model.Student;
 import ru.university.repository.FacultyRepository;
 import ru.university.repository.inmemory.InMemoryFacultyRepository;
 
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Objects;
 
 import static org.slf4j.LoggerFactory.getLogger;

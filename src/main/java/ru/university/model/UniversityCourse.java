@@ -30,6 +30,12 @@ public class UniversityCourse extends AbstractNamedEntity {
         this.number = number;
         this.cost = cost;
     }
+    public UniversityCourse(String name, int number, float cost) {
+        this.id=null;
+        this.name = name;
+        this.number = number;
+        this.cost = cost;
+    }
 
     public String getName() {
         return name;

@@ -1,4 +1,4 @@
-package ru.university.web;
+package ru.university.web.servlets;
 
 import org.slf4j.Logger;
 import ru.university.model.Student;
