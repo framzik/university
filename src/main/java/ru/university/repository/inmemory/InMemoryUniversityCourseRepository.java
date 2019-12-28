@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import static ru.university.repository.inmemory.InMemoryFacultyRepository.ECONOM_ID;
 import static ru.university.repository.inmemory.InMemoryFacultyRepository.FIZFAK_ID;
 
 @Repository
@@ -25,9 +26,12 @@ public class InMemoryUniversityCourseRepository implements UniversityCourseRepos
             new UniversityCourse(null, "Мат. анализ", 669, 15900.0f),
             new UniversityCourse(null, "Теория струн", 668, 16900.0f)
     );
+    public static final List<UniversityCourse> UNIVERSITY_COURSES_ECONOM = Arrays.asList(new UniversityCourse(null, "Коммунизм", 33, 250f),
+            new UniversityCourse(null, "Капитализм", 34, 255f));
 
     {
         UNIVERSITY_COURSES.forEach(universityCourse -> save(universityCourse, FIZFAK_ID));
+        UNIVERSITY_COURSES_ECONOM.forEach(universityCourse -> save(universityCourse,ECONOM_ID));
     }
 
     @Override

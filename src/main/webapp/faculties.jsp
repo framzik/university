@@ -16,15 +16,25 @@
         <thead>
         <tr>
             <th>Name</th>
+            <th>Courses</th>
             <th></th>
             <th></th>
         </tr>
         </thead>
 
+
         <c:forEach items="${faculties}" var="faculty">
             <jsp:useBean id="faculty" type="ru.university.model.Faculty"/>
             <tr>
                 <td>${faculty.name}</td>
+                <td>
+                    <form method="post" action="faculties" >
+                        <select name="facultyId" hidden>
+                            <option value=${faculty.id}></option>
+                        </select>
+                        <button type="submit" >Курсы</button>
+                    </form>
+                </td>
                 <td><a href="faculties?action=update&id=${faculty.id}">Update</a></td>
                 <td><a href="faculties?action=delete&id=${faculty.id}">Delete</a></td>
             </tr>

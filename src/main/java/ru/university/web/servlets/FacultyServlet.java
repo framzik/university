@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import ru.university.model.Faculty;
 import ru.university.repository.FacultyRepository;
 import ru.university.repository.inmemory.InMemoryFacultyRepository;
+import ru.university.web.SecurityUtil;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -28,16 +29,23 @@ public class FacultyServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
-        String id = req.getParameter("id");
-        Faculty faculty = new Faculty(id.isEmpty() ? null : Integer.valueOf(id),
-                req.getParameter("name"));
-
-        log.info(faculty.isNew() ? "Create {}" : "Update {}", faculty);
-        repository.save(faculty);
-        resp.sendRedirect("faculties");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int facultyId = Integer.parseInt(request.getParameter("facultyId"));
+        SecurityUtil.setId(facultyId);
+        response.sendRedirect("courses");
     }
+
+//    @Override
+//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        req.setCharacterEncoding("UTF-8");
+//        String id = req.getParameter("id");
+//        Faculty faculty = new Faculty(id.isEmpty() ? null : Integer.valueOf(id),
+//                req.getParameter("name"));
+//
+//        log.info(faculty.isNew() ? "Create {}" : "Update {}", faculty);
+//        repository.save(faculty);
+//        resp.sendRedirect("faculties");
+//    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
