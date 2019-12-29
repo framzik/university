@@ -1,25 +1,15 @@
 package ru.university.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "students")
-public class Student extends AbstractNamedEntity {
-    @NotBlank
-    @Size(min=2,max = 200)
-    @Column(name = "address", nullable = false)
-    protected String address;
+public class Student extends User {
 
-    @Column(name = "email", nullable = false, unique = true)
-    @Email
-    @NotBlank
-    @Size(max = 100)
-    private String email;
 
     @Column(name = "record_number", nullable = false, unique = true)
     @NotNull
@@ -30,6 +20,8 @@ public class Student extends AbstractNamedEntity {
     @NotNull
     @Size(max = 5)
     private float averageRating;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<Role> roles;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "students")
     private List<UniversityCourse> courses;
@@ -37,21 +29,17 @@ public class Student extends AbstractNamedEntity {
     public Student() {
     }
 
-    public Student(Integer id, String name, String address, String email, Integer recordNumber, float averageRating) {
-        super(id, name);
-        this.address = address;
-        this.email = email;
+    public Student(Integer id, String name, String email, String password, String address) {
+        super(id, name, email, password, address);
+    }
+
+    public Student(Integer id, String name, String email, String password, String address, boolean enabled, Integer recordNumber, float averageRating, Set<Role> roles) {
+        super(id, name, email, password, address, enabled);
         this.recordNumber = recordNumber;
         this.averageRating = averageRating;
+        this.roles = roles;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public Integer getRecordNumber() {
         return recordNumber;
@@ -69,14 +57,6 @@ public class Student extends AbstractNamedEntity {
         this.averageRating = averageRating;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public List<UniversityCourse> getCourses() {
         return courses;
     }
@@ -86,36 +66,16 @@ public class Student extends AbstractNamedEntity {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        Student student = (Student) o;
-
-        if (averageRating != student.averageRating) return false;
-        if (!email.equals(student.email)) return false;
-        return recordNumber.equals(student.recordNumber);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (recordNumber != null ? recordNumber.hashCode() : 0);
-        result = 31 * result + (averageRating != +0.0f ? Float.floatToIntBits(averageRating) : 0);
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "Student{" +
-                "email='" + email + '\'' +
-                ", recordNumber=" + recordNumber +
+                "recordNumber=" + recordNumber +
                 ", averageRating=" + averageRating +
                 ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
                 ", id=" + id +
                 '}';
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
     }
 }

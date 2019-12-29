@@ -1,21 +1,17 @@
 package ru.university.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "professors")
-public class Professor extends AbstractNamedEntity {
-    @NotBlank
-    @Size(min=2,max = 200)
-    @Column(name = "address", nullable = false)
-    protected String address;
-
+public class Professor extends User {
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<Role> roles;
     @NotBlank
     @Size(min = 2, max = 200)
     @Column(name = "address", nullable = false)
@@ -29,9 +25,9 @@ public class Professor extends AbstractNamedEntity {
     public Professor() {
     }
 
-    public Professor(Integer id, String name, String address, String telephone, Float cost) {
-        super(id, name);
-        this.address = address;
+    public Professor(Integer id, String name, String email, String password, String address, boolean enabled, Set<Role> roles, String telephone, Float cost) {
+        super(id,name, email, password, address,enabled);
+       this.roles = roles;
         this.telephone = telephone;
         this.cost = cost;
     }
@@ -52,19 +48,10 @@ public class Professor extends AbstractNamedEntity {
         this.telephone = telephone;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     @Override
     public String toString() {
         return "Professor{" +
-                "address='" + address + '\'' +
-                ", telephone='" + telephone + '\'' +
+                "telephone='" + telephone + '\'' +
                 ", cost=" + cost +
                 ", name='" + name + '\'' +
                 ", id=" + id +

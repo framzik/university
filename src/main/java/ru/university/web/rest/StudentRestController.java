@@ -1,55 +1,45 @@
 package ru.university.web.rest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import ru.university.model.Student;
 import ru.university.service.StudentService;
+import ru.university.service.UserService;
 
 import java.util.Collection;
-
-import static ru.university.util.ValidationUtil.assureIdConsistent;
-import static ru.university.util.ValidationUtil.checkNew;
-
 @Controller
-public class StudentRestController {
-    protected final Logger log = LoggerFactory.getLogger(getClass());
-
-    private final StudentService service;
+public class StudentRestController extends UserRestController<Student> {
 
     public StudentRestController(StudentService service) {
-        this.service = service;
+        super(service);
     }
 
+    @Override
     public Collection<Student> getAll() {
-        log.info("getAll");
-        return service.getAll();
+        return super.getAll();
     }
 
+    @Override
     public Student get(int id) {
-        log.info("get {}", id);
-        return service.get(id);
+        return super.get(id);
     }
 
-    public Student create(Student  student) {
-        log.info("create {}", student);
-        checkNew(student);
-        return service.create(student);
+    @Override
+    public Student create(Student user) {
+        return super.create(user);
     }
 
+    @Override
     public void delete(int id) {
-        log.info("delete {}", id);
-        service.delete(id);
+        super.delete(id);
     }
 
+    @Override
     public void update(Student student, int id) {
-        log.info("update {} with id={}", student, id);
-        assureIdConsistent(student, id);
-        service.update(student);
+        super.update(student, id);
     }
 
+    @Override
     public Student getByMail(String email) {
-        log.info("getByEmail {}", email);
-        return service.getByEmail(email);
+        return super.getByMail(email);
     }
 }
