@@ -6,18 +6,18 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 
 public abstract class User extends AbstractNamedEntity {
-    private String email;
+    protected String email;
 
     private String password;
 
-    private boolean enabled = true;
+    protected boolean enabled = true;
 
-    private Date registered = new Date();
+    protected Date registered = new Date();
 
     @NotBlank
     @Size(min = 2, max = 200)
     @Column(name = "address", nullable = false)
-    private String address;
+    protected String address;
 
     public User() {
     }
@@ -65,6 +65,10 @@ public abstract class User extends AbstractNamedEntity {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getAddress() {
+        return address;
     }
 
     @Override

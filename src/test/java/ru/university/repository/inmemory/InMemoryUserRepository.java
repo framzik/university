@@ -1,7 +1,6 @@
 package ru.university.repository.inmemory;
 
 import ru.university.model.User;
-import ru.university.repository.UserRepository;
 
 import java.util.Collection;
 import java.util.Map;

@@ -65,17 +65,20 @@ public class Student extends User {
         this.courses = courses;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
-                "recordNumber=" + recordNumber +
+                "id=" + id +
+                ", name='" + name +
+                ", email='" + email +
+                ", address=" + address +
+                ", recordNumber=" + recordNumber +
                 ", averageRating=" + averageRating +
-                ", name='" + name + '\'' +
-                ", id=" + id +
+                ", roles=" + roles +
                 '}';
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
     }
 }
