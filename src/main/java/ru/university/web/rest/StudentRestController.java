@@ -6,9 +6,9 @@ import ru.university.model.Student;
 import ru.university.service.StudentService;
 
 @Controller
-public class StudentRestRestController extends UserBaseRestController<Student> {
+public class StudentRestController extends UserBaseRestController<Student> {
 
-    public StudentRestRestController(@Qualifier("studentService") StudentService service) {
+    public StudentRestController(@Qualifier("studentService") StudentService service) {
         super(service);
     }
 

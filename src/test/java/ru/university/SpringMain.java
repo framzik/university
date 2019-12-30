@@ -4,7 +4,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.university.model.Student;
 import ru.university.model.UniversityCourse;
-import ru.university.web.rest.StudentRestRestController;
+import ru.university.web.rest.StudentRestController;
 import ru.university.web.rest.UniversityCourseRestController;
 
 import java.util.Arrays;
@@ -17,7 +17,7 @@ public class SpringMain {
     public static void main(String[] args) {
         try (ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml")) {
             System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
-            StudentRestRestController studentRestController = appCtx.getBean(StudentRestRestController.class);
+            StudentRestController studentRestController = appCtx.getBean(StudentRestController.class);
             studentRestController.create(new Student(null, "Савчук А.И", "fr@mail.ru", "password",
                             "ул. Самойловой 33", true, 114, 3.5f, EnumSet.of(ROLE_STUDENT)));
             //userRestController.create(new Student(null, "newStudent", "Filatova 16", "fr@kz.ru", 455518, 3.5f));
