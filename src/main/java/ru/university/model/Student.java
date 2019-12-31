@@ -20,8 +20,7 @@ public class Student extends User {
     @NotNull
     @Size(max = 5)
     private float averageRating;
-    @ElementCollection(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "students")
     private List<UniversityCourse> courses;
@@ -29,15 +28,11 @@ public class Student extends User {
     public Student() {
     }
 
-    public Student(Integer id, String name, String email, String password, String address) {
-        super(id, name, email, password, address);
-    }
 
     public Student(Integer id, String name, String email, String password, String address, boolean enabled, Integer recordNumber, float averageRating, Set<Role> roles) {
-        super(id, name, email, password, address, enabled);
+        super(id, name, email, password, address, enabled,roles);
         this.recordNumber = recordNumber;
         this.averageRating = averageRating;
-        this.roles = roles;
     }
 
 
@@ -65,9 +60,6 @@ public class Student extends User {
         this.courses = courses;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
 
     @Override
     public String toString() {
@@ -78,7 +70,6 @@ public class Student extends User {
                 ", address=" + address +
                 ", recordNumber=" + recordNumber +
                 ", averageRating=" + averageRating +
-                ", roles=" + roles +
                 '}';
     }
 }

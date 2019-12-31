@@ -1,11 +1,15 @@
 package ru.university.model;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.FetchType;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.EnumSet;
+import java.util.Set;
 
-public abstract class User extends AbstractNamedEntity {
+public class User extends AbstractNamedEntity {
     protected String email;
 
     private String password;
@@ -18,20 +22,23 @@ public abstract class User extends AbstractNamedEntity {
     @Size(min = 2, max = 200)
     @Column(name = "address", nullable = false)
     protected String address;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<Role> roles;
 
     public User() {
     }
 
-    public User(Integer id, String name, String email, String password, String address) {
-        this(id, name, email, password, address, true);
+    public User(Integer id, String name, String email, String password, String address, Role role, Role... roles) {
+        this(id, name, email, password, address, true, EnumSet.of(role, roles));
     }
 
-    public User(Integer id, String name, String email, String password, String address, boolean enabled) {
+    public User(Integer id, String name, String email, String password, String address, boolean enabled, Set<Role> roles) {
         super(id, name);
         this.email = email;
         this.password = password;
         this.address = address;
         this.enabled = enabled;
+        this.roles = roles;
     }
 
 
@@ -45,6 +52,18 @@ public abstract class User extends AbstractNamedEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Date getRegistered() {
@@ -63,22 +82,21 @@ public abstract class User extends AbstractNamedEntity {
         return enabled;
     }
 
-    public String getPassword() {
-        return password;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public String getAddress() {
-        return address;
-    }
 
     @Override
     public String toString() {
-        return "User (" +
-                "id=" + id +
-                ", email=" + email +
-                ", name=" + name +
-                ", address=" + address +
+        return "User{" +
+                " id=" + id +
+                ", name='" + name + '\'' +
+                ",email='" + email + '\'' +
+                ", password='" + password + '\'' +
                 ", enabled=" + enabled +
-                ')';
+                ", address='" + address + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }

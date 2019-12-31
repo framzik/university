@@ -29,8 +29,7 @@
         <hibernate.version>5.4.7.Final</hibernate.version>
         <!-- Logging -->
         <logback.version>1.2.3</logback.version>
-        <slf4j.version>1.7.28</slf4j.version>
-        <spring.version>5.2.0.RELEASE</spring.version>
+        <spring.version>5.2.1.RELEASE</spring.version>
     </properties>
 
     <dependencies>
@@ -39,12 +38,7 @@
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-            <scope>compile</scope>
-        </dependency>
+
 
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -96,6 +90,13 @@
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
             <scope>test</scope>
+        </dependency>
+<!--        DATABASE-->
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.18</version>
         </dependency>
 
     </dependencies>

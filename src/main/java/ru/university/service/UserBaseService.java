@@ -13,7 +13,7 @@ import java.util.Collection;
 
 import static ru.university.util.ValidationUtil.checkNotFound;
 import static ru.university.util.ValidationUtil.checkNotFoundWithId;
-
+@Service
 public class UserBaseService<T extends User> {
     @Autowired
     private UserBaseRepository<T> repository;

@@ -1,9 +1,6 @@
 package ru.university;
 
-import ru.university.model.Faculty;
-import ru.university.model.Professor;
-import ru.university.model.Student;
-import ru.university.model.UniversityCourse;
+import ru.university.model.*;
 
 import java.util.Arrays;
 import java.util.EnumSet;
@@ -16,6 +13,8 @@ public class UserTestData {
     public static final int STUDENT_ID = 1;
     public static final int PROFESSOR_ID = 2;
 
-    public static final Student STUDENT = new Student(null, "Ямчеков Н.А", "fr@ya.ru", "password", "ул. Стокгольма 28", true, 111, 4.33f, EnumSet.of(ROLE_STUDENT));
-    public static final Professor PROFESSOR = new Professor(null,"Григорьев Е.В.","gr@ya.ru","password","ул. Глушко 12В", true,EnumSet.of(ROLE_PROFESSOR),"+79787555555",45322f);
+//    public static final Student STUDENT = new Student(null, "Ямчеков Н.А", "fr@ya.ru", "password", "ул. Стокгольма 28", true, 111, 4.33f, EnumSet.of(ROLE_STUDENT));
+//    public static final Professor PROFESSOR = new Professor(null,"Григорьев Е.В.","gr@ya.ru","password","ул. Глушко 12В", true,EnumSet.of(ROLE_PROFESSOR),"+79787555555",45322f);
+     public static final User STUDENT = new User(null, "Ямчеков Н.А", "fr@ya.ru", "password", "ул. Стокгольма 28", true,  EnumSet.of(ROLE_STUDENT));
+    public static final User PROFESSOR = new User(null,"Григорьев Е.В.","gr@ya.ru","password","ул. Глушко 12В", true,EnumSet.of(ROLE_PROFESSOR));
 }

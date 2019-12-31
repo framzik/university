@@ -5,7 +5,7 @@ import ru.university.model.Student;
 import ru.university.model.User;
 
 import java.util.Collection;
-
+@Repository
 public interface UserBaseRepository<T extends User> {
     T save(T entity);
 
