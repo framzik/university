@@ -1,27 +1,28 @@
 package ru.university.model;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.FetchType;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.Set;
-
+@Entity
+@Table(name = "users")
 public class User extends AbstractNamedEntity {
+    @Column(name = "email")
     protected String email;
-
+    @Column(name = "password")
     private String password;
-
+    @Column(name = "enabled")
     protected boolean enabled = true;
-
+    @Column(name = "registered")
     protected Date registered = new Date();
 
     @NotBlank
     @Size(min = 2, max = 200)
     @Column(name = "address", nullable = false)
     protected String address;
+
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
