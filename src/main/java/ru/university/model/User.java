@@ -1,11 +1,15 @@
 package ru.university.model;
 
+import org.springframework.util.CollectionUtils;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Collection;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.Set;
+
 @Entity
 @Table(name = "users")
 public class User extends AbstractNamedEntity {
@@ -29,17 +33,22 @@ public class User extends AbstractNamedEntity {
     public User() {
     }
 
-    public User(Integer id, String name, String email, String password, String address, Role role, Role... roles) {
-        this(id, name, email, password, address, true, EnumSet.of(role, roles));
+    public User(User u) {
+        this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.getAddress(), u.isEnabled(), u.getRegistered(), u.getRoles());
     }
 
-    public User(Integer id, String name, String email, String password, String address, boolean enabled, Set<Role> roles) {
+    public User(Integer id, String name, String email, String password, String address, Role role, Role... roles) {
+        this(id, name, email, password, address, true, new Date(), EnumSet.of(role, roles));
+    }
+
+    public User(Integer id, String name, String email, String password, String address, boolean enabled, Date registered, Set<Role> roles) {
         super(id, name);
         this.email = email;
         this.password = password;
         this.address = address;
         this.enabled = enabled;
-        this.roles = roles;
+        this.registered = registered;
+        setRoles(roles);
     }
 
 
@@ -87,6 +96,9 @@ public class User extends AbstractNamedEntity {
         return roles;
     }
 
+    public void setRoles(Collection<Role> roles) {
+        this.roles = CollectionUtils.isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
+    }
 
     @Override
     public String toString() {

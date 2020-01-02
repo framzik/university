@@ -11,7 +11,7 @@ import ru.university.model.Student;
 import ru.university.repository.inmemory.InMemoryStudentRepository;
 import ru.university.util.exception.NotFoundException;
 
-import static ru.university.UserTestData.STUDENT;
+import static ru.university.UserTestData.YAMCHEKOV;
 
 
 @ContextConfiguration("classpath:spring/spring-app.xml")
@@ -23,7 +23,7 @@ public class StudentRestControllerTest {
     private InMemoryStudentRepository repository;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         // re-initialize
         repository.init();
     }
@@ -31,13 +31,13 @@ public class StudentRestControllerTest {
     @Test
     public void getByEmail() {
         Student Savchyk = controller.getByMail("fr@ya.ru");
-        Assert.assertEquals(Savchyk, STUDENT);
+        Assert.assertEquals(Savchyk, YAMCHEKOV);
     }
 
     @Test(expected = NotFoundException.class)
     public void getByEmailNotFound() {
         Student Savchyk = controller.getByMail("fr2@ya.ru");
-        Assert.assertEquals(Savchyk, STUDENT);
+        Assert.assertEquals(Savchyk, YAMCHEKOV);
     }
 
 

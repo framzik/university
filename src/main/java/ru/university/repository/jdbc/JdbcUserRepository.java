@@ -14,7 +14,7 @@ import ru.university.repository.UserBaseRepository;
 import java.util.List;
 
 @Repository
-public class JdbcUserRepository implements UserBaseRepository<User> {
+public class JdbcUserRepository<T extends User> implements UserBaseRepository<User> {
 
     private static final BeanPropertyRowMapper<User> ROW_MAPPER = BeanPropertyRowMapper.newInstance(User.class);
 
@@ -49,7 +49,8 @@ public class JdbcUserRepository implements UserBaseRepository<User> {
             Number newKey = insertUser.executeAndReturnKey(map);
             user.setId(newKey.intValue());
         } else if (namedParameterJdbcTemplate.update(
-                "UPDATE users SET name:=name, email=:email,password=:password,enabled=:enabled,registered=:registered,address:=address", map) == 0) {
+                "UPDATE users SET name=:name, email=:email, password=:password, " +
+                        "enabled=:enabled, registered=:registered, address=:address WHERE id=:id", map) == 0) {
             return null;
         }
         return user;
@@ -68,7 +69,6 @@ public class JdbcUserRepository implements UserBaseRepository<User> {
 
     @Override
     public User getByEmail(String email) {
-//        return jdbcTemplate.queryForObject("SELECT * FROM users WHERE email=?", ROW_MAPPER, email);
         List<User> users = jdbcTemplate.query("SELECT * FROM users WHERE email=?", ROW_MAPPER, email);
         return DataAccessUtils.singleResult(users);
     }

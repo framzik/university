@@ -14,7 +14,7 @@ public interface StudentRepository extends UserBaseRepository<Student>  {
 //    boolean delete(int id);
 //
 //
-//    Student get(int id);
+   Student get(int id);
 //
 //
 //    Student getByEmail(String email);

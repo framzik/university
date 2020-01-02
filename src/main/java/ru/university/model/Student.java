@@ -3,6 +3,7 @@ package ru.university.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -30,7 +31,7 @@ public class Student extends User {
 
 
     public Student(Integer id, String name, String email, String password, String address, boolean enabled, Integer recordNumber, float averageRating, Set<Role> roles) {
-        super(id, name, email, password, address, enabled,roles);
+        super(id, name, email, password, address, enabled,new Date(), roles);
         this.recordNumber = recordNumber;
         this.averageRating = averageRating;
     }

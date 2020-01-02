@@ -8,7 +8,6 @@ import ru.university.repository.StudentRepository;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static ru.university.UserTestData.STUDENT;
 import static ru.university.model.Role.ROLE_STUDENT;
 
 @Repository

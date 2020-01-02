@@ -28,7 +28,7 @@ public class UserBaseService<T extends User> {
     }
 
     public  T get(int id) throws NotFoundException {
-        return checkNotFoundWithId(repository.get(id), id);
+        return (T) checkNotFoundWithId(repository.get(id), id);
     }
 
     public T getByEmail(String email) throws NotFoundException {

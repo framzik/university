@@ -1,6 +1,7 @@
 package ru.university.web.servlets;
 
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.university.model.Student;
 import ru.university.repository.StudentRepository;
 
@@ -15,7 +16,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 public class StudentServlet extends HttpServlet {
     public static final Logger log = getLogger((StudentServlet.class));
-
+    @Autowired
     private StudentRepository repository;
 
 //    @Override

@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 import java.util.EnumSet;
 import java.util.Objects;
 import java.util.Set;
@@ -27,7 +28,7 @@ public class Professor extends User {
     }
 
     public Professor(Integer id, String name, String email, String password, String address, boolean enabled, Set<Role> roles, String telephone, Float cost) {
-        super(id,name, email, password, address,enabled, roles);
+        super(id,name, email, password, address,enabled, new Date(), roles);
        this.roles = roles;
         this.telephone = telephone;
         this.cost = cost;

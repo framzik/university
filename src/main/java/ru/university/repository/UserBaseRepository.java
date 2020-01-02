@@ -1,7 +1,6 @@
 package ru.university.repository;
 
 import org.springframework.stereotype.Repository;
-import ru.university.model.Student;
 import ru.university.model.User;
 
 import java.util.Collection;

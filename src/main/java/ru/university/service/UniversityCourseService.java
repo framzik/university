@@ -6,9 +6,6 @@ import ru.university.model.UniversityCourse;
 import ru.university.repository.UniversityCourseRepository;
 import ru.university.util.exception.NotFoundException;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Collection;
 import java.util.List;
 
 import static ru.university.util.ValidationUtil.checkNotFound;

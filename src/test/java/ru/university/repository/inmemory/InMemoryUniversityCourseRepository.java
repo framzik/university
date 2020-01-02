@@ -11,12 +11,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import static ru.university.FacultyTestData.*;
+import static ru.university.UserTestData.*;
 
 @Repository
 public class InMemoryUniversityCourseRepository implements UniversityCourseRepository {
 
-    private Map<Integer, Map<Integer, UniversityCourse>> facultyCourseMap = new ConcurrentHashMap<>();
+    private Map<Integer, Map<Integer, UniversityCourse>> studentCourseMap = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);
 
     public static final List<UniversityCourse> UNIVERSITY_COURSES = Arrays.asList(
@@ -28,13 +28,13 @@ public class InMemoryUniversityCourseRepository implements UniversityCourseRepos
             new UniversityCourse(null, "Капитализм", 34, 255f));
 
     {
-        UNIVERSITY_COURSES.forEach(universityCourse -> save(universityCourse, FIZFAK_ID));
-        UNIVERSITY_COURSES_ECONOM.forEach(universityCourse -> save(universityCourse, ECONOM_ID));
+        UNIVERSITY_COURSES.forEach(universityCourse -> save(universityCourse,STUDENT_ID));
+        UNIVERSITY_COURSES_ECONOM.forEach(universityCourse -> save(universityCourse, PROFESSOR_ID));
     }
 
     @Override
-    public UniversityCourse save(UniversityCourse universityCourse, int facultyId) {
-        Map<Integer, UniversityCourse> universityCourses = facultyCourseMap.computeIfAbsent(facultyId, ConcurrentHashMap::new);
+    public UniversityCourse save(UniversityCourse universityCourse, int userId) {
+        Map<Integer, UniversityCourse> universityCourses = studentCourseMap.computeIfAbsent(userId, ConcurrentHashMap::new);
         if (universityCourse.isNew()) {
             universityCourse.setId(counter.incrementAndGet());
             universityCourses.put(universityCourse.getId(), universityCourse);
@@ -45,19 +45,19 @@ public class InMemoryUniversityCourseRepository implements UniversityCourseRepos
 
     @Override
     public boolean delete(int id, int facultyId) {
-        Map<Integer, UniversityCourse> universityCourses = facultyCourseMap.get(facultyId);
+        Map<Integer, UniversityCourse> universityCourses = studentCourseMap.get(facultyId);
         return universityCourses != null && universityCourses.remove(id) != null;
     }
 
     @Override
     public UniversityCourse get(int id, int facultyId) {
-        Map<Integer, UniversityCourse> universityCourses = facultyCourseMap.get(facultyId);
+        Map<Integer, UniversityCourse> universityCourses = studentCourseMap.get(facultyId);
         return universityCourses == null ? null : universityCourses.get(id);
     }
 
     @Override
     public UniversityCourse getByName(String name, int facultyId) {
-        Map<Integer, UniversityCourse> universityCourses = facultyCourseMap.get(facultyId);
+        Map<Integer, UniversityCourse> universityCourses = studentCourseMap.get(facultyId);
         return universityCourses.values().stream()
                 .filter(course -> name.equals(course.getName()))
                 .findFirst()
@@ -70,7 +70,7 @@ public class InMemoryUniversityCourseRepository implements UniversityCourseRepos
     }
 
     private List<UniversityCourse> getAllFiltered(int facultyId, Predicate<UniversityCourse> filter) {
-        Map<Integer, UniversityCourse> universityCourses = facultyCourseMap.get(facultyId);
+        Map<Integer, UniversityCourse> universityCourses = studentCourseMap.get(facultyId);
 
         return CollectionUtils.isEmpty(universityCourses) ? Collections.emptyList() :
                 universityCourses.values().stream()

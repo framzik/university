@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS user_roles;
 DROP TABLE IF EXISTS professors;
 DROP TABLE IF EXISTS university_courses;
 DROP TABLE IF EXISTS fuculties;
-
+ALTER TABLE users AUTO_INCREMENT = 1;
 CREATE TABLE users(
                       id      INTEGER PRIMARY KEY AUTO_INCREMENT,
                       name    VARCHAR(100) NOT NULL,
