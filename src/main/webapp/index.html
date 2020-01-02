@@ -7,11 +7,14 @@
 <h3>Проект <a href="https://github.com/framzik/university" target="_blank">University </a></h3>
 <hr>
 <ul>
-    <li><a href="faculties">Факультеты</a></li>
-    <li><a href="professors.jsp">Профессор</a></li>
-    <li><a href="students">Студенты</a></li>
-    <li><a href="courses">Курсы</a></li>
-
+    <form method="post" action="users">
+        <b>Courses of&nbsp;</b>
+        <select name="userId">
+            <option value="1">User</option>
+            <option value="2">Professor</option>
+        </select>
+        <button type="submit">Select</button>
+    </form>
 </ul>
 </body>
 </html>

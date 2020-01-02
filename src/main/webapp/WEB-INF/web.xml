@@ -7,6 +7,16 @@
     <display-name>University</display-name>
 
     <servlet>
+        <servlet-name>userServlet</servlet-name>
+        <servlet-class>ru.university.web.servlets.UserServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>userServlet</servlet-name>
+        <url-pattern>/users</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>professorServlet</servlet-name>
         <servlet-class>ru.university.web.servlets.ProfessorServlet</servlet-class>
         <load-on-startup>0</load-on-startup>
@@ -36,14 +46,6 @@
         <url-pattern>/courses</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>facultyServlet</servlet-name>
-        <servlet-class>ru.university.web.servlets.FacultyServlet</servlet-class>
-        <load-on-startup>0</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>facultyServlet</servlet-name>
-        <url-pattern>/faculties</url-pattern>
-    </servlet-mapping>
+
 
 </web-app>

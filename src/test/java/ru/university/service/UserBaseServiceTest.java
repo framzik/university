@@ -28,7 +28,6 @@ public class UserBaseServiceTest {
     @Autowired
     private UserBaseService<User> service;
 
-
     @Test
     public void create() throws Exception {
         User newUser = new User(null, "Новый Юзер", "ny@ya.ru", "password", "Address", true, new Date(), Collections.singleton(Role.ROLE_STUDENT));
