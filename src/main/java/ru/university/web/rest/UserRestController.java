@@ -12,13 +12,13 @@ import java.util.Collection;
 
 import static ru.university.util.ValidationUtil.assureIdConsistent;
 import static ru.university.util.ValidationUtil.checkNew;
-
-public class UserBaseRestController<T extends User> {
+@Controller
+public class UserRestController<T extends User> {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 @Autowired
     private final UserBaseService<T> service;
 
-    public UserBaseRestController(UserBaseService<T> service) {
+    public UserRestController(UserBaseService<T> service) {
         this.service = service;
     }
 

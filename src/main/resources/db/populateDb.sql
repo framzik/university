@@ -4,6 +4,7 @@ DELETE from professors;
 DELETE from students;
 DELETE from university_courses;
 ALTER TABLE users AUTO_INCREMENT = 1;
+ALTER TABLE university_courses AUTO_INCREMENT = 1;
 
 INSERT INTO users(name, email, password, address )
 VALUES ('Ямчеков Н.А', 'fr@ya.ru', 'password', 'ул. Стокгольма 28'),
@@ -32,7 +33,10 @@ VALUES ('1', 111, 4.7),
        ('5', 113, 4.7),
        ('6', 114, 4.7);
 
-INSERT INTO university_courses (name, number, cost)
-VALUES ('Основы теоритической физики', 1, 172.15),
-       ('Основы мат. анализа', 2, 44500.82),
-       ('Английский язык', 3, 12789.5);
+INSERT INTO university_courses (user_id, name, number, cost)
+VALUES (1,'Теормех', 666, 15250.0),
+       (1,'Мат. анализ', 669, 15900.0),
+       (1,'Теория струн', 668, 16900.0),
+       (2,'Капитализм', 34, 255),
+       (2,'Марксизм', 35, 275);
+

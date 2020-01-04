@@ -6,8 +6,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 @Entity
-@Table(name = "university_course")
-public class UniversityCourse extends AbstractNamedEntity {
+@Table(name = "university_courses")
+public class Course extends AbstractNamedEntity {
 
     @NotNull
     @Size(max = 7)
@@ -22,15 +22,15 @@ public class UniversityCourse extends AbstractNamedEntity {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "courses")
     private List<Student> students;
 
-    public UniversityCourse() {
+    public Course() {
     }
 
-    public UniversityCourse(Integer id, String name, int number, float cost) {
+    public Course(Integer id, String name, int number, float cost) {
         super(id,name);
         this.number = number;
         this.cost = cost;
     }
-    public UniversityCourse(String name, int number, float cost) {
+    public Course(String name, int number, float cost) {
         this.id=null;
         this.name = name;
         this.number = number;

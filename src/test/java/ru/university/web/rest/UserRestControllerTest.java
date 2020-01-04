@@ -7,20 +7,21 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ru.university.model.Student;
-import ru.university.repository.inmemory.InMemoryStudentRepository;
+import ru.university.model.User;
+import ru.university.repository.inmemory.InMemoryUserRepository;
 import ru.university.util.exception.NotFoundException;
 
 import static ru.university.UserTestData.YAMCHEKOV;
 
 
-@ContextConfiguration("classpath:spring/spring-app.xml")
+@ContextConfiguration({"classpath:spring/spring-app.xml"
+                    ,"classpath:spring/inmemory.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class StudentRestControllerTest {
+public class UserRestControllerTest<T extends User> {
     @Autowired
-    private StudentRestController controller;
+    private UserRestController controller;
     @Autowired
-    private InMemoryStudentRepository repository;
+    private InMemoryUserRepository repository;
 
     @Before
     public void setUp() {
@@ -30,14 +31,14 @@ public class StudentRestControllerTest {
 
     @Test
     public void getByEmail() {
-        Student Savchyk = controller.getByMail("fr@ya.ru");
-        Assert.assertEquals(Savchyk, YAMCHEKOV);
+        User user = controller.getByMail("fr@ya.ru");
+        user.setId(1);
+        Assert.assertEquals(user, YAMCHEKOV);
     }
 
     @Test(expected = NotFoundException.class)
     public void getByEmailNotFound() {
-        Student Savchyk = controller.getByMail("fr2@ya.ru");
-        Assert.assertEquals(Savchyk, YAMCHEKOV);
+        User Savchyk = controller.getByMail("fr2@ya.ru");
     }
 
 

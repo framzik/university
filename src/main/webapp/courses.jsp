@@ -37,7 +37,7 @@
         </thead>
 
         <c:forEach items="${courses}" var="course">
-            <jsp:useBean id="course" type="ru.university.model.UniversityCourse"/>
+            <jsp:useBean id="course" type="ru.university.model.Course"/>
             <tr data-cost=${course.cost<16000}>
                 <td>${course.name}</td>
                 <td>${course.number}</td>

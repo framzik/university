@@ -24,7 +24,7 @@ public class Student extends User {
 
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "students")
-    private List<UniversityCourse> courses;
+    private List<Course> courses;
 
     public Student() {
     }
@@ -53,11 +53,11 @@ public class Student extends User {
         this.averageRating = averageRating;
     }
 
-    public List<UniversityCourse> getCourses() {
+    public List<Course> getCourses() {
         return courses;
     }
 
-    public void setCourses(List<UniversityCourse> courses) {
+    public void setCourses(List<Course> courses) {
         this.courses = courses;
     }
 

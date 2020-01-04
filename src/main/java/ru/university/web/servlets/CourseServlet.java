@@ -3,8 +3,8 @@ package ru.university.web.servlets;
 import org.springframework.util.StringUtils;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.university.model.UniversityCourse;
-import ru.university.web.rest.UniversityCourseRestController;
+import ru.university.model.Course;
+import ru.university.web.rest.CourseRestController;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -15,15 +15,15 @@ import java.io.IOException;
 import java.util.Objects;
 
 
-public class UniversityCourseServlet extends HttpServlet {
+public class CourseServlet extends HttpServlet {
     private ConfigurableApplicationContext springContext;
-    private UniversityCourseRestController controller;
+    private CourseRestController controller;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml","spring/spring-db.xml");
-        controller = springContext.getBean(UniversityCourseRestController.class);
+        controller = springContext.getBean(CourseRestController.class);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class UniversityCourseServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        UniversityCourse course = new UniversityCourse(req.getParameter("name"),
+        Course course = new Course(req.getParameter("name"),
                 Integer.parseInt(req.getParameter("number")),
                 Float.parseFloat(req.getParameter("cost")));
 
@@ -60,8 +60,8 @@ public class UniversityCourseServlet extends HttpServlet {
                 break;
             case "create":
             case "update":
-                final UniversityCourse course = "create".equals(action) ?
-                        new UniversityCourse() :
+                final Course course = "create".equals(action) ?
+                        new Course() :
                         controller.get(getId(request));
                 request.setAttribute("course", course);
                 request.getRequestDispatcher("/courseForm.jsp").forward(request, response);

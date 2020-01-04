@@ -11,7 +11,7 @@
     <h3><a href="index.html">Home</a></h3>
     <hr>
     <h2>${param.action == 'create' ? 'Create course' : 'Edit course'}</h2>
-    <jsp:useBean id="course" type="ru.university.model.UniversityCourse" scope="request"/>
+    <jsp:useBean id="course" type="ru.university.model.Course" scope="request"/>
     <form method="post" action="courses">
         <input type="hidden" name="id" value="${course.id}">
         <dl>

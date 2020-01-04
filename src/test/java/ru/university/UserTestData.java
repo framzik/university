@@ -9,7 +9,7 @@ import java.util.EnumSet;
 import static org.assertj.core.api.Assertions.assertThat;
 import static ru.university.model.Role.ROLE_PROFESSOR;
 import static ru.university.model.Role.ROLE_STUDENT;
-import static ru.university.repository.inmemory.InMemoryUniversityCourseRepository.UNIVERSITY_COURSES;
+
 
 public class UserTestData {
     public static final int STUDENT_ID = 1;

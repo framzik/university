@@ -3,12 +3,12 @@ package ru.university.model;
 import java.util.List;
 
 public class Faculty extends AbstractNamedEntity {
-    private List<UniversityCourse> courses;
+    private List<Course> courses;
 
     public Faculty() {
     }
 
-    public Faculty(Integer id, String name, List<UniversityCourse> courses) {
+    public Faculty(Integer id, String name, List<Course> courses) {
         super(id, name);
         this.courses = courses;
     }
@@ -17,11 +17,11 @@ public class Faculty extends AbstractNamedEntity {
         super(id, name);
     }
 
-    public List<UniversityCourse> getCourses() {
+    public List<Course> getCourses() {
         return courses;
     }
 
-    public void setCourses(List<UniversityCourse> courses) {
+    public void setCourses(List<Course> courses) {
         this.courses = courses;
     }
 

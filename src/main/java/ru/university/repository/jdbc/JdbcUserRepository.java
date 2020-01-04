@@ -9,12 +9,12 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import ru.university.model.User;
-import ru.university.repository.UserBaseRepository;
+import ru.university.repository.UserRepository;
 
 import java.util.List;
 
 @Repository
-public class JdbcUserRepository<T extends User> implements UserBaseRepository<User> {
+public class JdbcUserRepository<T extends User> implements UserRepository<User> {
 
     private static final BeanPropertyRowMapper<User> ROW_MAPPER = BeanPropertyRowMapper.newInstance(User.class);
 

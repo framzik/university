@@ -38,7 +38,7 @@
 
     <servlet>
         <servlet-name>courseServlet</servlet-name>
-        <servlet-class>ru.university.web.servlets.UniversityCourseServlet</servlet-class>
+        <servlet-class>ru.university.web.servlets.CourseServlet</servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
     <servlet-mapping>

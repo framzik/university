@@ -1,12 +1,9 @@
 package ru.university.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import ru.university.model.Student;
 import ru.university.model.User;
-import ru.university.repository.StudentRepository;
-import ru.university.repository.UserBaseRepository;
+import ru.university.repository.UserRepository;
 import ru.university.util.exception.NotFoundException;
 
 import java.util.Collection;
@@ -16,7 +13,7 @@ import static ru.university.util.ValidationUtil.checkNotFoundWithId;
 @Service
 public class UserBaseService<T extends User> {
     @Autowired
-    private UserBaseRepository<T> repository;
+    private UserRepository<T> repository;
 
 
     public T create(T entity) {
