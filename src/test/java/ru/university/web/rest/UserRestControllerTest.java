@@ -11,13 +11,16 @@ import ru.university.model.User;
 import ru.university.repository.inmemory.InMemoryUserRepository;
 import ru.university.util.exception.NotFoundException;
 
+import java.util.Collection;
+
+import static ru.university.UserTestData.PROFESSOR_ID;
 import static ru.university.UserTestData.YAMCHEKOV;
 
 
 @ContextConfiguration({"classpath:spring/spring-app.xml"
                     ,"classpath:spring/inmemory.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class UserRestControllerTest<T extends User> {
+public class UserRestControllerTest {
     @Autowired
     private UserRestController controller;
     @Autowired
@@ -30,10 +33,10 @@ public class UserRestControllerTest<T extends User> {
     }
 
     @Test
-    public void getByEmail() {
-        User user = controller.getByMail("fr@ya.ru");
-        user.setId(1);
-        Assert.assertEquals(user, YAMCHEKOV);
+    public void delete() throws Exception {
+        controller.delete(PROFESSOR_ID);
+        Collection<User> users = controller.getAll();
+        Assert.assertEquals(5, users.size());
     }
 
     @Test(expected = NotFoundException.class)

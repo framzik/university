@@ -1,6 +1,8 @@
 package ru.university.repository.inmemory;
 
+import org.springframework.stereotype.Repository;
 import ru.university.UserTestData;
+import ru.university.model.Student;
 import ru.university.model.User;
 
 import java.util.Collection;
@@ -9,18 +11,18 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static ru.university.UserTestData.YAMCHEKOV;
-
-public class InMemoryUserRepository<T extends User> {
+@Repository
+public class InMemoryUserRepository {
     private static AtomicInteger counter = new AtomicInteger(0);
 
-    Map<Integer, T> map = new ConcurrentHashMap<>();
+    Map<Integer, User> map = new ConcurrentHashMap<>();
 
     public void init() {
         map.clear();
-        map.put(UserTestData.STUDENT_ID, (T)YAMCHEKOV);
+        map.put(UserTestData.STUDENT_ID, YAMCHEKOV);
     }
 
-    public T save(T entry) {
+    public User save(User entry) {
         if (entry.isNew()) {
             entry.setId(counter.incrementAndGet());
             map.put(entry.getId(), entry);
@@ -33,11 +35,9 @@ public class InMemoryUserRepository<T extends User> {
         return map.remove(id) != null;
     }
 
-    public T get(int id) {
-        return map.get(id);
-    }
 
-    Collection<T> getCollection() {
+
+    Collection<User> getCollection() {
         return map.values();
     }
 }

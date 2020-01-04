@@ -24,9 +24,9 @@ import static ru.university.UserTestData.*;
 })
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDb.sql", config = @SqlConfig(encoding = "UTF-8"))
-public class UserBaseServiceTest {
+public class UserServiceTest {
     @Autowired
-    private UserBaseService<User> service;
+    private UserService service;
 
     @Test
     public void create() throws Exception {

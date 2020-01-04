@@ -14,7 +14,7 @@ import ru.university.repository.UserRepository;
 import java.util.List;
 
 @Repository
-public class JdbcUserRepository<T extends User> implements UserRepository<User> {
+public class JdbcUserRepository<T extends User> implements UserRepository {
 
     private static final BeanPropertyRowMapper<User> ROW_MAPPER = BeanPropertyRowMapper.newInstance(User.class);
 

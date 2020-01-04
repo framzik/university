@@ -5,18 +5,18 @@ import ru.university.model.User;
 
 import java.util.Collection;
 @Repository
-public interface UserRepository<T extends User> {
-    T save(T entity);
+public interface UserRepository {
+    User save(User entity);
 
 
     boolean delete(int id);
 
 
-    T get(int id);
+    User get(int id);
 
 
-    T getByEmail(String email);
+    User getByEmail(String email);
 
 
-    Collection<T> getAll();
+    Collection<User> getAll();
 }

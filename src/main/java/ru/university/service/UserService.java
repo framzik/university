@@ -11,12 +11,12 @@ import java.util.Collection;
 import static ru.university.util.ValidationUtil.checkNotFound;
 import static ru.university.util.ValidationUtil.checkNotFoundWithId;
 @Service
-public class UserBaseService<T extends User> {
+public class UserService {
     @Autowired
-    private UserRepository<T> repository;
+    private UserRepository repository;
 
 
-    public T create(T entity) {
+    public User create(User entity) {
         return repository.save(entity);
     }
 
@@ -24,19 +24,19 @@ public class UserBaseService<T extends User> {
         checkNotFoundWithId(repository.delete(id), id);
     }
 
-    public  T get(int id) throws NotFoundException {
-        return (T) checkNotFoundWithId(repository.get(id), id);
+    public  User get(int id) throws NotFoundException {
+        return  checkNotFoundWithId(repository.get(id), id);
     }
 
-    public T getByEmail(String email) throws NotFoundException {
+    public User getByEmail(String email) throws NotFoundException {
         return checkNotFound(repository.getByEmail(email), "email=" + email);
     }
 
-    public Collection<T> getAll() {
+    public Collection<User> getAll() {
         return repository.getAll();
     }
 
-    public   void update(T entity) throws NotFoundException {
+    public   void update(User entity) throws NotFoundException {
         checkNotFoundWithId(repository.save(entity), entity.getId());
     }
 }

@@ -1,6 +1,7 @@
 package ru.university.repository.jdbc;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -11,6 +12,7 @@ import ru.university.model.Course;
 import ru.university.repository.CourseRepository;
 
 import java.util.List;
+
 @Repository
 public class JdbcCourseRepository implements CourseRepository {
     private static final BeanPropertyRowMapper<Course> ROW_MAPPER = BeanPropertyRowMapper.newInstance(Course.class);
@@ -30,6 +32,7 @@ public class JdbcCourseRepository implements CourseRepository {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
+
     @Override
     public Course save(Course course, int userId) {
         MapSqlParameterSource map = new MapSqlParameterSource()
@@ -51,26 +54,28 @@ public class JdbcCourseRepository implements CourseRepository {
 
     @Override
     public boolean delete(int id, int userId) {
-        return false;
+        return jdbcTemplate.update("DELETE FROM university_courses WHERE id=? AND user_id=?", id, userId) != 0;
     }
 
     @Override
     public Course get(int id, int userId) {
-        return null;
+        List<Course> courseList = jdbcTemplate.query("SELECT * FROM university_courses WHERE id=? AND user_id=?", ROW_MAPPER, id, userId);
+        return DataAccessUtils.singleResult(courseList);
     }
 
     @Override
     public Course getByName(String name, int userId) {
-        return null;
+        List<Course> courseList = jdbcTemplate.query("SELECT * FROM university_courses WHERE name=? AND user_id=?", ROW_MAPPER, name, userId);
+        return DataAccessUtils.singleResult(courseList);
     }
 
     @Override
     public List<Course> getAll(int userId) {
-        return jdbcTemplate.query("SELECT * FROM university_courses WHERE user_id=? ORDER BY name", ROW_MAPPER,userId);
+        return jdbcTemplate.query("SELECT * FROM university_courses WHERE user_id=? ORDER BY name", ROW_MAPPER, userId);
     }
 
     @Override
     public List<Course> getBetweenCost(float startCost, float endCost, int userId) {
-        return null;
+        return jdbcTemplate.query("SELECT * FROM university_courses WHERE user_id=? AND cost BETWEEN ? AND ? ORDER BY name", ROW_MAPPER, userId, startCost, endCost);
     }
 }
