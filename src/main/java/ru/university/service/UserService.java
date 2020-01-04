@@ -2,9 +2,9 @@ package ru.university.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import ru.university.model.User;
 import ru.university.repository.UserRepository;
-import ru.university.util.exception.NotFoundException;
 
 import java.util.Collection;
 
@@ -17,6 +17,7 @@ public class UserService {
 
 
     public User create(User entity) {
+        Assert.notNull(entity, "user must not be null");
         return repository.save(entity);
     }
 
@@ -29,6 +30,7 @@ public class UserService {
     }
 
     public User getByEmail(String email)  {
+        Assert.notNull(email, "email must not be null");
         return checkNotFound(repository.getByEmail(email), "email=" + email);
     }
 
@@ -37,6 +39,7 @@ public class UserService {
     }
 
     public   void update(User entity)  {
+        Assert.notNull(entity, "user must not be null");
         checkNotFoundWithId(repository.save(entity), entity.getId());
     }
 }

@@ -2,6 +2,7 @@ package ru.university.service;
 
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import ru.university.model.Course;
 import ru.university.repository.CourseRepository;
 import ru.university.util.exception.NotFoundException;
@@ -36,6 +37,7 @@ public class CourseService {
     }
 
     public void update(Course course, int userId)  {
+        Assert.notNull(course, "course must not be null");
         checkNotFoundWithId(repository.save(course, userId), course.getId());
     }
 
@@ -45,6 +47,7 @@ public class CourseService {
 
 
     public Course create(Course course, int userId) {
+        Assert.notNull(course, "course must not be null");
         return repository.save(course, userId);
     }
 }

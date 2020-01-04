@@ -23,6 +23,7 @@ public class InMemoryCourseRepository implements CourseRepository {
 
     @Override
     public Course save(Course course, int userId) {
+        Objects.requireNonNull(course, "course must not be null");
         Map<Integer, Course> universityCourses = studentCourseMap.computeIfAbsent(userId, ConcurrentHashMap::new);
         if (course.isNew()) {
             course.setId(counter.incrementAndGet());
@@ -46,6 +47,7 @@ public class InMemoryCourseRepository implements CourseRepository {
 
     @Override
     public Course getByName(String name, int userId) {
+        Objects.requireNonNull(name, "name must not be null");
         Map<Integer, Course> universityCourses = studentCourseMap.get(userId);
         return universityCourses.values().stream()
                 .filter(course -> name.equals(course.getName()))
@@ -58,8 +60,8 @@ public class InMemoryCourseRepository implements CourseRepository {
         return getAllFiltered(userId, course -> true);
     }
 
-    private List<Course> getAllFiltered(int facultyId, Predicate<Course> filter) {
-        Map<Integer, Course> universityCourses = studentCourseMap.get(facultyId);
+    private List<Course> getAllFiltered(int userId, Predicate<Course> filter) {
+        Map<Integer, Course> universityCourses = studentCourseMap.get(userId);
 
         return CollectionUtils.isEmpty(universityCourses) ? Collections.emptyList() :
                 universityCourses.values().stream()
