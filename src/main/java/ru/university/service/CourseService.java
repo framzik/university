@@ -19,15 +19,15 @@ public class CourseService {
         this.repository = repository;
     }
 
-    public void delete(int id, int userId) throws NotFoundException {
+    public void delete(int id, int userId)  {
         checkNotFoundWithId(repository.delete(id, userId), id);
     }
 
-    public Course get(int id, int userId) throws NotFoundException {
+    public Course get(int id, int userId)  {
         return checkNotFoundWithId(repository.get(id, userId), id);
     }
 
-    public Course getByName(String name, int userId) throws NotFoundException {
+    public Course getByName(String name, int userId)  {
         return checkNotFound(repository.getByName(name, userId), "name=" + name);
     }
 
@@ -35,7 +35,7 @@ public class CourseService {
         return repository.getAll(userId);
     }
 
-    public void update(Course course, int userId) throws NotFoundException {
+    public void update(Course course, int userId)  {
         checkNotFoundWithId(repository.save(course, userId), course.getId());
     }
 

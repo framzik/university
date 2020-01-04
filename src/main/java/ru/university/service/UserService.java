@@ -20,15 +20,15 @@ public class UserService {
         return repository.save(entity);
     }
 
-    public void delete(int id) throws NotFoundException {
+    public void delete(int id)  {
         checkNotFoundWithId(repository.delete(id), id);
     }
 
-    public  User get(int id) throws NotFoundException {
+    public  User get(int id)  {
         return  checkNotFoundWithId(repository.get(id), id);
     }
 
-    public User getByEmail(String email) throws NotFoundException {
+    public User getByEmail(String email)  {
         return checkNotFound(repository.getByEmail(email), "email=" + email);
     }
 
@@ -36,7 +36,7 @@ public class UserService {
         return repository.getAll();
     }
 
-    public   void update(User entity) throws NotFoundException {
+    public   void update(User entity)  {
         checkNotFoundWithId(repository.save(entity), entity.getId());
     }
 }

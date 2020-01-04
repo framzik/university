@@ -1,6 +1,9 @@
 package ru.university.web;
 
 public class SecurityUtil {
+    private SecurityUtil() {
+    }
+
     private static int id = 1;
 
     public static int authUserId() {
