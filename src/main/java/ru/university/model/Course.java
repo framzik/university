@@ -18,8 +18,8 @@ public class Course extends AbstractNamedEntity {
     @Column(name = "cost",unique = true, nullable = false)
     private float cost;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "courses")
-    private List<Student> students;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
     public Course() {
     }
@@ -60,12 +60,12 @@ public class Course extends AbstractNamedEntity {
         this.cost = cost;
     }
 
-    public List<Student> getStudents() {
-        return students;
+    public User getUser() {
+        return user;
     }
 
-    public void setStudents(List<Student> students) {
-        this.students = students;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

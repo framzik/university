@@ -5,12 +5,13 @@ import org.springframework.data.annotation.AccessType;
 import javax.persistence.*;
 import java.util.Objects;
 
+
 @MappedSuperclass
 @AccessType(AccessType.Type.FIELD)
 public abstract class AbstractBaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     protected Integer id;
 

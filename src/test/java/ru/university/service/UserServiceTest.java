@@ -12,6 +12,7 @@ import ru.university.model.Role;
 import ru.university.model.User;
 import ru.university.util.exception.NotFoundException;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -35,11 +36,6 @@ public class UserServiceTest {
         newUser.setId(created.getId());
         assertMatch(newUser, created);
         assertMatch(service.getAll(), BELYALOV, GRIGOREV, NOVOGILOV, created, SAVCHYK, STAROSTENKO, YAMCHEKOV);
-    }
-
-    @Test(expected = DataAccessException.class)
-    public void duplicateMailCreate() {
-        service.create(new User(null, "Новый Юзер", BELYALOV.getEmail(), "password", "Address", true, new Date(), Collections.singleton(Role.ROLE_STUDENT)));
     }
 
     @Test
