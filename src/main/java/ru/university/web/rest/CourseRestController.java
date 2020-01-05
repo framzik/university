@@ -25,41 +25,41 @@ public class CourseRestController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     public List<Course> getBetween(@Nullable float startCost, @Nullable float endCost) {
-        int facultyId = SecurityUtil.authUserId();
-        log.info("getBetween cost({} - {}) for faculty {}", startCost, endCost, facultyId);
-        return service.getBetweenCost(startCost, endCost, facultyId);
+        int userId = SecurityUtil.authUserId();
+        log.info("getBetween cost({} - {}) for user {}", startCost, endCost, userId);
+        return service.getBetweenCost(startCost, endCost, userId);
     }
 
     public Course get(int id) {
-        int facultyId = SecurityUtil.authUserId();
-        log.info("get course {} for faculty {}", id, facultyId);
-        return service.get(id, facultyId);
+        int userId = SecurityUtil.authUserId();
+        log.info("get course {} for user {}", id, userId);
+        return service.get(id, userId);
     }
 
     public void delete(int id) {
-        int facultyId = SecurityUtil.authUserId();
-        log.info("delete meal {} for faculty {}", id, facultyId);
-        service.delete(id, facultyId);
+        int userId = SecurityUtil.authUserId();
+        log.info("delete course {} for user {}", id, userId);
+        service.delete(id, userId);
     }
 
     public List<Course> getAll() {
-        int facultyId = SecurityUtil.authUserId();
-        log.info("getAll for faculty {}", facultyId);
-        return service.getAll(facultyId);
+        int userId = SecurityUtil.authUserId();
+        log.info("getAll for user {}", userId);
+        return service.getAll(userId);
     }
 
     public Course create(Course course) {
-        int facultyId = SecurityUtil.authUserId();
+        int userId = SecurityUtil.authUserId();
         checkNew(course);
-        log.info("create {} for faculty {}", course, facultyId);
-        return service.create(course, facultyId);
+        log.info("create {} for user {}", course, userId);
+        return service.create(course, userId);
     }
 
     public void update(Course course, int id) {
-        int facultyId = SecurityUtil.authUserId();
+        int userId = SecurityUtil.authUserId();
         assureIdConsistent(course, id);
-        log.info("update {} for faculty {}", course, facultyId);
-        service.update(course, facultyId);
+        log.info("update {} for user {}", course, userId);
+        service.update(course, userId);
     }
 
 

@@ -1,48 +1,56 @@
 package ru.university.web.rest;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.junit.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.university.model.User;
 import ru.university.repository.inmemory.InMemoryUserRepository;
 import ru.university.util.exception.NotFoundException;
 
+import java.util.Arrays;
 import java.util.Collection;
 
-import static ru.university.UserTestData.PROFESSOR_ID;
-import static ru.university.UserTestData.YAMCHEKOV;
+import static ru.university.UserTestData.GRIGOREV;
+import static ru.university.UserTestData.STUDENT_ID;
 
 
-@ContextConfiguration({"classpath:spring/spring-app.xml"
-                    ,"classpath:spring/inmemory.xml"})
-@RunWith(SpringJUnit4ClassRunner.class)
 public class UserRestControllerTest {
-    @Autowired
-    private UserRestController controller;
-    @Autowired
-    private InMemoryUserRepository repository;
+    private static final Logger log = LoggerFactory.getLogger(UserRestControllerTest.class);
+
+    private static ConfigurableApplicationContext appCtx;
+    private static UserRestController controller;
+
+    @BeforeClass
+    public static void beforeClass() {
+        appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/inmemory.xml");
+        log.info("\n{}\n", Arrays.toString(appCtx.getBeanDefinitionNames()));
+        controller = appCtx.getBean(UserRestController.class);
+    }
+
+    @AfterClass
+    public static void afterClass() {
+        appCtx.close();
+    }
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         // re-initialize
+        InMemoryUserRepository repository = appCtx.getBean(InMemoryUserRepository.class);
         repository.init();
     }
 
     @Test
     public void delete() throws Exception {
-        controller.delete(PROFESSOR_ID);
+        controller.delete(STUDENT_ID);
         Collection<User> users = controller.getAll();
-        Assert.assertEquals(5, users.size());
+        Assert.assertEquals(1, users.size());
+        Assert.assertEquals(GRIGOREV, users.iterator().next());
     }
 
     @Test(expected = NotFoundException.class)
-    public void getByEmailNotFound() {
-        User Savchyk = controller.getByMail("fr2@ya.ru");
+    public void deleteNotFound() throws Exception {
+        controller.delete(10);
     }
-
-
 }

@@ -2,7 +2,6 @@ package ru.university.web.rest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ru.university.model.User;
 import ru.university.service.UserService;
@@ -11,10 +10,10 @@ import java.util.Collection;
 
 import static ru.university.util.ValidationUtil.assureIdConsistent;
 import static ru.university.util.ValidationUtil.checkNew;
+
 @Controller
 public class UserRestController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
-@Autowired
     private final UserService service;
 
     public UserRestController(UserService service) {

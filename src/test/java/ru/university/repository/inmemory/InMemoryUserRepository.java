@@ -2,42 +2,39 @@ package ru.university.repository.inmemory;
 
 import org.springframework.stereotype.Repository;
 import ru.university.UserTestData;
-import ru.university.model.Student;
 import ru.university.model.User;
+import ru.university.repository.UserRepository;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
-import static ru.university.UserTestData.YAMCHEKOV;
+import static ru.university.UserTestData.*;
+
+
 @Repository
-public class InMemoryUserRepository {
-    private static AtomicInteger counter = new AtomicInteger(0);
-
-    Map<Integer, User> map = new ConcurrentHashMap<>();
+public class InMemoryUserRepository extends InMemoryBaseRepository<User> implements UserRepository {
 
     public void init() {
         map.clear();
-        map.put(UserTestData.STUDENT_ID, YAMCHEKOV);
+        map.put(STUDENT_ID, YAMCHEKOV);
+        map.put(PROFESSOR_ID, GRIGOREV);
     }
 
-    public User save(User entry) {
-        if (entry.isNew()) {
-            entry.setId(counter.incrementAndGet());
-            map.put(entry.getId(), entry);
-            return entry;
-        }
-        return map.computeIfPresent(entry.getId(), (id, oldT) -> entry);
+    @Override
+    public List<User> getAll() {
+        return getCollection().stream()
+                .sorted(Comparator.comparing(User::getName).thenComparing(User::getEmail))
+                .collect(Collectors.toList());
     }
 
-    public boolean delete(int id) {
-        return map.remove(id) != null;
-    }
-
-
-
-    Collection<User> getCollection() {
-        return map.values();
+    @Override
+    public User getByEmail(String email) {
+        Objects.requireNonNull(email, "email must not be null");
+        return getCollection().stream()
+                .filter(u -> email.equals(u.getEmail()))
+                .findFirst()
+                .orElse(null);
     }
 }
