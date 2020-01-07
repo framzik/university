@@ -21,8 +21,8 @@ public class SpringMain {
             System.out.println();
 
             CourseRestController courseRestController = appCtx.getBean(CourseRestController.class);
-            List<Course> cours = courseRestController.getBetween(15000f, 16800f);
-            cours.forEach(System.out::println);
+            List<Course> courses = courseRestController.getBetween(15000f, 16800f);
+            courses.forEach(System.out::println);
         }
     }
 }

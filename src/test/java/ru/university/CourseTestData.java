@@ -18,7 +18,7 @@ public class CourseTestData {
     public static final Course PROFESSOR_COURSE_1 = new Course(PROFESSOR_COURSE_ID, "Капитализм", 34, 255f);
     public static final Course PROFESSOR_COURSE_2 = new Course(PROFESSOR_COURSE_ID + 1, "Марксизм", 35, 275f);
 
-    public static final List<Course> UNIVERSITY_COURSES = Arrays.asList(COURSE_1, COURSE_2, COURSE_3);
+    public static final List<Course> UNIVERSITY_COURSES = List.of(COURSE_1, COURSE_2, COURSE_3);
 
     public static Course getCreated() {
         return new Course(null, "Созданный курс", 6666, 15000f);
@@ -29,7 +29,7 @@ public class CourseTestData {
     }
 
     public static void assertMatch(Course actual, Course expected) {
-        assertThat(actual).isEqualToComparingFieldByField(expected);
+        assertThat(actual).isEqualToIgnoringGivenFields(expected,"user");
     }
 
     public static void assertMatch(Iterable<Course> actual, Course... expected) {
@@ -37,6 +37,6 @@ public class CourseTestData {
     }
 
     public static void assertMatch(Iterable<Course> actual, Iterable<Course> expected) {
-        assertThat(actual).usingFieldByFieldElementComparator().isEqualTo(expected);
+        assertThat(actual).usingElementComparatorIgnoringFields("user").isEqualTo(expected);
     }
 }

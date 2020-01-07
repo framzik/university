@@ -22,7 +22,7 @@ public class InMemoryCourseRepository implements CourseRepository {
     private AtomicInteger counter = new AtomicInteger(0);
 
     {
-        InMemoryBaseRepository<Course> userCourse = new InMemoryBaseRepository<>();
+        var userCourse = new InMemoryBaseRepository<Course>();
         studentCourseMap.put(UserTestData.STUDENT_ID, userCourse);
         UNIVERSITY_COURSES.forEach(course->userCourse.map.put(course.getId(),course));
     }
@@ -31,26 +31,26 @@ public class InMemoryCourseRepository implements CourseRepository {
     @Override
     public Course save(Course course, int userId) {
         Objects.requireNonNull(course, "course must not be null");
-        InMemoryBaseRepository<Course> universityCourses = studentCourseMap.computeIfAbsent(userId,uid->new InMemoryBaseRepository<>());
+        var universityCourses = studentCourseMap.computeIfAbsent(userId,uid->new InMemoryBaseRepository<>());
         return universityCourses.save(course);
     }
 
     @Override
     public boolean delete(int id, int userId) {
-        InMemoryBaseRepository<Course> universityCourses = studentCourseMap.get(userId);
+        var universityCourses = studentCourseMap.get(userId);
         return universityCourses != null && universityCourses.delete(id) ;
     }
 
     @Override
     public Course get(int id, int userId) {
-        InMemoryBaseRepository<Course> universityCourses = studentCourseMap.get(userId);
+        var universityCourses = studentCourseMap.get(userId);
         return universityCourses == null ? null : universityCourses.get(id);
     }
 
     @Override
     public Course getByName(String name, int userId) {
         Objects.requireNonNull(name, "name must not be null");
-        InMemoryBaseRepository<Course> universityCourses = studentCourseMap.get(userId);
+        var universityCourses = studentCourseMap.get(userId);
         return universityCourses.getCollection().stream()
                 .filter(course -> name.equals(course.getName()))
                 .findFirst()
@@ -63,7 +63,7 @@ public class InMemoryCourseRepository implements CourseRepository {
     }
 
     private List<Course> getAllFiltered(int userId, Predicate<Course> filter) {
-        InMemoryBaseRepository<Course> universityCourses = studentCourseMap.get(userId);
+        var universityCourses = studentCourseMap.get(userId);
 
         return universityCourses==null ? Collections.emptyList() :
                 universityCourses.getCollection().stream()
