@@ -129,6 +129,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jdbc</artifactId>
+            <version>9.0.30</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 </project>

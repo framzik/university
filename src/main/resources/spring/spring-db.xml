@@ -16,7 +16,7 @@
         <jdbc:script encoding="utf-8" location="classpath:db/populateDb.sql"/>
     </jdbc:initialize-database>
 
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
         <property name="url" value="${database.url}"/>
         <property name="username" value="${database.username}"/>
