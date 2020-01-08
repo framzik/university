@@ -1,13 +1,12 @@
 package ru.university.model;
 
-import org.springframework.data.annotation.AccessType;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 
 @MappedSuperclass
-@AccessType(AccessType.Type.FIELD)
+@Access(AccessType.FIELD)
 public abstract class AbstractBaseEntity {
 
     @Id
@@ -41,10 +40,14 @@ public abstract class AbstractBaseEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || !getClass().equals(Hibernate.getClass(o))) {
+            return false;
+        }
         AbstractBaseEntity that = (AbstractBaseEntity) o;
-        return Objects.equals(id, that.id);
+        return id != null && id.equals(that.id);
     }
 
     @Override

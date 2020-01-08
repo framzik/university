@@ -33,7 +33,7 @@ import static ru.university.UserTestData.STUDENT_ID;
 @Sql(scripts = "classpath:db/populateDb.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class CourseServiceTest {
 
-    private static final Logger log = getLogger(CourseServiceTest.class);
+    private static final Logger log = getLogger("result");
 
     private static StringBuilder results = new StringBuilder();
 
