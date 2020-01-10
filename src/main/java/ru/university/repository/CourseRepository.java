@@ -17,4 +17,8 @@ public interface CourseRepository {
     List<Course> getAll(int userId);
 
     List<Course> getBetweenCost(@Nullable float startCost, @Nullable float endCost, int userId);
+
+    default Course getWithUser(int id,int userId){
+        throw new UnsupportedOperationException();
+    }
 }

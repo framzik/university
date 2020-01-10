@@ -49,4 +49,9 @@ public class DataJpaCourseRepository implements CourseRepository {
     public List<Course> getBetweenCost(float startCost, float endCost, int userId) {
         return crudCourseRepository.getBetweenCost(startCost,endCost,userId);
     }
+
+    @Override
+    public Course getWithUser(int id, int userId) {
+        return crudCourseRepository.getWithUser(id,userId);
+    }
 }

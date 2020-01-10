@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.university.model.Course;
 import ru.university.repository.CourseRepository;
-import ru.university.util.exception.NotFoundException;
 
 import java.util.List;
 
@@ -49,5 +48,9 @@ public class CourseService {
     public Course create(Course course, int userId) {
         Assert.notNull(course, "course must not be null");
         return repository.save(course, userId);
+    }
+
+    public Course getWithUser(int id, int userId){
+        return checkNotFoundWithId(repository.getWithUser(id, userId), id);
     }
 }

@@ -1,6 +1,5 @@
 package ru.university.repository.datajpa;
 
-import net.bytebuddy.TypeCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
@@ -40,5 +39,10 @@ public class DataJpaUserRepository implements UserRepository {
     @Override
     public Collection<User> getAll() {
         return crudUserRepository.findAll(SORT_NAME_EMAIL);
+    }
+
+    @Override
+    public User getWithCourse(int id) {
+        return crudUserRepository.getWithCourse(id);
     }
 }

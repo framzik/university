@@ -16,4 +16,7 @@ public interface CrudUserRepository extends JpaRepository<User, Integer> {
     int delete(int id);
 
     User getByEmail(String email);
+
+    @Query("SELECT u FROM User u LEFT JOIN FETCH u.courses WHERE u.id = ?1 ORDER BY u.name, u.email")
+    User getWithCourse(int id);
 }

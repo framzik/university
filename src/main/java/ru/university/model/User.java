@@ -6,10 +6,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Collection;
-import java.util.Date;
-import java.util.EnumSet;
-import java.util.Set;
+import java.util.*;
+
 @NamedQueries({
         @NamedQuery(name =User.DELETE,query = "DELETE FROM User u WHERE u.id=:id"),
         @NamedQuery(name = User.ALL_SORTED, query = "SELECT u FROM User u LEFT JOIN FETCH u.roles ORDER BY u.name, u.email"),
@@ -43,6 +41,10 @@ public class User extends AbstractNamedEntity {
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user")
+    @OrderBy("name")
+    protected List<Course> courses;
 
     public User() {
     }
@@ -108,6 +110,10 @@ public class User extends AbstractNamedEntity {
 
     public Set<Role> getRoles() {
         return roles;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
     }
 
     public void setRoles(Collection<Role> roles) {
