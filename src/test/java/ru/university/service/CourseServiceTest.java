@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ru.university.model.Course;
 import ru.university.util.exception.NotFoundException;
 
-import javax.persistence.PersistenceException;
+import org.springframework.dao.DataIntegrityViolationException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -142,7 +142,7 @@ public class CourseServiceTest {
         //assertMatch(service.getAll(STUDENT_COURSE_ID), COURSE_2, created, COURSE_3, COURSE_1);
     }
 
-    @Test(expected = PersistenceException.class)
+    @Test(expected = DataIntegrityViolationException.class)
     public void duplicateNumberCreate() {
         service.create(new Course(null, "Новый Курс", 666, 1200), STUDENT_ID);
     }
