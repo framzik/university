@@ -20,7 +20,7 @@ public class CourseTestData {
 
     public static final List<Course> UNIVERSITY_COURSES = List.of(COURSE_1, COURSE_2, COURSE_3);
 
-    public static Course getCreated() {
+    public static Course getNew() {
         return new Course(null, "Созданный курс", 6666, 15000f);
     }
 

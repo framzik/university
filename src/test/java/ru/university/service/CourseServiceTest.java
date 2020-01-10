@@ -135,7 +135,7 @@ public class CourseServiceTest {
 
     @Test
     public void create() {
-        Course newCourse = getCreated();
+        Course newCourse = getNew();
         Course created = service.create(newCourse, STUDENT_COURSE_ID);
         newCourse.setId(created.getId());
         assertMatch(newCourse, created);

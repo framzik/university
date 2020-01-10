@@ -1,6 +1,8 @@
 package ru.university.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.university.model.User;
@@ -15,12 +17,12 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
-
+    @CacheEvict(value = "users", allEntries = true)
     public User create(User entity) {
         Assert.notNull(entity, "user must not be null");
         return repository.save(entity);
     }
-
+    @CacheEvict(value = "users", allEntries = true)
     public void delete(int id)  {
         checkNotFoundWithId(repository.delete(id), id);
     }
@@ -34,10 +36,12 @@ public class UserService {
         return checkNotFound(repository.getByEmail(email), "email=" + email);
     }
 
+    @Cacheable("users")
     public Collection<User> getAll() {
         return repository.getAll();
     }
 
+    @CacheEvict(value = "users", allEntries = true)
     public   void update(User entity)  {
         Assert.notNull(entity, "user must not be null");
         checkNotFoundWithId(repository.save(entity), entity.getId());

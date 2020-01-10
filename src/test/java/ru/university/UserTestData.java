@@ -2,6 +2,7 @@ package ru.university;
 
 import ru.university.model.*;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.List;
@@ -22,6 +23,16 @@ public class UserTestData {
     public static final User NOVOGILOV = new User(5, "Новожилов Э.А.", "fr@gmail.com", "password", "ул. Васильков 34", true, new Date(), EnumSet.of(ROLE_STUDENT));
     public static final User SAVCHYK = new User(6, "Савчук А.И", "fr@mail.ru", "password", "ул. Самойловой 33", true, new Date(), EnumSet.of(ROLE_STUDENT));
 
+    public static User getNew() {
+        return new User(null, "New", "new@gmail.com", "newPass","New", false, new Date(), Collections.singleton(ROLE_STUDENT));
+    }
+
+    public static User getUpdated() {
+        User updated = new User(YAMCHEKOV);
+        updated.setAddress("Upp");
+        updated.setName("Gala");
+        return updated;
+    }
 
     public static void assertMatch(User actual, User expected) {
         assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered", "roles");

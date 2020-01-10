@@ -1,8 +1,11 @@
 package ru.university.service;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
@@ -29,13 +32,21 @@ public class UserServiceTest {
     @Autowired
     private UserService service;
 
+    @Autowired
+    private CacheManager cacheManager;
+
+    @Before
+    public void setUp(){
+        cacheManager.getCache("users").clear();
+    }
+
     @Test
     public void create() throws Exception {
-        User newUser = new User(null, "Новый Юзер", "ny@ya.ru", "password", "Address", true, new Date(), Collections.singleton(Role.ROLE_STUDENT));
+        User newUser = getNew();
         User created = service.create(newUser);
         newUser.setId(created.getId());
         assertMatch(newUser, created);
-        assertMatch(service.getAll(), BELYALOV, GRIGOREV, NOVOGILOV, created, SAVCHYK, STAROSTENKO, YAMCHEKOV);
+        assertMatch(service.getAll(),created, BELYALOV, GRIGOREV, NOVOGILOV,  SAVCHYK, STAROSTENKO, YAMCHEKOV);
     }
 
     @Test
@@ -81,9 +92,7 @@ public class UserServiceTest {
 
     @Test
     public void update() {
-        User updated = new User(YAMCHEKOV);
-        updated.setAddress("ул. Михельштейна 98");
-        updated.setName("vasya");
+        User updated = getUpdated();
         service.update(updated);
         assertMatch(service.get(STUDENT_ID), updated);
     }

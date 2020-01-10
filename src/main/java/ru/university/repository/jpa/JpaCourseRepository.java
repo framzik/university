@@ -21,17 +21,14 @@ public class JpaCourseRepository implements CourseRepository {
     @Override
     @Transactional
     public Course save(Course course, int userId) {
-        if (!course.isNew() && get(course.getId(), userId) == null) {
-            return null;
-        }
         course.setUser(em.getReference(User.class, userId));
         if (course.isNew()) {
             em.persist(course);
             return course;
-        } else {
-            em.merge(course);
-            return course;
+        } else if(get(course.getId(),userId) == null){
+            return null;
         }
+        return em.merge(course);
     }
 
     @Override
