@@ -22,3 +22,11 @@ tr[data-cost="false"] {
 tr[data-cost="true"] {
     color: red;
 }
+
+header, footer {
+    background: none repeat scroll 0 0 #8BE2BF;
+    color: #2E6E9E;
+    font-size: 20px;
+    padding: 5px 20px;
+    margin: 6px 0;
+}
