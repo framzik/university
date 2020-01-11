@@ -10,7 +10,6 @@ import ru.university.util.exception.NotFoundException;
 
 import java.util.List;
 
-import static ru.university.CourseTestData.assertMatch;
 import static ru.university.CourseTestData.*;
 import static ru.university.UserTestData.*;
 
@@ -22,9 +21,9 @@ public class CourseServiceTest extends AbstractServiceTest {
 
     @Test
     public void delete() {
-        service.delete(STUDENT_COURSE_ID+1, STUDENT_ID);
+        service.delete(STUDENT_COURSE_ID + 1, STUDENT_ID);
         thrown.expect(NotFoundException.class);
-        service.get(STUDENT_COURSE_ID+1, STUDENT_ID);
+        service.get(STUDENT_COURSE_ID + 1, STUDENT_ID);
     }
 
     @Test
@@ -35,7 +34,7 @@ public class CourseServiceTest extends AbstractServiceTest {
 
     @Test
     public void get() {
-        Course courseByName = service.get(STUDENT_COURSE_ID+1, STUDENT_ID);
+        Course courseByName = service.get(STUDENT_COURSE_ID + 1, STUDENT_ID);
         assertMatch(courseByName, COURSE_2);
     }
 
@@ -105,7 +104,7 @@ public class CourseServiceTest extends AbstractServiceTest {
 
     @Test
     public void getWithUser() {
-        Course studenCourse = service.getWithUser(STUDENT_COURSE_ID+1, STUDENT_ID);
+        Course studenCourse = service.getWithUser(STUDENT_COURSE_ID + 1, STUDENT_ID);
         assertMatch(studenCourse, COURSE_2);
         UserTestData.assertMatch(studenCourse.getUser(), UserTestData.YAMCHEKOV);
     }

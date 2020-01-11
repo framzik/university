@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import ru.university.CourseTestData;
 import ru.university.model.User;
+import ru.university.repository.JpaUtil;
 import ru.university.util.exception.NotFoundException;
 
 import java.util.List;
+import java.util.Objects;
 
 import static ru.university.UserTestData.*;
 
@@ -19,9 +21,13 @@ public class UserServiceTest extends AbstractServiceTest {
     @Autowired
     private CacheManager cacheManager;
 
+    @Autowired
+    private JpaUtil jpaUtil;
+
     @Before
     public void setUp() {
-        cacheManager.getCache("users").clear();
+        Objects.requireNonNull(cacheManager.getCache("users")).clear();
+        jpaUtil.clear2ndLevelHibernateCache();
     }
 
     @Test
@@ -35,7 +41,7 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Test
     public void delete() {
-        service.delete(BELYALOV.getId());
+        service.delete(STUDENT_ID+3);
         assertMatch(service.getAll(), GRIGOREV, NOVOGILOV, SAVCHYK, STAROSTENKO, YAMCHEKOV);
     }
 
@@ -47,7 +53,7 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Test
     public void get() {
-        User user = service.get(SAVCHYK.getId());
+        User user = service.get(STUDENT_ID+5);
         assertMatch(user, SAVCHYK);
     }
 
@@ -84,7 +90,7 @@ public class UserServiceTest extends AbstractServiceTest {
     @Test
     public void getWithMeals() throws Exception {
         User user = service.getWithCourse(STUDENT_ID);
-        assertMatch(user,YAMCHEKOV);
+        assertMatch(user, YAMCHEKOV);
         CourseTestData.assertMatch(user.getCourses(), CourseTestData.UNIVERSITY_COURSES);
     }
 
