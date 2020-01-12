@@ -1,4 +1,4 @@
-package ru.university.web.rest;
+package ru.university.web.user;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

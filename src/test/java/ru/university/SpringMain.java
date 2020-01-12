@@ -5,11 +5,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.university.model.Course;
 import ru.university.model.Role;
 import ru.university.model.User;
-import ru.university.web.rest.CourseRestController;
-import ru.university.web.rest.UserRestController;
+import ru.university.web.course.CourseRestController;
+import ru.university.web.user.UserRestController;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 public class SpringMain {

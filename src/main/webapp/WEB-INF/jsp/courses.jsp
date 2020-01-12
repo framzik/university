@@ -10,21 +10,20 @@
 <section>
     <h3><spring:message code="course.title"/></h3>
 
-    <form method="get" action="courses">
-        <input type="hidden" name="action" value="filter">
+    <form method="get" action="courses/between">
         <dl>
-            <dt><spring:message code="course.fromCost"/></dt>
+            <dt><spring:message code="course.fromCost"/>:</dt>
             <dd><input type="number" name="startCost" value="${param.startCost}"></dd>
         </dl>
         <dl>
-            <dt><spring:message code="course.toCost"/></dt>
+            <dt><spring:message code="course.toCost"/>:</dt>
             <dd><input type="number" name="endCost" value="${param.endCost}"></dd>
         </dl>
         <button type="submit"><spring:message code="common.select"/></button>
     </form>
-
-    <a href="courses?action=create"><spring:message code="course.create"/></a>
-    <br><br>
+    <hr>
+    <a href="courses/create"><spring:message code="course.create"/></a>
+    <hr>
 
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
@@ -36,13 +35,13 @@
         </thead>
 
         <c:forEach items="${courses}" var="course">
-            <jsp:useBean id="course" type="ru.university.model.Course"/>
+            <jsp:useBean id="course" scope="page" type="ru.university.model.Course"/>
             <tr data-cost=${course.cost<16000}>
                 <td>${course.name}</td>
                 <td>${course.number}</td>
                 <td>${course.cost}</td>
-                <td><a href="courses?action=update&id=${course.id}"><spring:message code="app.update"/></a></td>
-                <td><a href="courses?action=delete&id=${course.id}"><spring:message code="app.delete"/></a></td>
+                <td><a href="courses/update?id=${course.id}"><spring:message code="app.update"/></a></td>
+                <td><a href="courses/delete?id=${course.id}"><spring:message code="app.delete"/></a></td>
             </tr>
         </c:forEach>
     </table>

@@ -1,22 +1,17 @@
 package ru.university.web.rest;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-import ru.university.UserTestData;
-import ru.university.model.User;
 import ru.university.repository.inmemory.InMemoryUserRepository;
 import ru.university.util.exception.NotFoundException;
+import ru.university.web.user.UserRestController;
 
 
-import java.util.Collection;
-
-import static ru.university.UserTestData.GRIGOREV;
+import static ru.university.UserTestData.STUDENT_ID;
 
 
 @ContextConfiguration({"classpath:spring/spring-app.xml", "classpath:spring/inmemory.xml"})
@@ -34,12 +29,10 @@ public class InMemoryUserRestControllerSpringTest {
         repository.init();
     }
 
-    @Test
+    @Test(expected = NotFoundException.class)
     public void delete() throws Exception {
-        controller.delete(UserTestData.STUDENT_ID);
-        Collection<User> users = controller.getAll();
-        Assert.assertEquals(1, users.size());
-        Assert.assertEquals( users.iterator().next(),GRIGOREV);
+        controller.delete(STUDENT_ID);
+        controller.get(STUDENT_ID);
     }
 
     @Test(expected = NotFoundException.class)

@@ -5,14 +5,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.university.model.User;
 import ru.university.repository.inmemory.InMemoryUserRepository;
 import ru.university.util.exception.NotFoundException;
+import ru.university.web.user.UserRestController;
 
 import java.util.Arrays;
-import java.util.Collection;
 
-import static ru.university.UserTestData.GRIGOREV;
 import static ru.university.UserTestData.STUDENT_ID;
 
 
@@ -41,12 +39,10 @@ public class UserRestControllerTest {
         repository.init();
     }
 
-    @Test
+    @Test(expected = NotFoundException.class)
     public void delete() throws Exception {
         controller.delete(STUDENT_ID);
-        Collection<User> users = controller.getAll();
-        Assert.assertEquals(1, users.size());
-        Assert.assertEquals(GRIGOREV, users.iterator().next());
+        controller.get(STUDENT_ID);
     }
 
     @Test(expected = NotFoundException.class)
