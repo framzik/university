@@ -31,7 +31,7 @@ public class JspCourseController extends AbstractCourseController {
     @GetMapping("/delete")
     public String delete(HttpServletRequest request){
         super.delete(getId(request));
-        return "redirect:courses";
+        return "redirect:/courses";
     }
 
     @GetMapping("/update")
@@ -57,7 +57,7 @@ public class JspCourseController extends AbstractCourseController {
         } else {
             super.update(course,getId(request));
         }
-        return "redirect:courses";
+        return "redirect:/courses";
     }
 
     private int getId(HttpServletRequest request) {
