@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<fmt:setBundle basename="messages.app"/>
 
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
@@ -12,13 +12,13 @@
 <br>
 <section>
     <form method="post" action="users">
-        <fmt:message key="app.login"/> : <label>
+        <spring:message code="app.login"/> : <label>
         <select name="userId">
-        <option value="1"><fmt:message key = "user.student"/></option>
-        <option value="2"><fmt:message key = "user.professor"/></option>
+        <option value="1"><spring:message code = "user.student"/></option>
+        <option value="2"><spring:message code = "user.professor"/></option>
     </select>
     </label>
-        <button type="submit"><fmt:message key="common.select"/></button>
+        <button type="submit"><spring:message code="common.select"/></button>
     </form>
 </section>
 <jsp:include page="fragments/footer.jsp"/>

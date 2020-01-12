@@ -19,24 +19,17 @@
     </listener>
 
     <servlet>
-        <servlet-name>userServlet</servlet-name>
-        <servlet-class>ru.university.web.servlets.UserServlet</servlet-class>
-        <load-on-startup>0</load-on-startup>
+        <servlet-name>mvc-dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring/spring-mvc.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>userServlet</servlet-name>
-        <url-pattern>/users</url-pattern>
+        <servlet-name>mvc-dispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
-
-    <servlet>
-        <servlet-name>courseServlet</servlet-name>
-        <servlet-class>ru.university.web.servlets.CourseServlet</servlet-class>
-        <load-on-startup>0</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>courseServlet</servlet-name>
-        <url-pattern>/courses</url-pattern>
-    </servlet-mapping>
-
 
 </web-app>
