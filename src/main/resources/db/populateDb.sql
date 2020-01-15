@@ -19,8 +19,9 @@ VALUES ('1','ROLE_STUDENT'),
        ('2','ROLE_PROFESSOR'),
        ('3','ROLE_PROFESSOR'),
        ('4','ROLE_STUDENT'),
-       ('5','ROLE_PROFESSOR'),
-       ('6','ROLE_STUDENT');
+       ('5','ROLE_STUDENT'),
+       ('6','ROLE_STUDENT'),
+       ('1', 'ROLE_PROFESSOR');
 
 
 INSERT INTO professors(user_id, telephone, cost)
