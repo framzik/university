@@ -1,6 +1,6 @@
 package ru.university.web;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -21,11 +21,11 @@ public class RootControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("users"))
                 .andExpect(forwardedUrl("/WEB-INF/jsp/users.jsp"))
-                .andExpect(model().attribute("users" , hasSize(6)))
+                .andExpect(model().attribute("users", hasSize(6)))
                 .andExpect(model().attribute("users", hasItem(
                         allOf(
-                                hasProperty("id",is(1)),
-                                hasProperty("name", is (YAMCHEKOV.getName()))
+                                hasProperty("id", is(1)),
+                                hasProperty("name", is(YAMCHEKOV.getName()))
                         )
                 )));
     }

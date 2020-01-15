@@ -1,7 +1,8 @@
 package ru.university.service;
 
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import ru.university.CourseTestData;
@@ -12,6 +13,7 @@ import ru.university.util.exception.NotFoundException;
 import java.util.List;
 import java.util.Objects;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.university.UserTestData.*;
 
 public class UserServiceTest extends AbstractServiceTest {
@@ -24,7 +26,7 @@ public class UserServiceTest extends AbstractServiceTest {
     @Autowired
     private JpaUtil jpaUtil;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         Objects.requireNonNull(cacheManager.getCache("users")).clear();
         jpaUtil.clear2ndLevelHibernateCache();
@@ -45,11 +47,11 @@ public class UserServiceTest extends AbstractServiceTest {
         assertMatch(service.getAll(), GRIGOREV, NOVOGILOV, SAVCHYK, STAROSTENKO, YAMCHEKOV);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test()
     public void deleteNotFound() {
-        service.delete(7);
+        assertThrows(NotFoundException.class, ()->
+        service.delete(7));
     }
-
 
     @Test
     public void get() {
@@ -57,9 +59,10 @@ public class UserServiceTest extends AbstractServiceTest {
         assertMatch(user, SAVCHYK);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void getNotFound() {
-        service.get(7);
+        assertThrows(NotFoundException.class, ()->
+        service.get(7));
     }
 
     @Test
@@ -68,9 +71,10 @@ public class UserServiceTest extends AbstractServiceTest {
         assertMatch(user, SAVCHYK);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void getByEmailNotFound() {
-        User user = service.getByEmail("no@email.ru");
+        assertThrows(NotFoundException.class, ()->
+        service.getByEmail("no@email.ru"));
     }
 
 
@@ -94,8 +98,9 @@ public class UserServiceTest extends AbstractServiceTest {
         CourseTestData.assertMatch(user.getCourses(), CourseTestData.UNIVERSITY_COURSES);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void getWithMealsNotFound() throws Exception {
-        service.getWithCourse(12);
+        assertThrows(NotFoundException.class, ()->
+        service.getWithCourse(12));
     }
 }

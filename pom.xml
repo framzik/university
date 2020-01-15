@@ -43,6 +43,8 @@
         <!--Tools-->
         <ehcache.version>3.8.1</ehcache.version>
         <tomcat.version>9.0.30</tomcat.version>
+
+        <junit.jupiter.version>5.5.2</junit.jupiter.version>
     </properties>
 
     <dependencies>
@@ -106,16 +108,10 @@
 
         <!--       Test-->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.jupiter.version}</version>
             <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>hamcrest-core</artifactId>
-                    <groupId>org.hamcrest</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest-all -->
         <dependency>
