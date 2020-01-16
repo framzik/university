@@ -6,7 +6,7 @@ import ru.university.model.Course;
 import ru.university.model.Role;
 import ru.university.model.User;
 import ru.university.web.course.CourseRestController;
-import ru.university.web.user.UserRestController;
+import ru.university.web.user.AdminRestController;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,8 +15,8 @@ public class SpringMain {
     public static void main(String[] args) {
         try (ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml","spring/inmemory.xml" )) {
             System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
-            UserRestController controller = appCtx.getBean(UserRestController.class);
-            controller.create(new User(null, "CreatedByMain NewUser","main@ya.ru", "password","ул Лопухова 22", Role.ROLE_STUDENT));
+            AdminRestController controller = appCtx.getBean(AdminRestController.class);
+            controller.getAll();
             System.out.println();
 
             CourseRestController courseRestController = appCtx.getBean(CourseRestController.class);

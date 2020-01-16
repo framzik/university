@@ -2,24 +2,22 @@ package ru.university.web.user;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.university.model.User;
 import ru.university.service.UserService;
 
 import java.util.Collection;
+import java.util.List;
 
 import static ru.university.util.ValidationUtil.assureIdConsistent;
 import static ru.university.util.ValidationUtil.checkNew;
 
-@Controller
-public class UserRestController {
+
+public abstract class AbstractUserController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
-    private final UserService service;
 
-    public UserRestController(UserService service) {
-        this.service = service;
-    }
-
+    @Autowired
+    private UserService service;
 
     public Collection<User> getAll() {
         log.info("getAll");
@@ -31,10 +29,10 @@ public class UserRestController {
         return service.get(id);
     }
 
-    public User create(User entity) {
-        log.info("create {}", entity);
-        checkNew(entity);
-        return service.create(entity);
+    public User create(User user) {
+        log.info("create {}", user);
+        checkNew(user);
+        return service.create(user);
     }
 
     public void delete(int id) {
@@ -42,10 +40,10 @@ public class UserRestController {
         service.delete(id);
     }
 
-    public void update(User entity, int id) {
-        log.info("update {} with id={}", entity, id);
-        assureIdConsistent(entity, id);
-        service.update(entity);
+    public void update(User user, int id) {
+        log.info("update {} with id={}", user, id);
+        assureIdConsistent(user, id);
+        service.update(user);
     }
 
     public User getByMail(String email) {
