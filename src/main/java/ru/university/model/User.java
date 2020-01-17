@@ -49,7 +49,7 @@ public class User extends AbstractNamedEntity {
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "user")
     @OrderBy("name")
-    @JsonIgnore
+    //@JsonIgnore
     protected List<Course> courses;
 
     public User() {

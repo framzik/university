@@ -9,7 +9,6 @@ import ru.university.model.User;
 
 import java.net.URI;
 import java.util.Collection;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = AdminRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
