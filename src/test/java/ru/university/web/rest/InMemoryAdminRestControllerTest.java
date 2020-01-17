@@ -18,8 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.university.UserTestData.STUDENT_ID;
 
 
-public class AdminRestControllerTest {
-    private static final Logger log = LoggerFactory.getLogger(AdminRestControllerTest.class);
+public class InMemoryAdminRestControllerTest {
+    private static final Logger log = LoggerFactory.getLogger(InMemoryAdminRestControllerTest.class);
 
     private static ConfigurableApplicationContext appCtx;
     private static AdminRestController controller;

@@ -1,5 +1,6 @@
 package ru.university.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.util.CollectionUtils;
 import org.hibernate.annotations.Cache;
@@ -48,6 +49,7 @@ public class User extends AbstractNamedEntity {
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "user")
     @OrderBy("name")
+    @JsonIgnore
     protected List<Course> courses;
 
     public User() {
