@@ -1,5 +1,6 @@
 package ru.university;
 
+import org.springframework.test.web.servlet.ResultMatcher;
 import ru.university.model.User;
 
 import java.util.Collections;
@@ -8,6 +9,8 @@ import java.util.EnumSet;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static ru.university.TestUtil.readFromJsonMvcResult;
+import static ru.university.TestUtil.readListFromJsonMvcResult;
 import static ru.university.model.Role.ROLE_PROFESSOR;
 import static ru.university.model.Role.ROLE_STUDENT;
 
@@ -45,5 +48,13 @@ public class UserTestData {
 
     public static void assertMatch(Iterable<User> actual, Iterable<User> expected) {
         assertThat(actual).usingElementComparatorIgnoringFields("registered", "courses").isEqualTo(expected);
+    }
+
+    public static ResultMatcher contentJson(User... expected) {
+        return result -> assertMatch(readListFromJsonMvcResult(result, User.class), List.of(expected));
+    }
+
+    public static ResultMatcher contentJson(User expected) {
+        return result -> assertMatch(readFromJsonMvcResult(result, User.class), expected);
     }
 }

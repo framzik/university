@@ -1,12 +1,15 @@
 package ru.university.web;
 
+import org.assertj.core.matcher.AssertionMatcher;
 import org.junit.jupiter.api.Test;
+import ru.university.model.User;
 
-import static org.hamcrest.Matchers.*;
+import java.util.List;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static ru.university.UserTestData.YAMCHEKOV;
+import static ru.university.UserTestData.*;
 
 public class RootControllerTest extends AbstractControllerTest {
 
@@ -21,21 +24,13 @@ public class RootControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("users"))
                 .andExpect(forwardedUrl("/WEB-INF/jsp/users.jsp"))
-                .andExpect(model().attribute("users", hasSize(6)))
-                .andExpect(model().attribute("users", hasItem(
-                        allOf(
-                                hasProperty("id", is(1)),
-                                hasProperty("name", is(YAMCHEKOV.getName()))
-                        )
-                )));
-    }
-
-
-    @Test
-    public void setUser() {
-    }
-
-    @Test
-    public void getCourses() {
+                .andExpect(model().attribute("users",
+                        new AssertionMatcher<List<User>>() {
+                            @Override
+                            public void assertion(List<User> actual) throws AssertionError {
+                                assertMatch(actual, BELYALOV, GRIGOREV, NOVOGILOV, SAVCHYK, STAROSTENKO, YAMCHEKOV);
+                            }
+                        }
+                ));
     }
 }
