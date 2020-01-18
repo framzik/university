@@ -8,7 +8,7 @@
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <section>
     <jsp:useBean id="course" type="ru.university.model.Course" scope="request"/>
-    <h3><spring:message code="${course.isNew() ? 'course.add' : 'course.edit'}"/></h3>
+    <h3><spring:message code="${course.new() ? 'course.add' : 'course.edit'}"/></h3>
     <form method="post" action="courses">
         <input type="hidden" name="id" value="${course.id}">
         <dl>

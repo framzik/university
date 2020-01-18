@@ -23,74 +23,74 @@ public class CourseServiceTest extends AbstractServiceTest {
     CourseService service;
 
     @Test
-    public void delete() {
+     void delete() {
         service.delete(STUDENT_COURSE_ID + 1, STUDENT_ID);
         assertThrows(NotFoundException.class, () ->
                 service.get(STUDENT_COURSE_ID + 1, STUDENT_ID));
     }
 
     @Test
-    public void deleteNotFound() {
+     void deleteNotFound() {
         assertThrows(NotFoundException.class, () ->
                 service.delete(7, STUDENT_ID));
     }
 
     @Test
-    public void get() {
+     void get() {
         Course courseByName = service.get(STUDENT_COURSE_ID + 1, STUDENT_ID);
         assertMatch(courseByName, COURSE_2);
     }
 
     @Test
-    public void getNotFound() {
+     void getNotFound() {
         assertThrows(NotFoundException.class, () ->
                 service.get(7, STUDENT_ID));
     }
 
     @Test
-    public void getNotFound2() {
+     void getNotFound2() {
         assertThrows(NotFoundException.class, () ->
                 service.get(STUDENT_COURSE_ID, PROFESSOR_ID));
     }
 
 
     @Test
-    public void getByName() {
+     void getByName() {
         Course courseByName = service.getByName(COURSE_2.getName(), STUDENT_ID);
         assertMatch(courseByName, COURSE_2);
     }
 
     @Test
-    public void getByNameNotFound() {
+     void getByNameNotFound() {
         assertThrows(NotFoundException.class, () -> service.getByName("HELLO WORLD", STUDENT_ID));
     }
 
     @Test
-    public void getAll() {
+     void getAll() {
         List<Course> courseList = service.getAll(STUDENT_ID);
         assertMatch(courseList, COURSE_2, COURSE_3, COURSE_1);
     }
 
     @Test
-    public void update() {
+     void update() {
         Course updated = CourseTestData.getUpdated();
         service.update(updated, STUDENT_ID);
         assertMatch(service.get(STUDENT_COURSE_ID, STUDENT_ID), updated);
     }
 
     @Test
-    public void updateNotFound() {
+     void updateNotFound() {
         NotFoundException e = assertThrows(NotFoundException.class, () -> service.update(COURSE_1, PROFESSOR_ID));
         assertEquals(e.getMessage(), "Not found entity with id=" + COURSE_1.getId());
     }
 
     @Test
-    public void getBetween() {
+     void getBetween() {
         assertMatch(service.getBetweenCost(15500, 17000, STUDENT_ID), COURSE_2, COURSE_3);
     }
 
     @Test
-    public void create() {
+     void create() {
         Course newCourse = CourseTestData.getNew();
         Course created = service.create(newCourse, STUDENT_COURSE_ID);
         newCourse.setId(created.getId());
@@ -99,20 +99,19 @@ public class CourseServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void duplicateNumberCreate() {
-//        service.create(new Course(null, "Новый Курс", 666, 1200), STUDENT_ID);
+     void duplicateNumberCreate() {
         assertThrows(DataIntegrityViolationException.class, () -> service.create(new Course(null, "Новый Курс", 666, 1200), STUDENT_ID));
     }
 
     @Test
-    public void getWithUser() {
+     void getWithUser() {
         Course studenCourse = service.getWithUser(STUDENT_COURSE_ID + 1, STUDENT_ID);
         assertMatch(studenCourse, COURSE_2);
         UserTestData.assertMatch(studenCourse.getUser(), UserTestData.YAMCHEKOV);
     }
 
     @Test()
-    public void getWithUserNotFound() throws Exception {
+     void getWithUserNotFound() throws Exception {
         assertThrows(NotFoundException.class, () -> service.getWithUser(1, 12));
     }
 }
