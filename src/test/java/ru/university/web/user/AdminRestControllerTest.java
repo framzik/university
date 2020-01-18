@@ -9,7 +9,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ru.university.UserTestData.GRIGOREV;
 import static ru.university.UserTestData.PROFESSOR_ID;
+import static ru.university.web.json.JsonUtil.writeIgnoreProps;
 
 class AdminRestControllerTest extends AbstractControllerTest {
     public static  final String REST_URL =AdminRestController.REST_URL + "/";
@@ -18,7 +20,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + PROFESSOR_ID))
                 .andExpect(status().isOk())
                 .andDo(print())
-                // https://jira.spring.io/browse/SPR-14472
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(writeIgnoreProps(GRIGOREV, "registered")));
     }
 }
