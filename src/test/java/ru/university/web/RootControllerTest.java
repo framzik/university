@@ -2,6 +2,7 @@ package ru.university.web;
 
 import org.assertj.core.matcher.AssertionMatcher;
 import org.junit.jupiter.api.Test;
+import ru.university.model.Course;
 import ru.university.model.User;
 
 import java.util.List;
@@ -9,13 +10,10 @@ import java.util.List;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static ru.university.CourseTestData.*;
 import static ru.university.UserTestData.*;
 
 public class RootControllerTest extends AbstractControllerTest {
-
-    @Test
-    public void root() {
-    }
 
     @Test
      void getUsers() throws Exception {
@@ -32,5 +30,22 @@ public class RootControllerTest extends AbstractControllerTest {
                             }
                         }
                 ));
+    }
+
+
+    @Test
+    void testCourses() throws Exception {
+        mockMvc.perform(get("/courses"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("courses"))
+                .andExpect(forwardedUrl("/WEB-INF/jsp/courses.jsp"))
+                .andExpect(model().attribute("courses",
+                        new AssertionMatcher<List<Course>>() {
+                            @Override
+                            public void assertion(List<Course> actual) throws AssertionError {
+                                assertMatch(actual,COURSE_2, COURSE_3, COURSE_1 );
+                            }
+                        }));
     }
 }

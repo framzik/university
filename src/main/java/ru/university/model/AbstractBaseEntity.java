@@ -6,6 +6,8 @@ import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
 
+import java.util.Objects;
+
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
 
@@ -46,14 +48,12 @@ public abstract class AbstractBaseEntity implements Persistable<Integer> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || !getClass().equals(Hibernate.getClass(o))) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
         AbstractBaseEntity that = (AbstractBaseEntity) o;
-        return id != null && id.equals(that.id);
+
+        return Objects.equals(id, that.id);
     }
 
     @Override
