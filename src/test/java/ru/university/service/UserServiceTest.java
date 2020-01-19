@@ -1,17 +1,13 @@
 package ru.university.service;
 
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import ru.university.CourseTestData;
 import ru.university.model.User;
-import ru.university.repository.JpaUtil;
 import ru.university.util.exception.NotFoundException;
 
 import java.util.List;
-import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.university.UserTestData.*;
@@ -19,18 +15,6 @@ import static ru.university.UserTestData.*;
 public class UserServiceTest extends AbstractServiceTest {
     @Autowired
     private UserService service;
-
-    @Autowired
-    private CacheManager cacheManager;
-
-    @Autowired
-    private JpaUtil jpaUtil;
-
-    @BeforeEach
-    public void setUp() {
-        Objects.requireNonNull(cacheManager.getCache("users")).clear();
-        jpaUtil.clear2ndLevelHibernateCache();
-    }
 
     @Test
     public void create() throws Exception {
@@ -43,26 +27,26 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Test
     public void delete() {
-        service.delete(STUDENT_ID+3);
+        service.delete(STUDENT_ID + 3);
         assertMatch(service.getAll(), GRIGOREV, NOVOGILOV, SAVCHYK, STAROSTENKO, YAMCHEKOV);
     }
 
     @Test()
     public void deleteNotFound() {
-        assertThrows(NotFoundException.class, ()->
-        service.delete(7));
+        assertThrows(NotFoundException.class, () ->
+                service.delete(7));
     }
 
     @Test
     public void get() {
-        User user = service.get(STUDENT_ID+5);
+        User user = service.get(STUDENT_ID + 5);
         assertMatch(user, SAVCHYK);
     }
 
     @Test
     public void getNotFound() {
-        assertThrows(NotFoundException.class, ()->
-        service.get(7));
+        assertThrows(NotFoundException.class, () ->
+                service.get(7));
     }
 
     @Test
@@ -73,8 +57,8 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Test
     public void getByEmailNotFound() {
-        assertThrows(NotFoundException.class, ()->
-        service.getByEmail("no@email.ru"));
+        assertThrows(NotFoundException.class, () ->
+                service.getByEmail("no@email.ru"));
     }
 
 
@@ -100,7 +84,7 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Test
     public void getWithMealsNotFound() throws Exception {
-        assertThrows(NotFoundException.class, ()->
-        service.getWithCourse(12));
+        assertThrows(NotFoundException.class, () ->
+                service.getWithCourse(12));
     }
 }
