@@ -19,7 +19,7 @@ public abstract class AbstractUserController {
     @Autowired
     private UserService service;
 
-    public Collection<User> getAll() {
+    public List<User> getAll() {
         log.info("getAll");
         return service.getAll();
     }

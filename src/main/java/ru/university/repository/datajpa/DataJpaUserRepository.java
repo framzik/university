@@ -7,6 +7,7 @@ import ru.university.model.User;
 import ru.university.repository.UserRepository;
 
 import java.util.Collection;
+import java.util.List;
 
 @Repository
 public class DataJpaUserRepository implements UserRepository {
@@ -37,7 +38,7 @@ public class DataJpaUserRepository implements UserRepository {
     }
 
     @Override
-    public Collection<User> getAll() {
+    public List<User> getAll() {
         return crudUserRepository.findAll(SORT_NAME_EMAIL);
     }
 

@@ -9,6 +9,7 @@ import ru.university.model.User;
 
 import java.net.URI;
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = AdminRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -17,7 +18,7 @@ public class AdminRestController extends AbstractUserController {
     static final String REST_URL = "/rest/admin/users";
 
     @GetMapping
-    public Collection<User> getAll() {
+    public List<User> getAll() {
         return super.getAll();
     }
 

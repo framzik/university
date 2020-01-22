@@ -55,7 +55,7 @@ public class JpaUserRepository implements UserRepository {
     }
 
     @Override
-    public Collection<User> getAll() {
+    public List<User> getAll() {
         return em.createNamedQuery(User.ALL_SORTED,User.class).getResultList();
     }
 }

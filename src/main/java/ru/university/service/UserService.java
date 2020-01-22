@@ -9,6 +9,7 @@ import ru.university.model.User;
 import ru.university.repository.UserRepository;
 
 import java.util.Collection;
+import java.util.List;
 
 import static ru.university.util.ValidationUtil.checkNotFound;
 import static ru.university.util.ValidationUtil.checkNotFoundWithId;
@@ -37,7 +38,7 @@ public class UserService {
     }
 
     @Cacheable("users")
-    public Collection<User> getAll() {
+    public List<User> getAll() {
         return repository.getAll();
     }
 

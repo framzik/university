@@ -25,7 +25,7 @@
         </dl>
 
         <button type="submit"><spring:message code="app.save"/></button>
-        <button onclick="window.history.back()" type="button"><spring:message code="app.cansel"/></button>
+        <button onclick="window.history.back()" type="button"><spring:message code="app.cancel"/></button>
     </form>
 </section>
 </body>

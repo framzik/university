@@ -5,6 +5,7 @@ import ru.university.model.Course;
 import ru.university.model.User;
 
 import java.util.Collection;
+import java.util.List;
 
 @Repository
 public interface UserRepository {
@@ -20,7 +21,7 @@ public interface UserRepository {
     User getByEmail(String email);
 
 
-    Collection<User> getAll();
+    List<User> getAll();
 
     default User getWithCourse(int id) {
         throw new UnsupportedOperationException();
