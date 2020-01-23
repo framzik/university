@@ -120,5 +120,8 @@
     <orderEntry type="library" name="Maven: org.webjars.bower:datetimepicker:2.5.20" level="project" />
     <orderEntry type="library" name="Maven: org.webjars.bower:jquery-mousewheel:3.1.13" level="project" />
     <orderEntry type="library" name="Maven: org.webjars.bower:noty:3.1.4" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-web:5.2.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:5.2.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-config:5.2.1.RELEASE" level="project" />
   </component>
 </module>
