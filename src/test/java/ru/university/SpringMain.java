@@ -13,10 +13,11 @@ import java.util.List;
 
 public class SpringMain {
     public static void main(String[] args) {
-        try (ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml","spring/inmemory.xml" )) {
+
+        try (ClassPathXmlApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/inmemory.xml")) {
             System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
-            AdminRestController controller = appCtx.getBean(AdminRestController.class);
-            controller.getAll();
+            AdminRestController adminUserController = appCtx.getBean(AdminRestController.class);
+            adminUserController.getAll();
             System.out.println();
 
             CourseRestController courseRestController = appCtx.getBean(CourseRestController.class);
