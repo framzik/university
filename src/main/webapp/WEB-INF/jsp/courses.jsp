@@ -13,10 +13,6 @@
 <div class="jumbotron pt-4">
     <div class="container">
         <h3 class="text-center"><spring:message code="course.title"/></h3>
-        <button class="btn btn-primary" onclick="add()">
-            <span class="fa fa-plus"></span>
-            <spring:message code="app.add"/>
-        </button>
 
         <div class="card border-dark">
             <div class="card-body pb-0">
@@ -39,6 +35,10 @@
             </div>
 
             <div class="card-footer text-right">
+                <button class="btn btn-danger" onclick="clearFilter()">
+                    <span class="fa fa-remove"></span>
+                    <spring:message code="app.cancel"/>
+                </button>
                 <button class="btn btn-primary" onclick="updateFilteredTable()">
                     <span class="fa fa-filter"></span>
                     <spring:message code="course.filter"/>
@@ -46,6 +46,10 @@
             </div>
         </div>
 
+        <button class="btn btn-primary" onclick="add()">
+            <span class="fa fa-plus"></span>
+            <spring:message code="app.add"/>
+        </button>
 
         <br/>
         <table class="table table-striped" id="datatable">

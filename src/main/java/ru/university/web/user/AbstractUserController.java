@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.university.model.User;
 import ru.university.service.UserService;
+import ru.university.to.UserTo;
+import ru.university.util.Util;
 
 import java.util.Collection;
 import java.util.List;
@@ -35,6 +37,11 @@ public abstract class AbstractUserController {
         return service.create(user);
     }
 
+    public User create(UserTo userTo) {
+        log.info("create from to {}", userTo);
+        return create(Util.createNewUserFromTo(userTo));
+    }
+
     public void delete(int id) {
         log.info("delete {}", id);
         service.delete(id);
@@ -49,5 +56,10 @@ public abstract class AbstractUserController {
     public User getByMail(String email) {
         log.info("getByEmail {}", email);
         return service.getByEmail(email);
+    }
+
+    public void enable(int id, boolean enabled) {
+        log.info(enabled ? "enable {}" : "disable {}", id);
+        service.enable(id, enabled);
     }
 }

@@ -9,7 +9,7 @@ import ru.university.util.exception.NotFoundException;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static ru.university.UserTestData.*;
 
 public class UserServiceTest extends AbstractServiceTest {
@@ -86,5 +86,13 @@ public class UserServiceTest extends AbstractServiceTest {
     public void getWithMealsNotFound() throws Exception {
         assertThrows(NotFoundException.class, () ->
                 service.getWithCourse(12));
+    }
+
+    @Test
+    void enable() {
+        service.enable(STUDENT_ID, false);
+        assertFalse(service.get(STUDENT_ID).isEnabled());
+        service.enable(STUDENT_ID, true);
+        assertTrue(service.get(STUDENT_ID).isEnabled());
     }
 }

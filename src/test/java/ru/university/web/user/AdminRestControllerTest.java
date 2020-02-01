@@ -11,6 +11,7 @@ import ru.university.util.exception.NotFoundException;
 import ru.university.web.AbstractControllerTest;
 import ru.university.web.json.JsonUtil;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -82,6 +83,17 @@ class AdminRestControllerTest extends AbstractControllerTest {
         newUser.setId(newId);
         assertMatch(created, newUser);
         assertMatch(userService.get(newId), newUser);
+    }
+
+    @Test
+    void enable() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.patch(REST_URL + STUDENT_ID)
+                .param("enabled", "false")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+
+        assertFalse(userService.get(STUDENT_ID).isEnabled());
     }
 
 }

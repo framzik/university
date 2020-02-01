@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.university.model.User;
 import ru.university.repository.UserRepository;
@@ -46,6 +47,13 @@ public class UserService {
     public   void update(User entity)  {
         Assert.notNull(entity, "user must not be null");
         checkNotFoundWithId(repository.save(entity), entity.getId());
+    }
+
+    @CacheEvict(value = "users", allEntries = true)
+    @Transactional
+    public void enable(int id, boolean enabled) {
+        User user = get(id);
+        user.setEnabled(enabled);
     }
 
     public User  getWithCourse(int id) {
