@@ -1,7 +1,6 @@
 package ru.university.to;
 
-public class UserTo {
-    private Integer id;
+public class UserTo extends BaseTo {
 
     private String name;
 
@@ -14,20 +13,13 @@ public class UserTo {
     }
 
     public UserTo(Integer id, String name, String email, String password, String address) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.email = email;
         this.password = password;
         this.address = address;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getPassword() {
         return password;
@@ -53,9 +45,6 @@ public class UserTo {
         this.email = email;
     }
 
-    public boolean isNew() {
-        return id == null;
-    }
     public String getAddress() {
         return address;
     }

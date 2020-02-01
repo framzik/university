@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.university.model.User;
 import ru.university.repository.UserRepository;
+import ru.university.to.UserTo;
+import ru.university.util.Util;
 
 import java.util.Collection;
 import java.util.List;
@@ -46,7 +48,13 @@ public class UserService {
     @CacheEvict(value = "users", allEntries = true)
     public   void update(User entity)  {
         Assert.notNull(entity, "user must not be null");
-        checkNotFoundWithId(repository.save(entity), entity.getId());
+        repository.save(entity);
+    }
+    @CacheEvict(value = "users", allEntries = true)
+    @Transactional
+    public void update(UserTo userTo) {
+        User user = get(userTo.id());
+        repository.save(Util.updateFromTo(user, userTo));
     }
 
     @CacheEvict(value = "users", allEntries = true)
