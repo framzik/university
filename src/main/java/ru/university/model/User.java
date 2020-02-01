@@ -6,6 +6,7 @@ import org.springframework.util.CollectionUtils;
 import org.hibernate.annotations.Cache;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -24,8 +25,14 @@ public class User extends AbstractNamedEntity {
     public static final String ALL_SORTED = "User.getAllSorted";
     public static final String BYEMAIL = "User.getByEmail";
     @Column(name = "email")
+    @Email
+    @NotBlank
+    @Size(max = 100)
     protected String email;
+
     @Column(name = "password")
+    @NotBlank
+    @Size(min = 5, max = 32)
     private String password;
 
     @Column(name = "enabled")

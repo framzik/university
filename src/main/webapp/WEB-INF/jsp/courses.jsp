@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -69,7 +69,7 @@
                     <td>${course.name}</td>
                     <td>${course.number}</td>
                     <td>${course.cost}</td>
-                    <td><a><span class="fa fa-pencil"></span></a></td>
+                    <td><a onclick="updateRow(${course.id})"><span class="fa fa-pencil"></span></a></td>
                     <td><a onclick="deleteRow(${course.id})"><span class="fa fa-remove"></span></a></td>
                 </tr>
             </c:forEach>

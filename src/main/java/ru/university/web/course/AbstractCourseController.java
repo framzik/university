@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import ru.university.model.Course;
 import ru.university.service.CourseService;
+import ru.university.to.CourseTo;
+import ru.university.util.Util;
 import ru.university.web.SecurityUtil;
 
 import java.util.List;
@@ -50,11 +52,25 @@ public abstract class AbstractCourseController {
         log.info("create {} for user {}", course, userId);
         return service.create(course, userId);
     }
+    public Course create(CourseTo courseTo) {
+        int userId = SecurityUtil.authUserId();
+        checkNew(courseTo);
+        log.info("create {} for user {}", courseTo, userId);
+        return service.create(Util.createNewCourseFromTo(courseTo), userId);
+    }
 
     public void update(Course course, int id) {
         int userId = SecurityUtil.authUserId();
         assureIdConsistent(course, id);
         log.info("update {} for user {}", course, userId);
         service.update(course, userId);
+    }
+
+    public void update(CourseTo courseTo, int id) {
+        int userId = SecurityUtil.authUserId();
+        assureIdConsistent(courseTo, id);
+        log.info("update {} with id={}", courseTo, id);
+        assureIdConsistent(courseTo, id);
+        service.update(courseTo,userId);
     }
 }

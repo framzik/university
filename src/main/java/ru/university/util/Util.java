@@ -1,8 +1,10 @@
 package ru.university.util;
 
 import org.springframework.lang.Nullable;
+import ru.university.model.Course;
 import ru.university.model.Role;
 import ru.university.model.User;
+import ru.university.to.CourseTo;
 import ru.university.to.UserTo;
 
 public class Util {
@@ -23,5 +25,15 @@ public class Util {
         user.setPassword(userTo.getPassword());
         user.setAddress(userTo.getAddress());
         return user;
+    }
+
+    public static Course createNewCourseFromTo(CourseTo courseTo) {
+        return new Course(null, courseTo.getName(), courseTo.getNumber(),courseTo.getCost());
+    }
+    public static Course updateFromTo(Course course, CourseTo courseTo) {
+        course.setName(courseTo.getName());
+        course.setNumber(courseTo.getNumber());
+        course.setCost(courseTo.getCost());
+        return course;
     }
 }

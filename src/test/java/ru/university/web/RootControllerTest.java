@@ -39,13 +39,6 @@ public class RootControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("courses"))
-                .andExpect(forwardedUrl("/WEB-INF/jsp/courses.jsp"))
-                .andExpect(model().attribute("courses",
-                        new AssertionMatcher<List<Course>>() {
-                            @Override
-                            public void assertion(List<Course> actual) throws AssertionError {
-                                assertMatch(actual,COURSE_2, COURSE_3, COURSE_1 );
-                            }
-                        }));
+                .andExpect(forwardedUrl("/WEB-INF/jsp/courses.jsp"));
     }
 }

@@ -5,9 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import ru.university.CourseTestData;
 import ru.university.model.Course;
 import ru.university.service.CourseService;
+import ru.university.to.CourseTo;
+import ru.university.util.Util;
 import ru.university.util.exception.NotFoundException;
 import ru.university.web.AbstractControllerTest;
 import ru.university.web.json.JsonUtil;
@@ -18,7 +19,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.university.CourseTestData.*;
 import static ru.university.TestUtil.readFromJson;
-import static ru.university.UserTestData.GRIGOREV;
 import static ru.university.UserTestData.STUDENT_ID;
 
 class CourseRestControllerTest extends AbstractControllerTest {
@@ -56,12 +56,12 @@ class CourseRestControllerTest extends AbstractControllerTest {
 
     @Test
     void update() throws Exception {
-        Course updated = CourseTestData.getUpdated();
+        CourseTo updated = new CourseTo(null, "newName", 9966, 15200f);
         mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + STUDENT_COURSE_ID).contentType(MediaType.APPLICATION_JSON).content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent())
                 .andDo(print());
 
-        assertMatch(courseService.get(STUDENT_COURSE_ID, STUDENT_ID), updated);
+        assertMatch(courseService.get(STUDENT_COURSE_ID, STUDENT_ID),  Util.updateFromTo(COURSE_1, updated));
     }
 
     @Test

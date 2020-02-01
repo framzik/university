@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.university.service.CourseService;
-import ru.university.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,8 +13,7 @@ import static ru.university.web.SecurityUtil.authUserId;
 
 @Controller
 public class RootController {
-    @Autowired
-    UserService userService;
+
     @Autowired
     CourseService courseService;
 
@@ -25,8 +23,7 @@ public class RootController {
     }
 
     @GetMapping("/users")
-    public String getUsers(Model model) {
-        model.addAttribute("users", userService.getAll());
+    public String getUsers() {
         return "users";
     }
 

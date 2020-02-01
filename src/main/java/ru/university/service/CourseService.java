@@ -2,9 +2,12 @@ package ru.university.service;
 
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.university.model.Course;
 import ru.university.repository.CourseRepository;
+import ru.university.to.CourseTo;
+import ru.university.util.Util;
 
 import java.util.List;
 
@@ -37,7 +40,13 @@ public class CourseService {
 
     public void update(Course course, int userId)  {
         Assert.notNull(course, "course must not be null");
-        checkNotFoundWithId(repository.save(course, userId), course.getId());
+        repository.save(course, userId);
+    }
+
+    @Transactional
+    public void update(CourseTo courseTo,int userId) {
+        Course course = get(courseTo.id(),userId);
+        repository.save(Util.updateFromTo(course, courseTo),userId);
     }
 
     public List<Course> getBetweenCost(@Nullable float startCost, @Nullable float endCost, int userId) {
