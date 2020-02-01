@@ -19,16 +19,16 @@ public class CourseUIController extends AbstractCourseController {
     @Override
     @DeleteMapping("/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("id") int id) {
+    public void delete(@PathVariable int id) {
         super.delete(id);
     }
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void createOrUpdate(@RequestParam("id") Integer id,
-                               @RequestParam("name") String name,
-                               @RequestParam("number") int number,
-                               @RequestParam("cost") float cost) {
+    public void createOrUpdate(@RequestParam Integer id,
+                               @RequestParam String name,
+                               @RequestParam int number,
+                               @RequestParam float cost) {
         Course course = new Course(id, name, number, cost);
         if (course.isNew()) {
             super.create(course);
@@ -37,8 +37,8 @@ public class CourseUIController extends AbstractCourseController {
 
     @Override
     @GetMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Course> getBetween(@RequestParam("startCost") float startCost,
-                                   @RequestParam("endCost") float endCost) {
+    public List<Course> getBetween(@RequestParam float startCost,
+                                   @RequestParam float endCost) {
         return super.getBetween(startCost, endCost);
     }
 }

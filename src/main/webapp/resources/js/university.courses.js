@@ -8,7 +8,7 @@ function updateFilteredTable() {
 
 $(function () {
     makeEditable({
-        ajaxUrl: "ajax/profile/courses/filter",
+        ajaxUrl: "ajax/profile/courses/",
         datatableApi: $("#datatable").DataTable({
             "paging": false,
             "info": true,

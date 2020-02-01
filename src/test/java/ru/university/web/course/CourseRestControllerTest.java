@@ -82,7 +82,7 @@ class CourseRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getBetween() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "between?startCost=15000&endCost=16000"))
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "filter?startCost=15000&endCost=16000"))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(contentJson(COURSE_2, COURSE_1));

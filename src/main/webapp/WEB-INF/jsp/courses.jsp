@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <html>
@@ -12,6 +13,10 @@
 <div class="jumbotron pt-4">
     <div class="container">
         <h3 class="text-center"><spring:message code="course.title"/></h3>
+        <button class="btn btn-primary" onclick="add()">
+            <span class="fa fa-plus"></span>
+            <spring:message code="app.add"/>
+        </button>
 
         <div class="card border-dark">
             <div class="card-body pb-0">
@@ -19,20 +24,18 @@
 
                     <div class="row">
 
-                        <div class="col-3">
+                        <div class="col-5">
                             <label for="startCost"><spring:message code="course.fromCost"/></label>
-                            <input class="form-control" type="number" name="startCost" id="startCost">
+                            <input class="form-control" value="0"  type="number" name="startCost" id="startCost">
                         </div>
 
-                        <div class="col-3">
+                        <div class="col-5">
                             <label for="endCost"><spring:message code="course.toCost"/></label>
-                            <input class="form-control" type="number" name="endCost" id="endCost">
+                            <input class="form-control" value="250000" type="number" name="endCost" id="endCost">
                         </div>
 
                     </div>
-
                 </form>
-
             </div>
 
             <div class="card-footer text-right">
@@ -43,20 +46,19 @@
             </div>
         </div>
 
+
         <br/>
-        <button class="btn btn-primary" onclick="add()">
-            <span class="fa fa-plus"></span>
-            <spring:message code="app.add"/>
-        </button>
         <table class="table table-striped" id="datatable">
             <thead>
             <tr>
                 <th><spring:message code="course.name"/></th>
                 <th><spring:message code="course.number"/></th>
                 <th><spring:message code="course.cost"/></th>
+                <th></th>
+                <th></th>
             </tr>
-            </thead>
 
+            </thead>
             <c:forEach items="${courses}" var="course">
                 <jsp:useBean id="course" type="ru.university.model.Course"/>
                 <tr data-cost=${course.cost<16000}>
@@ -74,10 +76,12 @@
 <div class="modal fade" tabindex="-1" id="editRow">
     <div class="modal-dialog">
         <div class="modal-content">
+
             <div class="modal-header">
-                <h4 class="modal-title" id="modalTitle"><spring:message code="course.add"/></h4>
+                <h4 class="modal-title"><spring:message code="course.add"/></h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
+
             <div class="modal-body">
                 <form id="detailsForm">
                     <input type="hidden" id="id" name="id">
@@ -96,8 +100,10 @@
 
                     <div class="form-group">
                         <label for="cost" class="col-form-label"><spring:message code="course.cost"/></label>
-                        <input type="number" class="form-control" id="cost" name="cost" placeholder="<spring:message code="course.cost"/>">
+                        <input type="number" class="form-control" id="cost" name="cost"
+                               placeholder="<spring:message code="course.cost"/>">
                     </div>
+
                 </form>
             </div>
 
@@ -111,10 +117,10 @@
                     <spring:message code="app.save"/>
                 </button>
             </div>
+
         </div>
     </div>
 </div>
-
 
 <jsp:include page="fragments/footer.jsp"/>
 </body>

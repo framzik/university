@@ -52,7 +52,7 @@ public class CourseRestController extends AbstractCourseController {
     }
 
     @Override
-    @GetMapping("/between")
+    @GetMapping("/filter")
     public List<Course> getBetween(@RequestParam float startCost,@RequestParam float endCost) {
         return super.getBetween(startCost, endCost);
     }
