@@ -15,6 +15,10 @@ $(function () {
     makeEditable({
         ajaxUrl: "ajax/profile/courses/",
         datatableApi: $("#datatable").DataTable({
+            "ajax": {
+                "url": "ajax/profile/courses/",
+                "dataSrc": ""
+            },
             "paging": false,
             "info": true,
             "columns": [
@@ -28,12 +32,14 @@ $(function () {
                     "data": "cost"
                 },
                 {
-                    "defaultContent": "Edit",
-                    "orderable": false
+                    "orderable": false,
+                    "defaultContent": "",
+                    "render": renderEditBtn
                 },
                 {
-                    "defaultContent": "Delete",
-                    "orderable": false
+                    "orderable": false,
+                    "defaultContent": "",
+                    "render": renderDeleteBtn
                 }
             ],
             "order": [

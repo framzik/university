@@ -63,16 +63,7 @@
             </tr>
 
             </thead>
-            <c:forEach items="${courses}" var="course">
-                <jsp:useBean id="course" type="ru.university.model.Course"/>
-                <tr data-cost=${course.cost<16000}>
-                    <td>${course.name}</td>
-                    <td>${course.number}</td>
-                    <td>${course.cost}</td>
-                    <td><a onclick="updateRow(${course.id})"><span class="fa fa-pencil"></span></a></td>
-                    <td><a onclick="deleteRow(${course.id})"><span class="fa fa-remove"></span></a></td>
-                </tr>
-            </c:forEach>
+
         </table>
     </div>
 </div>
