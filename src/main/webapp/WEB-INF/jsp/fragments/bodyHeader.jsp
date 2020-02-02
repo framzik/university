@@ -6,8 +6,8 @@
         <a href="${pageContext.request.contextPath}/courses" class="navbar-brand"><img src="resources/images/icon-university.png"> <spring:message code="app.title"/></a>
         <form class="form-inline my-2">
             <a class="btn btn-info mr-1" href="users"><spring:message code="user.title"/></a>
-            <a class="btn btn-primary" href="">
-                <span class="fa fa-sign-in"></span>
+            <a class="btn btn-primary" href="logout">
+                <span class="fa fa-sign-out"></span>
             </a>
         </form>
     </div>
