@@ -11,6 +11,9 @@ import ru.university.web.user.AdminRestController;
 import java.util.Arrays;
 import java.util.List;
 
+import static ru.university.TestUtil.mockAuthorize;
+import static ru.university.UserTestData.YAMCHEKOV;
+
 public class SpringMain {
     public static void main(String[] args) {
 
@@ -19,7 +22,7 @@ public class SpringMain {
             AdminRestController adminUserController = appCtx.getBean(AdminRestController.class);
             adminUserController.getAll();
             System.out.println();
-
+            mockAuthorize(YAMCHEKOV);
             CourseRestController courseRestController = appCtx.getBean(CourseRestController.class);
             List<Course> courses = courseRestController.getBetween(15000f, 16800f);
             courses.forEach(System.out::println);

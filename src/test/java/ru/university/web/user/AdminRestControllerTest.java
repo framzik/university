@@ -17,6 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.university.TestUtil.readFromJson;
+import static ru.university.TestUtil.userHttpBasic;
 import static ru.university.UserTestData.*;
 
 class AdminRestControllerTest extends AbstractControllerTest {
@@ -27,7 +28,8 @@ class AdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + PROFESSOR_ID))
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + PROFESSOR_ID)
+                .with(userHttpBasic(GRIGOREV)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -36,7 +38,8 @@ class AdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getByMail() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "by?email=" + GRIGOREV.getEmail()))
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "by?email=" + GRIGOREV.getEmail())
+                .with(userHttpBasic(GRIGOREV)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(contentJson(GRIGOREV));
@@ -45,15 +48,30 @@ class AdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void delete() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + STUDENT_ID))
+        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + STUDENT_ID)
+                .with(userHttpBasic(GRIGOREV)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
         assertThrows(NotFoundException.class, () -> userService.get(STUDENT_ID));
     }
 
     @Test
-    void getAll() throws Exception {
+    void getUnAuth() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get(REST_URL))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void getForbidden() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL)
+                .with(userHttpBasic(SAVCHYK)))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void getAll() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL)
+                .with(userHttpBasic(GRIGOREV)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(contentJson(BELYALOV, GRIGOREV, NOVOGILOV, SAVCHYK, STAROSTENKO, YAMCHEKOV));
@@ -64,6 +82,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
         User updated = getUpdated();
         mockMvc.perform(MockMvcRequestBuilders.put(REST_URL+STUDENT_ID)
                 .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(YAMCHEKOV))
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent());
 
@@ -75,6 +94,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
         User newUser = getNew();
         ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(YAMCHEKOV))
                 .content(JsonUtil.writeValue(newUser)))
                 .andExpect(status().isCreated());
 
@@ -89,7 +109,8 @@ class AdminRestControllerTest extends AbstractControllerTest {
     void enable() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.patch(REST_URL + STUDENT_ID)
                 .param("enabled", "false")
-                .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(YAMCHEKOV)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
 

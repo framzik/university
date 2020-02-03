@@ -11,31 +11,33 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static ru.university.CourseTestData.*;
+import static ru.university.TestUtil.userAuth;
 import static ru.university.UserTestData.*;
 
 public class RootControllerTest extends AbstractControllerTest {
 
     @Test
      void getUsers() throws Exception {
-        mockMvc.perform(get("/users"))
+        mockMvc.perform(get("/users")
+                .with(userAuth(GRIGOREV)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("users"))
-                .andExpect(forwardedUrl("/WEB-INF/jsp/users.jsp"))
-                .andExpect(model().attribute("users",
-                        new AssertionMatcher<List<User>>() {
-                            @Override
-                            public void assertion(List<User> actual) throws AssertionError {
-                                assertMatch(actual, BELYALOV, GRIGOREV, NOVOGILOV, SAVCHYK, STAROSTENKO, YAMCHEKOV);
-                            }
-                        }
-                ));
+                .andExpect(forwardedUrl("/WEB-INF/jsp/users.jsp"));
     }
 
+    @Test
+    void unAuth() throws Exception {
+        mockMvc.perform(get("/users"))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("http://localhost/login"));
+    }
 
     @Test
     void testCourses() throws Exception {
-        mockMvc.perform(get("/courses"))
+        mockMvc.perform(get("/courses")
+                .with(userAuth(GRIGOREV)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("courses"))
