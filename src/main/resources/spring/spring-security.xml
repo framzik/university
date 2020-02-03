@@ -31,12 +31,8 @@
     </http>
 
     <authentication-manager>
-        <authentication-provider>
+        <authentication-provider user-service-ref="userService">
             <password-encoder ref="noopEncoder"/>
-            <user-service>
-                <user name="fr@ya.ru" password="password" authorities="ROLE_STUDENT"/>
-                <user name="gr@ya.ru" password="password" authorities="ROLE_PROFESSOR"/>
-            </user-service>
         </authentication-provider>
     </authentication-manager>
 </beans:beans>

@@ -20,8 +20,7 @@ VALUES ('1','ROLE_STUDENT'),
        ('3','ROLE_PROFESSOR'),
        ('4','ROLE_STUDENT'),
        ('5','ROLE_STUDENT'),
-       ('6','ROLE_STUDENT'),
-       ('1', 'ROLE_PROFESSOR');
+       ('6','ROLE_STUDENT');
 
 
 INSERT INTO professors(user_id, telephone, cost)
@@ -38,6 +37,9 @@ INSERT INTO university_courses (user_id, name, number, cost)
 VALUES (1,'Теормех', 666, 15250.0),
        (1,'Мат. анализ', 669, 15900.0),
        (1,'Теория струн', 668, 16900.0),
+       (6,'Начерталка', 670, 15251.0),
+       (6,'Англ. язык', 671, 25900.0),
+       (6,'Основы программирования', 672, 16999.0),
        (2,'Капитализм', 34, 255),
        (2,'Марксизм', 35, 275);
 

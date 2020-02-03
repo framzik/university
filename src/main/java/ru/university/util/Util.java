@@ -19,6 +19,11 @@ public class Util {
     public static User createNewUserFromTo(UserTo userTo) {
         return new User(null, userTo.getName(), userTo.getEmail().toLowerCase(), userTo.getPassword(), userTo.getAddress(), Role.ROLE_STUDENT);
     }
+
+    public static UserTo asTo(User user) {
+        return new UserTo(user.getId(), user.getName(), user.getEmail(), user.getPassword(), user.getAddress());
+    }
+
     public static User updateFromTo(User user, UserTo userTo) {
         user.setName(userTo.getName());
         user.setEmail(userTo.getEmail().toLowerCase());
@@ -36,4 +41,5 @@ public class Util {
         course.setCost(courseTo.getCost());
         return course;
     }
+
 }
