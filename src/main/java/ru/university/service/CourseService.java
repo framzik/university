@@ -40,7 +40,7 @@ public class CourseService {
 
     public void update(Course course, int userId)  {
         Assert.notNull(course, "course must not be null");
-        repository.save(course, userId);
+        checkNotFoundWithId(repository.save(course, userId), course.getId());
     }
 
     @Transactional

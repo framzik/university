@@ -31,16 +31,23 @@ class CourseRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + STUDENT_COURSE_ID))
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + STUDENT_COURSE_ID)
+                .with(userHttpBasic(YAMCHEKOV)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJson(COURSE_1));
     }
+    @Test
+    void getUnauth() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL))
+                .andExpect(status().isUnauthorized());
+    }
 
     @Test
     void delete() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + STUDENT_COURSE_ID))
+        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + STUDENT_COURSE_ID)
+                .with(userHttpBasic(YAMCHEKOV)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
@@ -60,7 +67,7 @@ class CourseRestControllerTest extends AbstractControllerTest {
     @Test
     void update() throws Exception {
         CourseTo updated = new CourseTo(null, "newName", 9966, 15200f);
-        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + STUDENT_COURSE_ID).contentType(MediaType.APPLICATION_JSON).content(JsonUtil.writeValue(updated)))
+        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + STUDENT_COURSE_ID).with(userHttpBasic(YAMCHEKOV)).contentType(MediaType.APPLICATION_JSON).content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent())
                 .andDo(print());
 
@@ -71,6 +78,7 @@ class CourseRestControllerTest extends AbstractControllerTest {
     void createWithLocation() throws Exception {
         Course newCourse = CourseTestData.getNew();
         ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
+                .with(userHttpBasic(YAMCHEKOV))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(JsonUtil.writeValue(newCourse)))
                 .andExpect(status().isCreated());
@@ -84,10 +92,19 @@ class CourseRestControllerTest extends AbstractControllerTest {
 
 
     @Test
-    void getBetween() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "filter?startCost=15000&endCost=16000"))
+    void filter() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "filter?startCost=15000&endCost=16000").with(userHttpBasic(YAMCHEKOV)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(contentJson(COURSE_2, COURSE_1));
     }
+
+    @Test
+    void filterAll() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "filter?startCost=&endCost=").with(userHttpBasic(YAMCHEKOV)))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(contentJson(COURSE_2, COURSE_3, COURSE_1));
+    }
+
 }

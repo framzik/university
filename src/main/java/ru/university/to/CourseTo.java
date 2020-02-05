@@ -1,13 +1,13 @@
 package ru.university.to;
 
+import java.beans.ConstructorProperties;
+
 public class CourseTo extends BaseTo {
-    String name;
-    int number;
-    float cost;
+    private final String name;
+    private final int number;
+    private final float cost;
 
-    public CourseTo() {
-    }
-
+    @ConstructorProperties({"id", "name", "number", "cost", "cheep"})
     public CourseTo(Integer id, String name, int number, float cost) {
         super(id);
         this.name = name;
@@ -19,24 +19,32 @@ public class CourseTo extends BaseTo {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getNumber() {
         return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
     }
 
     public float getCost() {
         return cost;
     }
 
-    public void setCost(float cost) {
-        this.cost = cost;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CourseTo courseTo = (CourseTo) o;
+
+        if (number != courseTo.number) return false;
+        if (Float.compare(courseTo.cost, cost) != 0) return false;
+        return name != null ? name.equals(courseTo.name) : courseTo.name == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + number;
+        result = 31 * result + (cost != +0.0f ? Float.floatToIntBits(cost) : 0);
+        return result;
     }
 
     @Override

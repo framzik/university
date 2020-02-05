@@ -1,18 +1,19 @@
-tr[data-cost="false"] {
+tr[data-courseCost="false"] {
     color: green;
 }
-
-tr[data-cost="true"] {
+tr[data-courseCost="true"] {
     color: red;
 }
-
+.blue {
+    color: blue;
+    text-decoration : underline;
+}
 .fa {
     cursor: pointer;
 }
 tr[data-userEnabled="false"] {
     opacity: 0.3;
 }
-
 .error, .message {
     padding: 10px;
     border-radius: 4px;

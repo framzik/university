@@ -51,9 +51,15 @@ public class CourseRestController extends AbstractCourseController {
         super.update(course, id);
     }
 
-    @Override
+
     @GetMapping("/filter")
-    public List<Course> getBetween(@RequestParam float startCost,@RequestParam float endCost) {
+    public List<Course> getBetween(@RequestParam Float startCost,@RequestParam Float endCost) {
+        if(startCost==null){
+            startCost=0f;
+        }
+        if(endCost==null){
+            endCost=250000f;
+        }
         return super.getBetween(startCost, endCost);
     }
 

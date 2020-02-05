@@ -26,6 +26,7 @@ $(function () {
                 },
                 {
                     "data": "cost"
+                    // "className": "blue"
                 },
                 {
                     "render": renderEditBtn,
@@ -44,9 +45,16 @@ $(function () {
                     "desc"
                 ]
             ],
-        "createdRow": function (row, data, dataIndex) {
-            $(row).attr("data-cost", data.more);
-        },
+            "rowCallback":
+                function (row, data) {
+                //debugger;
+                if(data["cost"]>16000){
+                    $(row).attr("data-courseCost", false);
+                } else {
+                    $(row).attr("data-courseCost", true);
+                }
+                // else $('td', row).css('background-color', 'Green');
+            },
     },
         updateTable: updateFilteredTable
     });
