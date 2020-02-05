@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.university.model.User;
 import ru.university.to.UserTo;
+import ru.university.util.ValidationUtil;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -38,18 +39,7 @@ public class AdminUIController extends AbstractUserController {
     @PostMapping
     public ResponseEntity<String> createOrUpdate(@Valid UserTo userTo, BindingResult result) {
         if (result.hasErrors()) {
-            StringJoiner joiner = new StringJoiner("<br>");
-            result.getFieldErrors().forEach(
-                    fe -> {
-                        String msg = fe.getDefaultMessage();
-                        if (msg != null) {
-                            if (!msg.startsWith(fe.getField())) {
-                                msg = fe.getField() + ' ' + msg;
-                            }
-                            joiner.add(msg);
-                        }
-                    });
-            return ResponseEntity.unprocessableEntity().body(joiner.toString());
+            return ValidationUtil.getErrorResponse(result);
         }
         if (userTo.isNew()) {
             super.create(userTo);

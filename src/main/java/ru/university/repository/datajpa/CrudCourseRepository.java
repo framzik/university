@@ -30,6 +30,6 @@ public interface CrudCourseRepository extends JpaRepository<Course, Integer> {
     @Query("SELECT c FROM Course c WHERE c.user.id = :userId AND c.cost>= :startCost AND c.cost<= :endCost order by c.name")
     List<Course> getBetweenCost(@Param("startCost") float startCost, @Param("endCost") float endCost, @Param("userId") int userId);
 
-    @Query("SELECT c FROM Course c JOIN FETCH c.user where c.id=:id AND c.user.id=:userId ")
-    Course getWithUser(@Param("id") int id,@Param("userId") int userId);
+    @Query("SELECT c FROM Course c JOIN FETCH c.user where c.id=?1 AND c.user.id=?2")
+    Course getWithUser(int id, int userId);
 }

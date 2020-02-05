@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import ru.university.CourseTestData;
 import ru.university.model.Course;
 import ru.university.service.CourseService;
 import ru.university.to.CourseTo;
@@ -19,7 +20,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.university.CourseTestData.*;
 import static ru.university.TestUtil.readFromJson;
-import static ru.university.UserTestData.STUDENT_ID;
+import static ru.university.TestUtil.userHttpBasic;
+import static ru.university.UserTestData.*;
 
 class CourseRestControllerTest extends AbstractControllerTest {
     public static final String REST_URL = "/rest/courses/";
@@ -47,7 +49,8 @@ class CourseRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getAll() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL))
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL)
+                .with(userHttpBasic(YAMCHEKOV)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -66,7 +69,7 @@ class CourseRestControllerTest extends AbstractControllerTest {
 
     @Test
     void createWithLocation() throws Exception {
-        Course newCourse = getNew();
+        Course newCourse = CourseTestData.getNew();
         ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(JsonUtil.writeValue(newCourse)))

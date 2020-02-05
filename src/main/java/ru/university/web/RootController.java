@@ -14,9 +14,6 @@ import static ru.university.web.SecurityUtil.authUserId;
 @Controller
 public class RootController {
 
-    @Autowired
-    CourseService courseService;
-
     @GetMapping("/")
     public String root() {
         return "redirect:courses";
@@ -34,7 +31,6 @@ public class RootController {
 
     @GetMapping("/courses")
     public String getCourses(Model model) {
-        model.addAttribute("courses", courseService.getAll(authUserId()));
         return "courses";
     }
 }

@@ -35,7 +35,7 @@ public class RootControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void testCourses() throws Exception {
+    void getCourses() throws Exception {
         mockMvc.perform(get("/courses")
                 .with(userAuth(GRIGOREV)))
                 .andDo(print())

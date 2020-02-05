@@ -1,26 +1,22 @@
+var courseAjaxUrl = "ajax/profile/courses/";
 function updateFilteredTable() {
     $.ajax({
         type: "GET",
-        url: "ajax/profile/courses/filter",
+        url: courseAjaxUrl+"filter",
         data: $("#filter").serialize()
     }).done(updateTableByData);
 }
 
 function clearFilter() {
     $("#filter")[0].reset();
-    $.get("ajax/profile/courses/", updateTableByData);
+    $.get(courseAjaxUrl, updateTableByData);
 }
+
 
 $(function () {
     makeEditable({
-        ajaxUrl: "ajax/profile/courses/",
-        datatableApi: $("#datatable").DataTable({
-            "ajax": {
-                "url": "ajax/profile/courses/",
-                "dataSrc": ""
-            },
-            "paging": false,
-            "info": true,
+        ajaxUrl: courseAjaxUrl,
+        datatableOpts: {
             "columns": [
                 {
                     "data": "name"
@@ -32,14 +28,14 @@ $(function () {
                     "data": "cost"
                 },
                 {
-                    "orderable": false,
+                    "render": renderEditBtn,
                     "defaultContent": "",
-                    "render": renderEditBtn
+                    "orderable": false
                 },
                 {
-                    "orderable": false,
+                    "render": renderDeleteBtn,
                     "defaultContent": "",
-                    "render": renderDeleteBtn
+                    "orderable": false
                 }
             ],
             "order": [
@@ -47,8 +43,11 @@ $(function () {
                     0,
                     "desc"
                 ]
-            ]
-        }),
+            ],
+        "createdRow": function (row, data, dataIndex) {
+            $(row).attr("data-cost", data.more);
+        },
+    },
         updateTable: updateFilteredTable
     });
 });
