@@ -1,6 +1,7 @@
 package ru.university.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ public class RootController {
         return "redirect:courses";
     }
 
+    @Secured("ROLE_PROFESSOR")
     @GetMapping("/users")
     public String getUsers() {
         return "users";
