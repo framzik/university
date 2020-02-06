@@ -1,8 +1,9 @@
 package ru.university.model;
 
+import ru.university.View;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @NamedQueries({
         @NamedQuery(name = Course.DELETE, query = "DELETE FROM Course c WHERE c.id = :id AND c.user.id = :userId"),
@@ -29,6 +30,7 @@ public class Course extends AbstractNamedEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @NotNull(groups = View.Persist.class)
     private User user;
 
     public Course() {
