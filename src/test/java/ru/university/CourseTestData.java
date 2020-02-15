@@ -14,11 +14,14 @@ import static ru.university.TestUtil.readListFromJsonMvcResult;
 
 public class CourseTestData {
     public static final int STUDENT_COURSE_ID = 1;
-    public static final int PROFESSOR_COURSE_ID = 4;
+    public static final int PROFESSOR_COURSE_ID = 7;
 
     public static final Course COURSE_1 = new Course(STUDENT_COURSE_ID, "Теормех", 666, 15250.0f);
     public static final Course COURSE_2 = new Course(STUDENT_COURSE_ID + 1, "Мат. анализ", 669, 15900.0f);
     public static final Course COURSE_3 = new Course(STUDENT_COURSE_ID + 2, "Теория струн", 668, 16900.0f);
+    public static final Course COURSE_4 = new Course(STUDENT_COURSE_ID + 3,"Начерталка", 670, 15251.0f);
+    public static final Course COURSE_5 = new Course(STUDENT_COURSE_ID + 4,"Англ. язык", 671, 25900.0f);
+    public static final Course COURSE_6 = new Course(STUDENT_COURSE_ID + 5,"Основы программирования", 672, 16999.0f);
     public static final Course PROFESSOR_COURSE_1 = new Course(PROFESSOR_COURSE_ID, "Капитализм", 34, 255f);
     public static final Course PROFESSOR_COURSE_2 = new Course(PROFESSOR_COURSE_ID + 1, "Марксизм", 35, 275f);
 

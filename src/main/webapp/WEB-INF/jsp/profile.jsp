@@ -13,9 +13,9 @@
     <div class="container">
         <div class="row">
             <div class="col-5 offset-3">
-                <h3>${userTo.name} <spring:message code="app.profile"/></h3>
+                <h3>${userTo.name} <spring:message code="${register ? 'app.register' : 'app.profile'}"/></h3>
                 <%--@elvariable id="userTo" type="ru.university.to.UserTo"--%>
-                <form:form class="form-group" modelAttribute="userTo" method="post" action="profile"
+                <form:form class="form-group" modelAttribute="userTo" method="post" action="${register ? 'profile/register' : 'profile'}"
                            charset="utf-8" accept-charset="UTF-8">
 
                     <university:inputField labelCode="user.name" name="name"/>

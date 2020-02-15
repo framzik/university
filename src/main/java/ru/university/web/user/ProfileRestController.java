@@ -2,9 +2,13 @@ package ru.university.web.user;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.university.model.User;
 import ru.university.to.UserTo;
+
+import java.net.URI;
 
 import static ru.university.web.SecurityUtil.authUserId;
 
@@ -18,6 +22,16 @@ public class ProfileRestController extends AbstractUserController {
         return super.get(authUserId());
     }
 
+    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public ResponseEntity<User> register(@RequestBody UserTo userTo) {
+        User created = super.create(userTo);
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(REST_URL + "/{id}")
+                .buildAndExpand(created.getId()).toUri();
+
+        return ResponseEntity.created(uriOfNewResource).body(created);
+    }
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete() {

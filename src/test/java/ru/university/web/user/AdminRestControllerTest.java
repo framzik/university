@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.university.model.User;
 import ru.university.service.UserService;
@@ -37,6 +38,13 @@ class AdminRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    void getNotFound() throws Exception {
+        perform(doGet(REST_URL,100000).basicAuth(GRIGOREV))
+                .andExpect(status().isUnprocessableEntity())
+                .andDo(print());
+    }
+
+    @Test
     void getByMail() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "by?email=" + GRIGOREV.getEmail())
                 .with(userHttpBasic(GRIGOREV)))
@@ -53,6 +61,14 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
         assertThrows(NotFoundException.class, () -> userService.get(STUDENT_ID));
+    }
+
+    @Test
+    void deleteNotFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL+1000)
+        .with(userHttpBasic(GRIGOREV)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test

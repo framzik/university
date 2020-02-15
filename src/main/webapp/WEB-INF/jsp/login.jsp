@@ -19,6 +19,7 @@
 
         <sec:authorize access="isAnonymous()">
             <div class=pt-4>
+                <a class="btn btn-lg btn-success" href="profile/register"><spring:message code="app.register"/> &raquo;</a>
             <button type="submit" class="btn btn-lg btn-primary" onclick="login('fr@mail.ru', 'password')">
                 <spring:message code="app.login"/> <spring:message code="user.student"/>
             </button>

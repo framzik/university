@@ -26,6 +26,7 @@ import static ru.university.UserTestData.*;
 class CourseRestControllerTest extends AbstractControllerTest {
     public static final String REST_URL = "/rest/courses/";
 
+
     @Autowired
     private CourseService courseService;
 
@@ -38,6 +39,15 @@ class CourseRestControllerTest extends AbstractControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJson(COURSE_1));
     }
+
+    @Test
+    void getNotFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL+PROFESSOR_COURSE_ID)
+                .with(userHttpBasic(SAVCHYK)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+    }
+
     @Test
     void getUnauth() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get(REST_URL))
@@ -52,6 +62,14 @@ class CourseRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isNoContent());
 
         assertThrows(NotFoundException.class, () -> courseService.get(STUDENT_COURSE_ID, STUDENT_ID));
+    }
+
+    @Test
+    void deleteNotFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL+PROFESSOR_COURSE_ID)
+                .with(userHttpBasic(SAVCHYK)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
