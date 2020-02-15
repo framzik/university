@@ -19,11 +19,11 @@
 
         <sec:authorize access="isAnonymous()">
             <div class=pt-4>
-            <button type="submit" class="btn btn-lg btn-primary" onclick="login('fr@ya.ru', 'password')">
-                <spring:message code="app.login"/> Student
-            </button>
             <button type="submit" class="btn btn-lg btn-primary" onclick="login('fr@mail.ru', 'password')">
-                <spring:message code="app.login"/> Professor
+                <spring:message code="app.login"/> <spring:message code="user.student"/>
+            </button>
+            <button type="submit" class="btn btn-lg btn-primary" onclick="login('gr@ya.ru', 'password')">
+                <spring:message code="app.login"/> <spring:message code="user.professor"/>
             </button>
             </div>
         </sec:authorize>
