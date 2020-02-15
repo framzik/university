@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import ru.university.HasId;
 import ru.university.model.AbstractBaseEntity;
+import ru.university.util.exception.IllegalRequestDataException;
 import ru.university.util.exception.NotFoundException;
 
 import javax.validation.*;
@@ -36,7 +37,7 @@ public class ValidationUtil {
 
     public static void checkNew(HasId bean) {
         if (!bean.isNew()) {
-            throw new IllegalArgumentException(bean + " must be new (id=null)");
+            throw new IllegalRequestDataException(bean + " must be new (id=null)");
         }
     }
 
@@ -45,7 +46,7 @@ public class ValidationUtil {
         if (bean.isNew()) {
             bean.setId(id);
         } else if (bean.getId() != id) {
-            throw new IllegalArgumentException(bean + " must be with id=" + id);
+            throw new IllegalRequestDataException(bean + " must be with id=" + id);
         }
     }
 
