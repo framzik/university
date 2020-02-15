@@ -7,6 +7,8 @@ import ru.university.HasId;
 import ru.university.model.AbstractBaseEntity;
 import ru.university.util.exception.NotFoundException;
 
+import javax.validation.*;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ValidationUtil {
@@ -47,6 +49,32 @@ public class ValidationUtil {
         }
     }
 
+    public static Throwable getRootCause(Throwable t) {
+        Throwable result = t;
+        Throwable cause;
+
+        while (null != (cause = result.getCause()) && (result != cause)) {
+            result = cause;
+        }
+        return result;
+    }
+
+    private static final Validator validator;
+
+    static {
+        //  From Javadoc: implementations are thread-safe and instances are typically cached and reused.
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        //  From Javadoc: implementations of this interface must be thread-safe
+        validator = factory.getValidator();
+    }
+
+    public static <T> void validate(T bean) {
+        // https://alexkosarev.name/2018/07/30/bean-validation-api/
+        Set<ConstraintViolation<T>> violations = validator.validate(bean);
+        if (!violations.isEmpty()) {
+            throw new ConstraintViolationException(violations);
+        }
+    }
     public static ResponseEntity<String> getErrorResponse(BindingResult result) {
         return ResponseEntity.unprocessableEntity().body(
                 result.getFieldErrors().stream()
