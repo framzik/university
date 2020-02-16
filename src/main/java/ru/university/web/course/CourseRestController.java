@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.university.model.Course;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class CourseRestController extends AbstractCourseController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Course> createWithLocation(@RequestBody Course course) {
+    public ResponseEntity<Course> createWithLocation(@Valid @RequestBody Course course) {
         Course created = super.create(course);
         URI uriOfNewCourse = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL+"/{id}")
@@ -47,7 +48,7 @@ public class CourseRestController extends AbstractCourseController {
     @Override
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody Course course, @PathVariable int id) {
+    public void update(@Valid @RequestBody Course course, @PathVariable int id) {
         super.update(course, id);
     }
 

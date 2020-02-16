@@ -8,8 +8,10 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.university.TestUtil;
 import ru.university.UserTestData;
+import ru.university.model.Role;
 import ru.university.model.User;
 import ru.university.service.UserService;
+import ru.university.util.exception.ErrorType;
 import ru.university.util.exception.NotFoundException;
 import ru.university.web.AbstractControllerTest;
 import ru.university.web.json.JsonUtil;
@@ -17,8 +19,8 @@ import ru.university.web.json.JsonUtil;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static ru.university.TestUtil.readFromJson;
 import static ru.university.TestUtil.userHttpBasic;
 import static ru.university.UserTestData.*;
@@ -97,11 +99,8 @@ class AdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void update() throws Exception {
-        User updated = getUpdated();
-        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL+STUDENT_ID)
-                .contentType(MediaType.APPLICATION_JSON)
-                .with(userHttpBasic(YAMCHEKOV))
-                .content(JsonUtil.writeValue(updated)))
+        User updated = UserTestData.getUpdated();
+        perform(doPut(REST_URL, STUDENT_ID).jsonUserWithPassword(updated).basicAuth(GRIGOREV))
                 .andExpect(status().isNoContent());
 
         assertMatch(userService.get(STUDENT_ID), updated);
@@ -130,6 +129,26 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isNoContent());
 
         assertFalse(userService.get(STUDENT_ID).isEnabled());
+    }
+
+    @Test
+    void createInvalid() throws Exception {
+        User expected = new User(null, null, "", "newPass", "Stroibat 18", Role.ROLE_STUDENT, Role.ROLE_PROFESSOR);
+        perform(doPost(REST_URL).jsonBody(expected).basicAuth(GRIGOREV))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("$.type").value(ErrorType.VALIDATION_ERROR.name()))
+                .andDo(print());
+    }
+
+    @Test
+    void updateInvalid() throws Exception {
+        User updated = new User(SAVCHYK);
+        updated.setName("");
+        perform(doPut(REST_URL, SAVCHYK.getId()).jsonBody(updated).basicAuth(GRIGOREV))
+                .andExpect(status().isUnprocessableEntity())
+                .andDo(print())
+                .andExpect(jsonPath("$.type").value(ErrorType.VALIDATION_ERROR.name()))
+                .andDo(print());
     }
 
 }

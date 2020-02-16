@@ -10,12 +10,12 @@ import ru.university.model.User;
 import ru.university.service.UserService;
 import ru.university.to.UserTo;
 import ru.university.util.Util;
+import ru.university.util.exception.ErrorType;
 import ru.university.web.AbstractControllerTest;
 import ru.university.web.json.JsonUtil;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static ru.university.TestUtil.readFromJson;
 import static ru.university.TestUtil.userHttpBasic;
 import static ru.university.UserTestData.*;
@@ -76,5 +76,16 @@ class ProfileRestControllerTest extends AbstractControllerTest {
         newUser.setId(newId);
         assertMatch(created,newUser);
         assertMatch(userService.get(newId),newUser);
+    }
+
+    @Test
+    void updateInvalid() throws Exception {
+        UserTo updatedTo = new UserTo(null, null, "password", null, "new Address");
+
+        perform(doPut(REST_URL).jsonBody(updatedTo).basicAuth(SAVCHYK))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("$.type").value(ErrorType.VALIDATION_ERROR.name()))
+                .andDo(print());
     }
 }

@@ -10,14 +10,15 @@ import ru.university.model.Course;
 import ru.university.service.CourseService;
 import ru.university.to.CourseTo;
 import ru.university.util.Util;
+import ru.university.util.exception.ErrorType;
 import ru.university.util.exception.NotFoundException;
 import ru.university.web.AbstractControllerTest;
 import ru.university.web.json.JsonUtil;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static ru.university.CourseTestData.*;
 import static ru.university.TestUtil.readFromJson;
 import static ru.university.TestUtil.userHttpBasic;
@@ -123,6 +124,26 @@ class CourseRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(contentJson(COURSE_2, COURSE_3, COURSE_1));
+    }
+
+    @Test
+    void createInvalid() throws Exception {
+        Course invalid = new Course(null, null, 25554, 200f);
+        perform(doPost(REST_URL).jsonBody(invalid).basicAuth(GRIGOREV))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("$.type").value(ErrorType.VALIDATION_ERROR.name()))
+                .andDo(print());
+    }
+
+    @Test
+    void updateInvalid() throws Exception {
+        Course invalid = new Course(STUDENT_COURSE_ID, null, 0, 6000);
+        perform(doPut(REST_URL,STUDENT_COURSE_ID).jsonBody(invalid).basicAuth(SAVCHYK))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("$.type").value(ErrorType.VALIDATION_ERROR.name()))
+                .andDo(print());
     }
 
 }

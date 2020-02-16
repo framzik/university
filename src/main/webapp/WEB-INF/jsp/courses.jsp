@@ -74,7 +74,7 @@
 
             <div class="modal-header">
                 <h4 class="modal-title"><spring:message code="course.add"/></h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" class="close" data-dismiss="modal" onclick="closeNoty()">&times;</button>
             </div>
 
             <div class="modal-body">
@@ -103,7 +103,7 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeNoty()">
                     <span class="fa fa-close"></span>
                     <spring:message code="app.cancel"/>
                 </button>
