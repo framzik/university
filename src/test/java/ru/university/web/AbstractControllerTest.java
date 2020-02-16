@@ -133,5 +133,10 @@ abstract public class AbstractControllerTest {
             builder.with(SecurityMockMvcRequestPostProcessors.authentication(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword())));
             return this;
         }
+
+        public RequestWrapper jsonUserWithPassword(User user) {
+            builder.contentType(MediaType.APPLICATION_JSON).content(JsonUtil.writeAdditionProps(user, "password", user.getPassword()));
+            return this;
+        }
     }
 }

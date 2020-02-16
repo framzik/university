@@ -6,6 +6,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import ru.university.TestUtil;
+import ru.university.UserTestData;
 import ru.university.model.User;
 import ru.university.service.UserService;
 import ru.university.util.exception.NotFoundException;
@@ -107,14 +109,11 @@ class AdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void createWithLocation() throws Exception {
-        User newUser = getNew();
-        ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
-                .contentType(MediaType.APPLICATION_JSON)
-                .with(userHttpBasic(YAMCHEKOV))
-                .content(JsonUtil.writeValue(newUser)))
+        User newUser = UserTestData.getNew();
+        ResultActions action = perform(doPost(REST_URL).jsonUserWithPassword(newUser).basicAuth(GRIGOREV))
                 .andExpect(status().isCreated());
 
-        User created = readFromJson(action,User.class);
+        User created = TestUtil.readFromJson(action, User.class);
         Integer newId = created.getId();
         newUser.setId(newId);
         assertMatch(created, newUser);
