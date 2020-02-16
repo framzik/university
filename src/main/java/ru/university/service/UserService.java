@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -18,19 +19,26 @@ import ru.university.web.AuthorizedUser;
 
 import java.util.List;
 
+import static ru.university.util.Util.prepareToSave;
 import static ru.university.util.ValidationUtil.checkNotFound;
 import static ru.university.util.ValidationUtil.checkNotFoundWithId;
 
 @Service("userService")
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class UserService implements UserDetailsService {
-    @Autowired
-    private UserRepository repository;
+    private final UserRepository repository;
+
+    private final PasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository repository,PasswordEncoder passwordEncoder ) {
+        this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @CacheEvict(value = "users", allEntries = true)
     public User create(User entity) {
         Assert.notNull(entity, "user must not be null");
-        return repository.save(entity);
+        return prepareAndSave(entity);
     }
 
     @CacheEvict(value = "users", allEntries = true)
@@ -55,14 +63,14 @@ public class UserService implements UserDetailsService {
     @CacheEvict(value = "users", allEntries = true)
     public void update(User entity) {
         Assert.notNull(entity, "user must not be null");
-        repository.save(entity);
+        prepareAndSave(entity);
     }
 
     @CacheEvict(value = "users", allEntries = true)
     @Transactional
     public void update(UserTo userTo) {
         User user = get(userTo.id());
-        repository.save(Util.updateFromTo(user, userTo));
+        prepareAndSave(Util.updateFromTo(user, userTo));
     }
 
     @CacheEvict(value = "users", allEntries = true)
@@ -83,5 +91,9 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("User " + email + " is not found");
         }
         return new AuthorizedUser(user);
+    }
+
+    private User prepareAndSave(User user) {
+        return repository.save(prepareToSave(user, passwordEncoder));
     }
 }

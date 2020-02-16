@@ -7,12 +7,12 @@ ALTER TABLE users AUTO_INCREMENT = 1;
 ALTER TABLE university_courses AUTO_INCREMENT = 1;
 
 INSERT INTO users(name, email, password, address )
-VALUES ('Ямчеков Н.А', 'fr@ya.ru', 'password', 'ул. Стокгольма 28'),
-       ('Григорьев Е.В.','gr@ya.ru','password','ул. Глушко 12В'),
-       ('Старостенко В.В', 'st@ya.ru', 'password','ул. Мамонтова 43'),
-       ('Белялов Л.Э','fr@yahoo.com','password', 'ул. Белогвардейцев 38' ),
-       ('Новожилов Э.А.','fr@gmail.com','password', 'ул. Васильков 34' ),
-       ('Савчук А.И', 'fr@mail.ru', 'password', 'ул. Самойловой 33');
+VALUES ('Ямчеков Н.А', 'fr@ya.ru', '{noop}password', 'ул. Стокгольма 28'),
+       ('Григорьев Е.В.','gr@ya.ru','{noop}password','ул. Глушко 12В'),
+       ('Старостенко В.В', 'st@ya.ru', '{noop}password','ул. Мамонтова 43'),
+       ('Белялов Л.Э','fr@yahoo.com','{noop}password', 'ул. Белогвардейцев 38' ),
+       ('Новожилов Э.А.','fr@gmail.com','{noop}password', 'ул. Васильков 34' ),
+       ('Савчук А.И', 'fr@mail.ru', '{noop}password', 'ул. Самойловой 33');
 
 INSERT INTO user_roles(user_id,role)
 VALUES ('1','ROLE_STUDENT'),

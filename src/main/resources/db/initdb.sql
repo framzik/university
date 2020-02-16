@@ -10,7 +10,7 @@ CREATE TABLE users(
                       id      INTEGER PRIMARY KEY AUTO_INCREMENT,
                       name    VARCHAR(100) NOT NULL,
                       email   VARCHAR(100) NOT NULL,
-                      password VARCHAR(25)  NOT NULL,
+                      password VARCHAR(100)  NOT NULL,
                       enabled          BOOL DEFAULT TRUE       NOT NULL,
                       registered       TIMESTAMP DEFAULT now() NOT NULL,
                       address VARCHAR(200) NOT NULL

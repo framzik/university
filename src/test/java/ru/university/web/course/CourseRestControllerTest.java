@@ -32,12 +32,12 @@ class CourseRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + STUDENT_COURSE_ID)
-                .with(userHttpBasic(YAMCHEKOV)))
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + 6)
+                .with(userHttpBasic(SAVCHYK)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(COURSE_1));
+                .andExpect(contentJson(COURSE_6));
     }
 
     @Test

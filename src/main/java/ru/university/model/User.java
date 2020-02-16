@@ -32,7 +32,7 @@ public class User extends AbstractNamedEntity {
 
     @Column(name = "password")
     @NotBlank
-    @Size(min = 5, max = 32)
+    @Size(min = 5, max = 100)
     private String password;
 
     @Column(name = "enabled")
