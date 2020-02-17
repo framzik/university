@@ -6,6 +6,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.university.TestUtil;
 import ru.university.UserTestData;
 import ru.university.model.Role;
@@ -24,6 +26,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static ru.university.TestUtil.readFromJson;
 import static ru.university.TestUtil.userHttpBasic;
 import static ru.university.UserTestData.*;
+import static ru.university.util.exception.ErrorType.VALIDATION_ERROR;
+import static ru.university.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_EMAIL;
 
 class AdminRestControllerTest extends AbstractControllerTest {
     public static final String REST_URL = AdminRestController.REST_URL + "/";
@@ -136,7 +140,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
         User expected = new User(null, null, "", "newPass", "Stroibat 18", Role.ROLE_STUDENT, Role.ROLE_PROFESSOR);
         perform(doPost(REST_URL).jsonBody(expected).basicAuth(GRIGOREV))
                 .andExpect(status().isUnprocessableEntity())
-                .andExpect(jsonPath("$.type").value(ErrorType.VALIDATION_ERROR.name()))
+                .andExpect(errorType(VALIDATION_ERROR))
                 .andDo(print());
     }
 
@@ -147,8 +151,31 @@ class AdminRestControllerTest extends AbstractControllerTest {
         perform(doPut(REST_URL, SAVCHYK.getId()).jsonBody(updated).basicAuth(GRIGOREV))
                 .andExpect(status().isUnprocessableEntity())
                 .andDo(print())
-                .andExpect(jsonPath("$.type").value(ErrorType.VALIDATION_ERROR.name()))
+                .andExpect(errorType(VALIDATION_ERROR))
                 .andDo(print());
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void updateDuplicate() throws Exception {
+        User updated = new User(SAVCHYK);
+        updated.setEmail("fr@ya.ru");
+        perform(doPut(REST_URL,SAVCHYK.getId()).jsonUserWithPassword(updated).basicAuth(GRIGOREV))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(errorType(VALIDATION_ERROR))
+                .andExpect(detailMessage(EXCEPTION_DUPLICATE_EMAIL))
+                .andDo(print());
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void createDuplicate() throws Exception {
+        User expected = new User(null, "New", "fr@ya.ru", "newPass", "Faster fl 98", Role.ROLE_STUDENT, Role.ROLE_PROFESSOR);
+        perform(doPost(REST_URL).jsonUserWithPassword(expected).basicAuth(GRIGOREV))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(errorType(VALIDATION_ERROR))
+                .andExpect(detailMessage(EXCEPTION_DUPLICATE_EMAIL));
+
     }
 
 }

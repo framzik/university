@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.util.CollectionUtils;
 import org.hibernate.annotations.Cache;
+import ru.university.HasEmail;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -21,7 +22,7 @@ import java.util.*;
 })
 @Entity
 @Table(name = "users")
-public class User extends AbstractNamedEntity {
+public class User extends AbstractNamedEntity implements HasEmail {
     public static final String DELETE = "User.delete";
     public static final String ALL_SORTED = "User.getAllSorted";
     public static final String BYEMAIL = "User.getByEmail";
@@ -83,7 +84,7 @@ public class User extends AbstractNamedEntity {
         setRoles(roles);
     }
 
-
+    @Override
     public String getEmail() {
         return email;
     }

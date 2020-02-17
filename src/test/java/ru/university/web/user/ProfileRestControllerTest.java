@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.university.UserTestData;
 import ru.university.model.User;
 import ru.university.service.UserService;
@@ -19,6 +21,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static ru.university.TestUtil.readFromJson;
 import static ru.university.TestUtil.userHttpBasic;
 import static ru.university.UserTestData.*;
+import static ru.university.util.exception.ErrorType.VALIDATION_ERROR;
+import static ru.university.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_EMAIL;
 import static ru.university.web.user.ProfileRestController.REST_URL;
 
 class ProfileRestControllerTest extends AbstractControllerTest {
@@ -85,7 +89,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
         perform(doPut(REST_URL).jsonBody(updatedTo).basicAuth(SAVCHYK))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity())
-                .andExpect(jsonPath("$.type").value(ErrorType.VALIDATION_ERROR.name()))
+                .andExpect(errorType(VALIDATION_ERROR))
                 .andDo(print());
     }
 }

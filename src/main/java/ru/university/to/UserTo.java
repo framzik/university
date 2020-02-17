@@ -1,10 +1,12 @@
 package ru.university.to;
 
+import ru.university.HasEmail;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-public class UserTo extends BaseTo {
+public class UserTo extends BaseTo implements HasEmail {
     @NotBlank
     @Size(min = 2, max = 100)
     private String name;
@@ -49,6 +51,7 @@ public class UserTo extends BaseTo {
         this.name = name;
     }
 
+    @Override
     public String getEmail() {
         return email;
     }

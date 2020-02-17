@@ -3,11 +3,11 @@ package ru.university.util.exception;
 public class ErrorInfo {
     private final String url;
     private final ErrorType type;
-    private final String[] strings;
+    private final String[] details;
 
-    public ErrorInfo(CharSequence url, ErrorType type, String... detail) {
+    public ErrorInfo(CharSequence url, ErrorType type, String... details) {
         this.url = url.toString();
         this.type = type;
-        this.strings = detail;
+        this.details = details;
     }
 }
