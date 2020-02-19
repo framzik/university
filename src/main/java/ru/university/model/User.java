@@ -1,11 +1,12 @@
 package ru.university.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.util.CollectionUtils;
 import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.springframework.util.CollectionUtils;
 import ru.university.HasEmail;
+import ru.university.View;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -16,7 +17,7 @@ import java.util.*;
 
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @NamedQueries({
-        @NamedQuery(name =User.DELETE,query = "DELETE FROM User u WHERE u.id=:id"),
+        @NamedQuery(name = User.DELETE, query = "DELETE FROM User u WHERE u.id=:id"),
         @NamedQuery(name = User.ALL_SORTED, query = "SELECT distinct (u) FROM User u LEFT JOIN FETCH u.roles ORDER BY u.name, u.email"),
         @NamedQuery(name = User.BYEMAIL, query = "SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.email=?1"),
 })
@@ -30,6 +31,7 @@ public class User extends AbstractNamedEntity implements HasEmail {
     @Email
     @NotBlank
     @Size(max = 100)
+    @SafeHtml(groups = {View.Web.class})
     protected String email;
 
     @Column(name = "password")
@@ -49,6 +51,7 @@ public class User extends AbstractNamedEntity implements HasEmail {
     @NotBlank
     @Size(min = 2, max = 200)
     @Column(name = "address", nullable = false)
+    @SafeHtml
     protected String address;
 
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -58,7 +61,7 @@ public class User extends AbstractNamedEntity implements HasEmail {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @OrderBy("name")
     //@JsonIgnore
     protected List<Course> courses;

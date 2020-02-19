@@ -3,10 +3,11 @@ package ru.university.web.course;
 import com.sun.istack.Nullable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.university.View;
 import ru.university.model.Course;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -33,7 +34,7 @@ public class CourseUIController extends AbstractCourseController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void createOrUpdate(@Valid Course course) {
+    public void createOrUpdate(@Validated(View.Web.class) Course course) {
         if (course.isNew()) {
             super.create(course);
         } else {

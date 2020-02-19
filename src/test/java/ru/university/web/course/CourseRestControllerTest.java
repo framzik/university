@@ -14,6 +14,8 @@ import ru.university.util.exception.NotFoundException;
 import ru.university.web.AbstractControllerTest;
 import ru.university.web.json.JsonUtil;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -142,6 +144,16 @@ class CourseRestControllerTest extends AbstractControllerTest {
     void updateInvalid() throws Exception {
         Course invalid = new Course(STUDENT_COURSE_ID, null, 0, 6000);
         perform(doPut(REST_URL, STUDENT_COURSE_ID).jsonBody(invalid).basicAuth(SAVCHYK))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(errorType(VALIDATION_ERROR))
+                .andDo(print());
+    }
+
+    @Test
+    void updateHtmlUnsafe() throws Exception {
+        Course invalid = new Course(STUDENT_COURSE_ID, "<script>alert(123)</script>", 12, 200);
+        perform(doPut(REST_URL,STUDENT_COURSE_ID).jsonBody(invalid).basicAuth(SAVCHYK))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(errorType(VALIDATION_ERROR))
