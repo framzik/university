@@ -12,7 +12,7 @@
 
     <context:component-scan base-package="ru.university.web"/>
 
-    <mvc:default-servlet-handler/>
+<!--    <mvc:default-servlet-handler/>-->
 
     <security:global-method-security secured-annotations="enabled" pre-post-annotations="enabled"/>
 

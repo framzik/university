@@ -1,10 +1,12 @@
 package ru.university.util;
 
 
+import org.slf4j.Logger;
 import ru.university.HasId;
 import ru.university.util.exception.IllegalRequestDataException;
 import ru.university.util.exception.NotFoundException;
-
+import ru.university.util.exception.ErrorType;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.*;
 import java.util.Set;
 
@@ -75,5 +77,15 @@ public class ValidationUtil {
         if (!violations.isEmpty()) {
             throw new ConstraintViolationException(violations);
         }
+    }
+
+    public static Throwable logAndGetRootCause(Logger log, HttpServletRequest req, Exception e, boolean logException, ErrorType errorType) {
+        Throwable rootCause = ValidationUtil.getRootCause(e);
+        if (logException) {
+            log.error(errorType + " at request " + req.getRequestURL(), rootCause);
+        } else {
+            log.warn("{} at request  {}: {}", errorType, req.getRequestURL(), rootCause.toString());
+        }
+        return rootCause;
     }
 }
