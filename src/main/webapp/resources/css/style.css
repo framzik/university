@@ -31,6 +31,11 @@ tr[data-userEnabled="false"] {
     background-color: #c6fbc2;
     border: 1px solid #9feba6;
 }
+
+#noty_layout__bottomRight {
+    width: 385px !important;
+}
+
 /*https://getbootstrap.com/docs/4.0/examples/sticky-footer/sticky-footer.css*/
 html {
     position: relative;
